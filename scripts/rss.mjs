@@ -3,7 +3,6 @@ import path from 'path'
 import { slug } from 'github-slugger'
 import { escape } from 'pliny/utils/htmlEscaper.js'
 import siteMetadata from '../data/siteMetadata.js'
-import tagData from '../app/tag-data.json' with { type: 'json' }
 import { allBlogs } from '../.contentlayer/generated/index.mjs'
 import { sortPosts } from 'pliny/utils/contentlayer.js'
 
@@ -11,9 +10,9 @@ const outputFolder = process.env.EXPORT ? 'out' : 'public'
 
 const generateRssItem = (config, post) => `
   <item>
-    <guid>${config.siteUrl}/blog/${post.slug}</guid>
+    <guid>${config.siteUrl}/${post.path}</guid>
     <title>${escape(post.title)}</title>
-    <link>${config.siteUrl}/blog/${post.slug}</link>
+    <link>${config.siteUrl}/${post.path}</link>
     ${post.summary && `<description>${escape(post.summary)}</description>`}
     <pubDate>${new Date(post.date).toUTCString()}</pubDate>
     <author>${config.email} (${config.author})</author>
@@ -39,6 +38,9 @@ const generateRss = (config, posts, page = 'feed.xml') => `
 
 async function generateRSS(config, allBlogs, page = 'feed.xml') {
   const publishPosts = allBlogs.filter((post) => post.draft !== true)
+  const tags = [
+    ...new Set(publishPosts.flatMap((post) => post.tags?.map((tag) => slug(tag)) || [])),
+  ]
   // RSS for blog post
   if (publishPosts.length > 0) {
     const rss = generateRss(config, sortPosts(publishPosts))
@@ -46,9 +48,11 @@ async function generateRSS(config, allBlogs, page = 'feed.xml') {
   }
 
   if (publishPosts.length > 0) {
-    for (const tag of Object.keys(tagData)) {
-      const filteredPosts = allBlogs.filter((post) => post.tags.map((t) => slug(t)).includes(tag))
-      const rss = generateRss(config, filteredPosts, `tags/${tag}/${page}`)
+    for (const tag of tags) {
+      const filteredPosts = publishPosts.filter((post) =>
+        post.tags?.map((item) => slug(item)).includes(tag)
+      )
+      const rss = generateRss(config, sortPosts(filteredPosts), `tags/${tag}/${page}`)
       const rssPath = path.join(outputFolder, 'tags', tag)
       mkdirSync(rssPath, { recursive: true })
       writeFileSync(path.join(rssPath, page), rss)

@@ -1,34 +1,39 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { slug } from 'github-slugger'
 import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
-import tagData from 'app/tag-data.json'
+import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
+import type { TagMetadata } from '@/lib/content'
 
-interface PaginationProps {
+interface PaginationData {
   totalPages: number
   currentPage: number
 }
+
+interface PaginationProps extends PaginationData {
+  locale: Locale
+}
+
 interface ListLayoutProps {
   posts: CoreContent<Blog>[]
   title: string
+  locale: Locale
+  tagMetadata: TagMetadata
   initialDisplayPosts?: CoreContent<Blog>[]
-  pagination?: PaginationProps
+  pagination?: PaginationData
 }
 
-function Pagination({ totalPages, currentPage }: PaginationProps) {
+function Pagination({ totalPages, currentPage, locale }: PaginationProps) {
   const pathname = usePathname()
-  const segments = pathname.split('/')
-  const lastSegment = segments[segments.length - 1]
+  const dictionary = getDictionary(locale)
   const basePath = pathname
-    .replace(/^\//, '') // Remove leading slash
-    .replace(/\/page\/\d+\/?$/, '') // Remove any trailing /page
-    .replace(/\/$/, '') // Remove trailing slash
+    .replace(/^\//, '')
+    .replace(/\/page\/\d+\/?$/, '')
+    .replace(/\/$/, '')
   const prevPage = currentPage - 1 > 0
   const nextPage = currentPage + 1 <= totalPages
 
@@ -37,7 +42,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       <nav className="flex justify-between">
         {!prevPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            Previous
+            {dictionary.list.previous}
           </button>
         )}
         {prevPage && (
@@ -45,20 +50,18 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
             href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
             rel="prev"
           >
-            Previous
+            {dictionary.list.previous}
           </Link>
         )}
-        <span>
-          {currentPage} of {totalPages}
-        </span>
+        <span>{dictionary.list.pageIndicator(currentPage, totalPages)}</span>
         {!nextPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            Next
+            {dictionary.list.next}
           </button>
         )}
         {nextPage && (
           <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            Next
+            {dictionary.list.next}
           </Link>
         )}
       </nav>
@@ -69,14 +72,18 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 export default function ListLayoutWithTags({
   posts,
   title,
+  locale,
+  tagMetadata,
   initialDisplayPosts = [],
   pagination,
 }: ListLayoutProps) {
   const pathname = usePathname()
-  const tagCounts = tagData as Record<string, number>
-  const tagKeys = Object.keys(tagCounts)
-  const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
-
+  const dictionary = getDictionary(locale)
+  const sortedTags = Object.entries(tagMetadata).sort(
+    ([, left], [, right]) => right.count - left.count
+  )
+  const activeTag = decodeURI(pathname.split('/tags/')[1]?.split('/')[0] || '')
+  const blogPath = localizePath('/blog', locale)
   const displayPosts = initialDisplayPosts.length > 0 ? initialDisplayPosts : posts
 
   return (
@@ -90,36 +97,34 @@ export default function ListLayoutWithTags({
         <div className="flex sm:space-x-24">
           <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm bg-gray-50 pt-5 shadow-md sm:flex dark:bg-gray-900/70 dark:shadow-gray-800/40">
             <div className="px-6 py-4">
-              {pathname.startsWith('/blog') ? (
-                <h3 className="text-primary-500 font-bold uppercase">All Posts</h3>
+              {pathname === blogPath || pathname.startsWith(`${blogPath}/page/`) ? (
+                <h3 className="text-primary-500 font-bold uppercase">{dictionary.tags.allPosts}</h3>
               ) : (
                 <Link
-                  href={`/blog`}
+                  href={blogPath}
                   className="hover:text-primary-500 dark:hover:text-primary-500 font-bold text-gray-700 uppercase dark:text-gray-300"
                 >
-                  All Posts
+                  {dictionary.tags.allPosts}
                 </Link>
               )}
               <ul>
-                {sortedTags.map((t) => {
-                  return (
-                    <li key={t} className="my-3">
-                      {decodeURI(pathname.split('/tags/')[1]) === slug(t) ? (
-                        <h3 className="text-primary-500 inline px-3 py-2 text-sm font-bold uppercase">
-                          {`${t} (${tagCounts[t]})`}
-                        </h3>
-                      ) : (
-                        <Link
-                          href={`/tags/${slug(t)}`}
-                          className="hover:text-primary-500 dark:hover:text-primary-500 px-3 py-2 text-sm font-medium text-gray-500 uppercase dark:text-gray-300"
-                          aria-label={`View posts tagged ${t}`}
-                        >
-                          {`${t} (${tagCounts[t]})`}
-                        </Link>
-                      )}
-                    </li>
-                  )
-                })}
+                {sortedTags.map(([tag, metadata]) => (
+                  <li key={tag} className="my-3">
+                    {activeTag === tag ? (
+                      <h3 className="text-primary-500 inline px-3 py-2 text-sm font-bold uppercase">
+                        {`${metadata.label} (${metadata.count})`}
+                      </h3>
+                    ) : (
+                      <Link
+                        href={localizePath(`/tags/${tag}`, locale)}
+                        className="hover:text-primary-500 dark:hover:text-primary-500 px-3 py-2 text-sm font-medium text-gray-500 uppercase dark:text-gray-300"
+                        aria-label={dictionary.tags.viewPosts(metadata.label)}
+                      >
+                        {`${metadata.label} (${metadata.count})`}
+                      </Link>
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -131,10 +136,10 @@ export default function ListLayoutWithTags({
                   <li key={path} className="py-5">
                     <article className="flex flex-col space-y-2 xl:space-y-0">
                       <dl>
-                        <dt className="sr-only">Published on</dt>
+                        <dt className="sr-only">{dictionary.post.publishedOn}</dt>
                         <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                           <time dateTime={date} suppressHydrationWarning>
-                            {formatDate(date, siteMetadata.locale)}
+                            {formatDate(date, locale)}
                           </time>
                         </dd>
                       </dl>
@@ -146,7 +151,9 @@ export default function ListLayoutWithTags({
                             </Link>
                           </h2>
                           <div className="flex flex-wrap">
-                            {tags?.map((tag) => <Tag key={tag} text={tag} />)}
+                            {tags?.map((tag) => (
+                              <Tag key={tag} text={tag} locale={locale} />
+                            ))}
                           </div>
                         </div>
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">
@@ -159,7 +166,11 @@ export default function ListLayoutWithTags({
               })}
             </ul>
             {pagination && pagination.totalPages > 1 && (
-              <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />
+              <Pagination
+                currentPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                locale={locale}
+              />
             )}
           </div>
         </div>

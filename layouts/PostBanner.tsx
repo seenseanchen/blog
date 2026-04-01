@@ -2,23 +2,27 @@ import { ReactNode } from 'react'
 import Image from '@/components/Image'
 import Bleed from 'pliny/ui/Bleed'
 import { CoreContent } from 'pliny/utils/contentlayer'
-import type { Blog } from 'contentlayer/generated'
+import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
 
 interface LayoutProps {
   content: CoreContent<Blog>
+  locale: Locale
+  authorDetails?: CoreContent<Authors>[]
   children: ReactNode
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
 }
 
-export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
+export default function PostMinimal({ content, locale, next, prev, children }: LayoutProps) {
   const { slug, title, images } = content
+  const dictionary = getDictionary(locale)
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
 
@@ -52,7 +56,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                   <Link
                     href={`/${prev.path}`}
                     className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                    aria-label={`Previous post: ${prev.title}`}
+                    aria-label={`${dictionary.post.previousArticle}: ${prev.title}`}
                   >
                     &larr; {prev.title}
                   </Link>
@@ -63,12 +67,21 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                   <Link
                     href={`/${next.path}`}
                     className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                    aria-label={`Next post: ${next.title}`}
+                    aria-label={`${dictionary.post.nextArticle}: ${next.title}`}
                   >
                     {next.title} &rarr;
                   </Link>
                 </div>
               )}
+            </div>
+            <div className="pt-4 xl:pt-8">
+              <Link
+                href={localizePath('/blog', locale)}
+                className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                aria-label={dictionary.post.backToBlog}
+              >
+                &larr; {dictionary.post.backToBlog}
+              </Link>
             </div>
           </footer>
         </div>

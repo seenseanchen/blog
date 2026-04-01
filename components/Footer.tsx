@@ -1,8 +1,16 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
+import { getDictionary, getLocaleFromPathname, localizePath } from '@/lib/i18n'
 
 export default function Footer() {
+  const pathname = usePathname() || '/'
+  const locale = getLocaleFromPathname(pathname)
+  const dictionary = getDictionary(locale)
+
   return (
     <footer>
       <div className="mt-16 flex flex-col items-center">
@@ -24,11 +32,12 @@ export default function Footer() {
           <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
-          <Link href="/">{siteMetadata.title}</Link>
+          <Link href={localizePath('/', locale)}>{siteMetadata.title}</Link>
         </div>
         <div className="mb-8 text-sm text-gray-500 dark:text-gray-400">
+          <div>{dictionary.footer.brandLine}</div>
           <Link href="https://github.com/timlrx/tailwind-nextjs-starter-blog">
-            Tailwind Nextjs Theme
+            {dictionary.footer.themeCredit}
           </Link>
         </div>
       </div>

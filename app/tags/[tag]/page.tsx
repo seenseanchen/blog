@@ -1,12 +1,9 @@
-import { slug } from 'github-slugger'
-import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
-import siteMetadata from '@/data/siteMetadata'
-import ListLayout from '@/layouts/ListLayoutWithTags'
-import { allBlogs } from 'contentlayer/generated'
-import tagData from 'app/tag-data.json'
-import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
+import { genPageMetadata } from 'app/seo'
+import ListLayout from '@/layouts/ListLayoutWithTags'
+import { getPostsByTag, getTagMetadata, getTagStaticParams } from '@/lib/content'
 
+const locale = 'zh-TW' as const
 const POSTS_PER_PAGE = 5
 
 export async function generateMetadata(props: {
@@ -14,46 +11,34 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params
   const tag = decodeURI(params.tag)
+  const tagLabel = getTagMetadata(locale)[tag]?.label || tag
+
   return genPageMetadata({
-    title: tag,
-    description: `${siteMetadata.title} ${tag} tagged content`,
-    alternates: {
-      canonical: './',
-      types: {
-        'application/rss+xml': `${siteMetadata.siteUrl}/tags/${tag}/feed.xml`,
-      },
-    },
+    title: tagLabel,
+    description: `${tagLabel} 相關文章整理`,
+    locale,
+    path: `/tags/${tag}`,
   })
 }
 
-export const generateStaticParams = async () => {
-  const tagCounts = tagData as Record<string, number>
-  const tagKeys = Object.keys(tagCounts)
-  return tagKeys.map((tag) => ({
-    tag: encodeURI(tag),
-  }))
-}
+export const generateStaticParams = async () => getTagStaticParams(locale)
 
 export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
   const params = await props.params
   const tag = decodeURI(params.tag)
-  const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
-  const filteredPosts = allCoreContent(
-    sortPosts(allBlogs.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag)))
-  )
+  const tagMetadata = getTagMetadata(locale)
+  const filteredPosts = getPostsByTag(locale, tag)
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
   const initialDisplayPosts = filteredPosts.slice(0, POSTS_PER_PAGE)
-  const pagination = {
-    currentPage: 1,
-    totalPages: totalPages,
-  }
 
   return (
     <ListLayout
       posts={filteredPosts}
       initialDisplayPosts={initialDisplayPosts}
-      pagination={pagination}
-      title={title}
+      pagination={{ currentPage: 1, totalPages }}
+      title={tagMetadata[tag]?.label || tag}
+      locale={locale}
+      tagMetadata={tagMetadata}
     />
   )
 }

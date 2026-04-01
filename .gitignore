@@ -45,3 +45,11 @@ yarn-error.log*
 
 # Contentlayer
 .contentlayer
+
+# Claude project artifacts
+.claude/worktrees/
+.claude/settings.local.json
+
+# Claude project artifacts
+.claude/worktrees/
+.claude/settings.local.json

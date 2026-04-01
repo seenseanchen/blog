@@ -1,20 +1,28 @@
-import { Authors, allAuthors } from 'contentlayer/generated'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import AuthorLayout from '@/layouts/AuthorLayout'
-import { coreContent } from 'pliny/utils/contentlayer'
 import { genPageMetadata } from 'app/seo'
+import { getPageContent } from '@/data/pageContent'
+import { getDictionary } from '@/lib/i18n'
+import { getLocaleAuthor, getLocaleAuthorCore } from '@/lib/content'
 
-export const metadata = genPageMetadata({ title: 'About' })
+const locale = 'zh-TW' as const
+const dictionary = getDictionary(locale)
+const siteContent = getPageContent(locale).site
+
+export const metadata = genPageMetadata({
+  title: dictionary.about.title,
+  description: siteContent.aboutDescription,
+  locale,
+  path: '/about',
+})
 
 export default function Page() {
-  const author = allAuthors.find((p) => p.slug === 'default') as Authors
-  const mainContent = coreContent(author)
+  const author = getLocaleAuthor(locale)
+  const mainContent = getLocaleAuthorCore(locale)
 
   return (
-    <>
-      <AuthorLayout content={mainContent}>
-        <MDXLayoutRenderer code={author.body.code} />
-      </AuthorLayout>
-    </>
+    <AuthorLayout content={mainContent} title={dictionary.about.title}>
+      <MDXLayoutRenderer code={author.body.code} />
+    </AuthorLayout>
   )
 }

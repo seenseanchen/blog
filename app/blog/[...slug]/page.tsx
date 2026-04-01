@@ -1,24 +1,37 @@
 import 'css/prism.css'
 import 'katex/dist/katex.css'
 
-import PageTitle from '@/components/PageTitle'
-import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { sortPosts, coreContent, allCoreContent } from 'pliny/utils/contentlayer'
-import { allBlogs, allAuthors } from 'contentlayer/generated'
-import type { Authors, Blog } from 'contentlayer/generated'
+import { coreContent } from 'pliny/utils/contentlayer'
+import { allAuthors } from 'contentlayer/generated'
+import type { Authors } from 'contentlayer/generated'
 import PostSimple from '@/layouts/PostSimple'
 import PostLayout from '@/layouts/PostLayout'
 import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
+import { components } from '@/components/MDXComponents'
+import { getLocalizedBlogParams, getLocaleBlogCoreContents, getLocaleBlogPost } from '@/lib/content'
+import { getOpenGraphLocale, localizePath } from '@/lib/i18n'
 
+const locale = 'zh-TW' as const
 const defaultLayout = 'PostLayout'
+const defaultAuthorSlug = 'default'
 const layouts = {
   PostSimple,
   PostLayout,
   PostBanner,
+}
+
+function getAuthorDetails(authorList: string[]) {
+  return authorList.map((author) => {
+    const authorResults =
+      allAuthors.find((entry) => entry.slug === author) ||
+      allAuthors.find((entry) => entry.slug === defaultAuthorSlug)
+
+    return coreContent(authorResults as Authors)
+  })
 }
 
 export async function generateMetadata(props: {
@@ -26,42 +39,44 @@ export async function generateMetadata(props: {
 }): Promise<Metadata | undefined> {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
-  const post = allBlogs.find((p) => p.slug === slug)
-  const authorList = post?.authors || ['default']
-  const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults as Authors)
-  })
+  const post = getLocaleBlogPost(locale, slug)
+
   if (!post) {
     return
   }
 
+  const authorList = post.authors || [defaultAuthorSlug]
+  const authorDetails = getAuthorDetails(authorList)
   const publishedAt = new Date(post.date).toISOString()
   const modifiedAt = new Date(post.lastmod || post.date).toISOString()
   const authors = authorDetails.map((author) => author.name)
-  let imageList = [siteMetadata.socialBanner]
-  if (post.images) {
-    imageList = typeof post.images === 'string' ? [post.images] : post.images
-  }
-  const ogImages = imageList.map((img) => {
-    return {
-      url: img && img.includes('http') ? img : siteMetadata.siteUrl + img,
-    }
-  })
+  const imageList =
+    post.images && typeof post.images === 'string'
+      ? [post.images]
+      : post.images || [siteMetadata.socialBanner]
 
   return {
     title: post.title,
     description: post.summary,
+    alternates: {
+      canonical: `/${post.path}`,
+      languages: {
+        'zh-TW': localizePath(`/blog/${slug}`, 'zh-TW'),
+        en: localizePath(`/blog/${slug}`, 'en'),
+      },
+    },
     openGraph: {
       title: post.title,
       description: post.summary,
       siteName: siteMetadata.title,
-      locale: 'en_US',
+      locale: getOpenGraphLocale(locale),
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,
-      url: './',
-      images: ogImages,
+      url: `/${post.path}`,
+      images: imageList.map((image) => ({
+        url: image && image.includes('http') ? image : siteMetadata.siteUrl + image,
+      })),
       authors: authors.length > 0 ? authors : [siteMetadata.author],
     },
     twitter: {
@@ -73,36 +88,35 @@ export async function generateMetadata(props: {
   }
 }
 
-export const generateStaticParams = async () => {
-  return allBlogs.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
-}
+export const generateStaticParams = async () => getLocalizedBlogParams(locale)
 
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
-  // Filter out drafts in production
-  const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
-  const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
+  const post = getLocaleBlogPost(locale, slug)
+
+  if (!post) {
+    return notFound()
+  }
+
+  const sortedCoreContents = getLocaleBlogCoreContents(locale)
+  const postIndex = sortedCoreContents.findIndex((entry) => entry.path === post.path)
+
   if (postIndex === -1) {
     return notFound()
   }
 
   const prev = sortedCoreContents[postIndex + 1]
   const next = sortedCoreContents[postIndex - 1]
-  const post = allBlogs.find((p) => p.slug === slug) as Blog
-  const authorList = post?.authors || ['default']
-  const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults as Authors)
-  })
+  const authorList = post.authors || [defaultAuthorSlug]
+  const authorDetails = getAuthorDetails(authorList)
   const mainContent = coreContent(post)
   const jsonLd = post.structuredData
-  jsonLd['author'] = authorDetails.map((author) => {
-    return {
-      '@type': 'Person',
-      name: author.name,
-    }
-  })
+
+  jsonLd['author'] = authorDetails.map((author) => ({
+    '@type': 'Person',
+    name: author.name,
+  }))
 
   const Layout = layouts[post.layout || defaultLayout]
 
@@ -112,7 +126,13 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
+      <Layout
+        content={mainContent}
+        authorDetails={authorDetails}
+        locale={locale}
+        next={next}
+        prev={prev}
+      >
         <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
       </Layout>
     </>

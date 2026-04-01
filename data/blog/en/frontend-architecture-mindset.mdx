@@ -1,0 +1,67 @@
+---
+title: 'How I Think About Enterprise Frontend Architecture'
+date: '2026-04-01'
+tags: ['frontend-architecture', 'react', 'next.js']
+draft: false
+authors: ['default.en']
+summary: 'Frontend architecture is not just framework selection. This post outlines the core principles I use when building enterprise frontend systems.'
+---
+
+> 📝 **This post was AI-assisted and has not yet been fully reviewed by the author.**
+
+## The Real Question Behind Frontend Architecture
+
+When frontend engineers discuss architecture, the conversation often gets stuck on tool selection: Zustand or Redux? React Query or SWR?
+
+Those are implementation choices. They are not the center of the architecture problem.
+
+The real question is this:
+
+**Will different people still be able to change this system safely a year from now?**
+
+## Three Problems I See Repeatedly in Enterprise Systems
+
+### 1. Components with unclear responsibility
+
+One of the most common issues is a component that handles UI rendering, API calls, business logic, and state management all at once.
+
+It can work in the short term, but as business complexity grows, it becomes one of the most dangerous parts of the codebase.
+
+My usual split looks like this:
+
+- **UI components**: rendering only, props in and events out
+- **Container components**: data fetching and state coordination
+- **Business hooks**: reusable domain logic extracted into custom hooks
+- **API layer**: requests managed in one place instead of scattered across components
+
+### 2. No predictable data flow
+
+In large systems, messy data flow is one of the hardest things to maintain.
+
+I prefer to define data flow expectations early:
+
+- keep server state and client state clearly separated
+- make ownership explicit for data shared across modules
+- avoid prop drilling, but also avoid turning global state into a default answer for everything
+
+### 3. Unclear module boundaries
+
+This becomes especially painful in monorepos or larger applications. When module boundaries are blurry, the cost of refactoring rises very quickly.
+
+I usually want each feature module to own its own:
+
+- components
+- hooks
+- API services
+- types
+- constants
+
+That makes modules easier to understand, test, and evolve independently.
+
+## Closing Thought
+
+Enterprise frontend architecture is not mainly about choosing the newest technology.
+
+It is about building a system a team can keep changing with confidence.
+
+That means clear component responsibilities, predictable data flow, and explicit module boundaries.

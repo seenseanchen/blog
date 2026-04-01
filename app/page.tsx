@@ -1,9 +1,16 @@
-import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
-import { allBlogs } from 'contentlayer/generated'
-import Main from './Main'
+import Home from './Main'
+import { genPageMetadata } from 'app/seo'
+import { getPageContent } from '@/data/pageContent'
+import { getLocaleBlogCoreContents } from '@/lib/content'
+
+export const metadata = genPageMetadata({
+  title: '首頁',
+  description: getPageContent('zh-TW').site.homeDescription,
+  locale: 'zh-TW',
+  path: '/',
+})
 
 export default async function Page() {
-  const sortedPosts = sortPosts(allBlogs)
-  const posts = allCoreContent(sortedPosts)
-  return <Main posts={posts} />
+  const posts = getLocaleBlogCoreContents('zh-TW')
+  return <Home posts={posts} locale="zh-TW" />
 }
