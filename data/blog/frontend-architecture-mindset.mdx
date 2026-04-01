@@ -6,6 +6,8 @@ draft: false
 summary: '前端架構不只是選 framework。這篇文章整理我在實際企業系統中建立前端架構的核心思考框架。'
 ---
 
+> 📝 **本文由 AI 輔助撰寫，尚未經過作者本人校稿。**
+
 ## 前端架構的真正問題
 
 很多前端工程師在討論架構時，容易陷入工具選型的爭論：要用 Zustand 還是 Redux？要用 React Query 還是 SWR？
@@ -23,6 +25,7 @@ summary: '前端架構不只是選 framework。這篇文章整理我在實際企
 短期可以跑，但隨著業務複雜度提升，它會成為整個系統最危險的地方。
 
 我的做法是明確拆分：
+
 - **UI 元件**：只負責渲染，props in、events out
 - **Container 元件**：負責資料獲取與狀態協調
 - **業務邏輯 hooks**：把可複用的邏輯抽離成 custom hook
@@ -33,6 +36,7 @@ summary: '前端架構不只是選 framework。這篇文章整理我在實際企
 大型系統中，資料流混亂是最難維護的問題之一。
 
 我傾向在專案初期就建立明確的資料流規範：
+
 - Server state（API 資料）vs Client state（UI 狀態）清楚分開
 - 跨模組共享的資料要有明確的 owner
 - 避免 prop drilling，但也避免過度依賴全局狀態
@@ -42,6 +46,7 @@ summary: '前端架構不只是選 framework。這篇文章整理我在實際企
 特別是在 monorepo 或多頁面應用中，模組之間的依賴關係如果不清楚，重構成本會非常高。
 
 我習慣在每個功能模組下維護自己的：
+
 - 元件
 - hooks
 - API service
