@@ -53,10 +53,6 @@ type Dictionary = {
   about: {
     title: string
   }
-  footer: {
-    brandLine: string
-    themeCredit: string
-  }
 }
 
 const dictionaries: Record<Locale, Dictionary> = {
@@ -109,10 +105,6 @@ const dictionaries: Record<Locale, Dictionary> = {
     about: {
       title: '關於',
     },
-    footer: {
-      brandLine: 'Frontend Architecture • Enterprise Systems • AI-assisted Development',
-      themeCredit: '基於 Tailwind Next.js Starter Blog 客製化',
-    },
   },
   en: {
     localeLabel: '中文',
@@ -162,10 +154,6 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     about: {
       title: 'About',
-    },
-    footer: {
-      brandLine: 'Frontend Architecture • Enterprise Systems • AI-assisted Development',
-      themeCredit: 'Customized from Tailwind Next.js Starter Blog',
     },
   },
 }

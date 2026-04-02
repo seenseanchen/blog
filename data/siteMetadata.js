@@ -1,8 +1,8 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Sean Chen',
+  title: '興向成',
   author: 'Sean Chen',
-  headerTitle: 'Sean Chen',
+  headerTitle: '興向成',
   description: '專注於企業級前端架構、系統設計與 AI-assisted development 的資深前端工程師。',
   language: 'zh-TW',
   theme: 'system', // system, dark or light

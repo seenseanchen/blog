@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import { Noto_Serif_TC } from 'next/font/google'
 import siteMetadata from '@/data/siteMetadata'
 import getHeaderNavLinks from '@/data/headerNavLinks'
 import { getLocaleFromPathname, localizePath } from '@/lib/i18n'
@@ -10,6 +11,13 @@ import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import LocaleSwitcher from './LocaleSwitcher'
+
+const posterTitleFont = Noto_Serif_TC({
+  weight: ['700', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['serif'],
+})
 
 const Header = () => {
   const pathname = usePathname() || '/'
@@ -26,8 +34,8 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="mr-3 flex items-center">
             <Image
-              src="/static/images/seenseanchen-logo-v2.png"
-              alt="Sean Chen logo"
+              src={siteMetadata.siteLogo}
+              alt={`${siteMetadata.headerTitle} logo`}
               width={88}
               height={48}
               className="h-10 w-auto"
@@ -35,7 +43,9 @@ const Header = () => {
             />
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-2xl font-semibold sm:block">
+            <div
+              className={`${posterTitleFont.className} hidden text-[1.65rem] leading-none font-black tracking-[0.18em] text-gray-900 sm:block dark:text-gray-100`}
+            >
               {siteMetadata.headerTitle}
             </div>
           ) : (

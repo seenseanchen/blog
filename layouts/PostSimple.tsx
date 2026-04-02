@@ -1,15 +1,14 @@
 import { ReactNode } from 'react'
-import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
+import PostMetaLine from '@/components/PostMetaLine'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
-import { formatReadingTime } from '@/lib/reading-time'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -30,24 +29,9 @@ export default function PostLayout({ content, locale, next, prev, children }: La
       <article>
         <div>
           <header>
-            <div className="space-y-1 border-b border-gray-200 pb-10 text-center dark:border-gray-700">
-              <dl className="space-y-2">
-                <div>
-                  <dt className="sr-only">{dictionary.post.publishedOn}</dt>
-                  <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>{formatDate(date, locale)}</time>
-                  </dd>
-                </div>
-                <div>
-                  <dt className="sr-only">{dictionary.post.readingTimeLabel}</dt>
-                  <dd className="text-sm leading-6 text-gray-500 dark:text-gray-400">
-                    {formatReadingTime(readingTime, locale)}
-                  </dd>
-                </div>
-              </dl>
-              <div>
-                <PageTitle>{title}</PageTitle>
-              </div>
+            <div className="space-y-4 border-b border-gray-200 pb-10 text-center dark:border-gray-700">
+              <PageTitle>{title}</PageTitle>
+              <PostMetaLine date={date} readingTime={readingTime} locale={locale} />
             </div>
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">

@@ -4,24 +4,17 @@ import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
+import PostMetaLine from '@/components/PostMetaLine'
 import SectionContainer from '@/components/SectionContainer'
 import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
-import { formatReadingTime } from '@/lib/reading-time'
 
 const editUrl = (path: string) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path: string) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}`
-
-const postDateTemplate: Intl.DateTimeFormatOptions = {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-}
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -49,26 +42,9 @@ export default function PostLayout({
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-6">
-            <div className="space-y-1 text-center">
-              <dl className="space-y-4">
-                <div>
-                  <dt className="sr-only">{dictionary.post.publishedOn}</dt>
-                  <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(locale, postDateTemplate)}
-                    </time>
-                  </dd>
-                </div>
-                <div>
-                  <dt className="sr-only">{dictionary.post.readingTimeLabel}</dt>
-                  <dd className="text-sm leading-6 text-gray-500 dark:text-gray-400">
-                    {formatReadingTime(readingTime, locale)}
-                  </dd>
-                </div>
-              </dl>
-              <div>
-                <PageTitle>{title}</PageTitle>
-              </div>
+            <div className="space-y-4 text-center">
+              <PageTitle>{title}</PageTitle>
+              <PostMetaLine date={date} readingTime={readingTime} locale={locale} />
             </div>
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
