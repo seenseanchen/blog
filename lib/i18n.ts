@@ -25,6 +25,7 @@ type Dictionary = {
     noPosts: string
     previous: string
     next: string
+    readingTimeLabel: string
     pageIndicator: (currentPage: number, totalPages: number) => string
   }
   tags: {
@@ -35,6 +36,7 @@ type Dictionary = {
   }
   post: {
     publishedOn: string
+    readingTimeLabel: string
     tags: string
     previousArticle: string
     nextArticle: string
@@ -79,6 +81,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       noPosts: '目前還沒有文章。',
       previous: '上一頁',
       next: '下一頁',
+      readingTimeLabel: '建議閱讀時間',
       pageIndicator: (currentPage, totalPages) => `第 ${currentPage} / ${totalPages} 頁`,
     },
     tags: {
@@ -89,6 +92,7 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     post: {
       publishedOn: '發佈日期',
+      readingTimeLabel: '建議閱讀時間',
       tags: '標籤',
       previousArticle: '上一篇文章',
       nextArticle: '下一篇文章',
@@ -131,6 +135,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       noPosts: 'No posts found yet.',
       previous: 'Previous',
       next: 'Next',
+      readingTimeLabel: 'Reading time',
       pageIndicator: (currentPage, totalPages) => `${currentPage} of ${totalPages}`,
     },
     tags: {
@@ -141,6 +146,7 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     post: {
       publishedOn: 'Published on',
+      readingTimeLabel: 'Reading time',
       tags: 'Tags',
       previousArticle: 'Previous Article',
       nextArticle: 'Next Article',

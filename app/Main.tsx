@@ -3,6 +3,7 @@ import Tag from '@/components/Tag'
 import { getPageContent } from '@/data/pageContent'
 import siteMetadata from '@/data/siteMetadata'
 import { localizePath, getDictionary, type Locale } from '@/lib/i18n'
+import { formatReadingTime } from '@/lib/reading-time'
 import type { Blog } from 'contentlayer/generated'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import { formatDate } from 'pliny/utils/formatDate'
@@ -96,16 +97,22 @@ export default function Home({ posts, locale }: HomeProps) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && dictionary.list.noPosts}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
-            const { path, slug, date, title, summary, tags } = post
+            const { path, slug, date, title, summary, tags, readingTime } = post
             return (
               <li key={slug} className="py-12">
                 <article>
                   <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                    <dl>
+                    <dl className="space-y-1">
                       <dt className="sr-only">{dictionary.post.publishedOn}</dt>
                       <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                         <time dateTime={date}>{formatDate(date, locale)}</time>
                       </dd>
+                      <div>
+                        <dt className="sr-only">{dictionary.list.readingTimeLabel}</dt>
+                        <dd className="text-sm leading-6 text-gray-500 dark:text-gray-400">
+                          {formatReadingTime(readingTime, locale)}
+                        </dd>
+                      </div>
                     </dl>
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">

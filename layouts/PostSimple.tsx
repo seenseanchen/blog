@@ -9,6 +9,7 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
+import { formatReadingTime } from '@/lib/reading-time'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -20,7 +21,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, locale, next, prev, children }: LayoutProps) {
-  const { slug, date, title } = content
+  const { slug, date, title, readingTime } = content
   const dictionary = getDictionary(locale)
 
   return (
@@ -30,11 +31,17 @@ export default function PostLayout({ content, locale, next, prev, children }: La
         <div>
           <header>
             <div className="space-y-1 border-b border-gray-200 pb-10 text-center dark:border-gray-700">
-              <dl>
+              <dl className="space-y-2">
                 <div>
                   <dt className="sr-only">{dictionary.post.publishedOn}</dt>
                   <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                     <time dateTime={date}>{formatDate(date, locale)}</time>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="sr-only">{dictionary.post.readingTimeLabel}</dt>
+                  <dd className="text-sm leading-6 text-gray-500 dark:text-gray-400">
+                    {formatReadingTime(readingTime, locale)}
                   </dd>
                 </div>
               </dl>

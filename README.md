@@ -269,6 +269,8 @@ layout (optional list which should correspond to the file names in `data/layouts
 canonicalUrl (optional, canonical url for the post for SEO)
 ```
 
+`readingTime` is generated automatically by Contentlayer from the MDX body, so existing posts and any newly created blog post will both get an estimated reading time without adding extra frontmatter.
+
 Here's an example of a post's frontmatter:
 
 ```

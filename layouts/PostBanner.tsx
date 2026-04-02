@@ -10,6 +10,7 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
+import { formatReadingTime } from '@/lib/reading-time'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -21,7 +22,7 @@ interface LayoutProps {
 }
 
 export default function PostMinimal({ content, locale, next, prev, children }: LayoutProps) {
-  const { slug, title, images } = content
+  const { slug, title, images, readingTime } = content
   const dictionary = getDictionary(locale)
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
@@ -41,6 +42,9 @@ export default function PostMinimal({ content, locale, next, prev, children }: L
             </div>
             <div className="relative pt-10">
               <PageTitle>{title}</PageTitle>
+              <p className="pt-3 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                {formatReadingTime(readingTime, locale)}
+              </p>
             </div>
           </div>
           <div className="prose dark:prose-invert max-w-none py-4">{children}</div>

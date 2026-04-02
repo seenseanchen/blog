@@ -7,6 +7,7 @@ import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
+import { formatReadingTime } from '@/lib/reading-time'
 import type { TagMetadata } from '@/lib/content'
 
 interface PaginationData {
@@ -131,17 +132,23 @@ export default function ListLayoutWithTags({
           <div>
             <ul>
               {displayPosts.map((post) => {
-                const { path, date, title, summary, tags } = post
+                const { path, date, title, summary, tags, readingTime } = post
                 return (
                   <li key={path} className="py-5">
                     <article className="flex flex-col space-y-2 xl:space-y-0">
-                      <dl>
+                      <dl className="space-y-1">
                         <dt className="sr-only">{dictionary.post.publishedOn}</dt>
                         <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                           <time dateTime={date} suppressHydrationWarning>
                             {formatDate(date, locale)}
                           </time>
                         </dd>
+                        <div>
+                          <dt className="sr-only">{dictionary.list.readingTimeLabel}</dt>
+                          <dd className="text-sm leading-6 text-gray-500 dark:text-gray-400">
+                            {formatReadingTime(readingTime, locale)}
+                          </dd>
+                        </div>
                       </dl>
                       <div className="space-y-3">
                         <div>

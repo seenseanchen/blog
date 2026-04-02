@@ -8,6 +8,7 @@ import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import { getDictionary, type Locale } from '@/lib/i18n'
+import { formatReadingTime } from '@/lib/reading-time'
 
 interface PaginationData {
   totalPages: number
@@ -122,15 +123,21 @@ export default function ListLayout({
         <ul>
           {!filteredBlogPosts.length && dictionary.list.noPosts}
           {displayPosts.map((post) => {
-            const { path, date, title, summary, tags } = post
+            const { path, date, title, summary, tags, readingTime } = post
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <dl>
+                  <dl className="space-y-1">
                     <dt className="sr-only">{dictionary.post.publishedOn}</dt>
                     <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>{formatDate(date, locale)}</time>
                     </dd>
+                    <div>
+                      <dt className="sr-only">{dictionary.list.readingTimeLabel}</dt>
+                      <dd className="text-sm leading-6 text-gray-500 dark:text-gray-400">
+                        {formatReadingTime(readingTime, locale)}
+                      </dd>
+                    </div>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
                     <div>

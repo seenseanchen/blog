@@ -130,6 +130,7 @@ export const Blog = defineDocumentType(() => ({
         dateModified: doc.lastmod || doc.date,
         description: doc.summary,
         image: doc.images ? doc.images[0] : siteMetadata.socialBanner,
+        timeRequired: `PT${Math.max(1, Math.ceil(readingTime(doc.body.raw).minutes))}M`,
         url: `${siteMetadata.siteUrl}/${getPublicBlogPath(doc._raw.flattenedPath)}`,
       }),
     },
