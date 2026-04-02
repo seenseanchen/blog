@@ -23,7 +23,11 @@ const siteMetadata = {
   bluesky: '',
   locale: 'zh-TW',
   stickyNav: true,
-  analytics: {},
+  analytics: {
+    googleAnalytics: {
+      googleAnalyticsId: 'G-DLV14VT6XM',
+    },
+  },
   newsletter: { provider: '' },
   comments: {},
   search: {
