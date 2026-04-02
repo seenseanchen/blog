@@ -93,6 +93,48 @@
 }
 
 @layer utilities {
+  .site-title-galaxy {
+    text-shadow:
+      0 1px 0 rgb(255 255 255 / 0.36),
+      0 2px 10px rgb(19 42 76 / 0.08);
+    transition:
+      color 220ms ease,
+      text-shadow 220ms ease,
+      background-position 320ms ease,
+      filter 220ms ease;
+  }
+
+  .site-title-link:hover .site-title-galaxy,
+  .site-title-link:focus-visible .site-title-galaxy {
+    color: transparent;
+    background-image:
+      radial-gradient(circle at 16% 18%, rgb(255 255 255 / 0.92) 0, transparent 24%),
+      linear-gradient(
+        120deg,
+        #8ccfff 4%,
+        #79a9ff 22%,
+        #b49cff 40%,
+        #f4abd6 57%,
+        #fde7a3 74%,
+        #89d6ff 88%,
+        #ffffff 100%
+      );
+    background-position:
+      12% 18%,
+      0% 50%;
+    background-repeat: no-repeat;
+    background-size:
+      160% 160%,
+      220% 220%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: site-title-galaxy-pan 4.4s linear infinite;
+    filter: saturate(1.08);
+    text-shadow:
+      0 1px 0 rgb(255 255 255 / 0.28),
+      0 0 18px rgb(117 177 255 / 0.22);
+  }
+
   .prose {
     & a {
       color: var(--color-primary-500);
@@ -128,6 +170,32 @@
     & :where(h1, h2, h3, h4, h5, h6) {
       color: var(--color-gray-100);
     }
+  }
+}
+
+@keyframes site-title-galaxy-pan {
+  0% {
+    background-position:
+      12% 18%,
+      0% 50%;
+  }
+  50% {
+    background-position:
+      88% 30%,
+      100% 50%;
+  }
+  100% {
+    background-position:
+      12% 18%,
+      0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-title-galaxy,
+  .site-title-link:hover .site-title-galaxy,
+  .site-title-link:focus-visible .site-title-galaxy {
+    animation: none;
   }
 }
 

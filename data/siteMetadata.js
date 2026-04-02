@@ -2,7 +2,7 @@
 const siteMetadata = {
   title: '興向成',
   author: 'Sean Chen',
-  headerTitle: '興向成',
+  headerTitle: 'SEAN CHEN',
   description: '專注於企業級前端架構、系統設計與 AI-assisted development 的資深前端工程師。',
   language: 'zh-TW',
   theme: 'system', // system, dark or light

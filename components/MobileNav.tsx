@@ -3,8 +3,9 @@
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { Fragment, useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from './Link'
-import type { Locale } from '@/lib/i18n'
+import { isActivePath, type Locale } from '@/lib/i18n'
 
 interface MobileNavProps {
   locale: Locale
@@ -12,6 +13,7 @@ interface MobileNavProps {
 }
 
 const MobileNav = ({ locale, navLinks }: MobileNavProps) => {
+  const pathname = usePathname() || '/'
   const [mounted, setMounted] = useState(false)
   const [navShow, setNavShow] = useState(false)
   const navRef = useRef(null)
@@ -84,16 +86,25 @@ const MobileNav = ({ locale, navLinks }: MobileNavProps) => {
                   ref={navRef}
                   className="mt-8 flex h-full basis-0 flex-col items-start overflow-y-auto pt-2 pl-12 text-left"
                 >
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.title}
-                      href={link.href}
-                      className="hover:text-primary-500 dark:hover:text-primary-400 mb-4 py-2 pr-4 text-2xl font-bold tracking-widest text-gray-900 outline outline-0 dark:text-gray-100"
-                      onClick={onToggleNav}
-                    >
-                      {link.title}
-                    </Link>
-                  ))}
+                  {navLinks.map((link) => {
+                    const isActive = isActivePath(pathname, link.href)
+
+                    return (
+                      <Link
+                        key={link.title}
+                        href={link.href}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={`mb-4 border-b-2 py-2 pr-4 text-2xl font-bold tracking-widest outline outline-0 transition-colors duration-200 ${
+                          isActive
+                            ? 'border-primary-500 text-primary-700 dark:border-primary-300 dark:text-primary-100'
+                            : 'hover:border-primary-500 hover:text-primary-500 dark:hover:border-primary-300 dark:hover:text-primary-300 border-transparent text-gray-900 dark:text-gray-100'
+                        }`}
+                        onClick={onToggleNav}
+                      >
+                        {link.title}
+                      </Link>
+                    )
+                  })}
                 </nav>
 
                 <button

@@ -209,6 +209,17 @@ export function switchLocalePath(pathname: string): string {
   return localizePath(pathname, currentLocale === 'en' ? defaultLocale : 'en')
 }
 
+export function isActivePath(currentPathname: string, targetPathname: string): boolean {
+  const current = stripLocalePrefix(currentPathname)
+  const target = stripLocalePrefix(targetPathname)
+
+  if (target === '/') {
+    return current === '/'
+  }
+
+  return current === target || current.startsWith(`${target}/`)
+}
+
 export function getOpenGraphLocale(locale: Locale): string {
   return locale === 'en' ? 'en_US' : 'zh_TW'
 }

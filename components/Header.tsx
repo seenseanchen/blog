@@ -1,23 +1,15 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { Noto_Serif_TC } from 'next/font/google'
 import siteMetadata from '@/data/siteMetadata'
 import getHeaderNavLinks from '@/data/headerNavLinks'
-import { getLocaleFromPathname, localizePath } from '@/lib/i18n'
+import { getLocaleFromPathname, isActivePath, localizePath } from '@/lib/i18n'
 import Image from './Image'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import LocaleSwitcher from './LocaleSwitcher'
-
-const posterTitleFont = Noto_Serif_TC({
-  weight: ['700', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['serif'],
-})
 
 const Header = () => {
   const pathname = usePathname() || '/'
@@ -31,7 +23,11 @@ const Header = () => {
 
   return (
     <header className={headerClass}>
-      <Link href={localizePath('/', locale)} aria-label={siteMetadata.headerTitle}>
+      <Link
+        href={localizePath('/', locale)}
+        aria-label={siteMetadata.headerTitle}
+        className="site-title-link group"
+      >
         <div className="flex items-center justify-between">
           <div className="mr-3 flex items-center">
             <Image
@@ -44,9 +40,7 @@ const Header = () => {
             />
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div
-              className={`${posterTitleFont.className} hidden bg-linear-to-b from-sky-500 via-slate-400 via-60% to-stone-100 bg-clip-text text-[1.65rem] leading-none font-black tracking-[0.18em] text-transparent [text-shadow:0_1px_0_rgba(255,255,255,0.5),0_2px_5px_rgba(15,23,42,0.1)] sm:block dark:from-sky-300 dark:via-slate-200 dark:to-stone-50 dark:[text-shadow:0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.24)]`}
-            >
+            <div className="site-title-galaxy text-primary-800 dark:text-primary-100 hidden text-[1.56rem] leading-none font-semibold tracking-[0.2em] sm:block">
               {siteMetadata.headerTitle}
             </div>
           ) : (
@@ -56,15 +50,24 @@ const Header = () => {
       </Link>
       <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
         <div className="no-scrollbar hidden max-w-40 items-center gap-x-4 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
-          {headerNavLinks.map((link) => (
-            <Link
-              key={link.title}
-              href={link.href}
-              className="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium text-gray-900 dark:text-gray-100"
-            >
-              {link.title}
-            </Link>
-          ))}
+          {headerNavLinks.map((link) => {
+            const isActive = isActivePath(pathname, link.href)
+
+            return (
+              <Link
+                key={link.title}
+                href={link.href}
+                aria-current={isActive ? 'page' : undefined}
+                className={`m-1 inline-block border-b-2 pb-1 font-medium transition-colors duration-200 ${
+                  isActive
+                    ? 'border-primary-500 text-primary-700 dark:border-primary-300 dark:text-primary-100'
+                    : 'hover:border-primary-500 hover:text-primary-500 dark:hover:border-primary-300 dark:hover:text-primary-300 border-transparent text-gray-900 dark:text-gray-100'
+                }`}
+              >
+                {link.title}
+              </Link>
+            )
+          })}
         </div>
         <SearchButton />
         <LocaleSwitcher />
