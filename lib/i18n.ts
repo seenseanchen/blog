@@ -109,7 +109,7 @@ const dictionaries: Record<Locale, Dictionary> = {
   en: {
     localeLabel: '中文',
     nav: {
-      home: 'Home',
+      home: 'Entry',
       blog: 'Blog',
       tags: 'Tags',
       projects: 'Projects',

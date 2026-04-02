@@ -5,7 +5,7 @@ export default function getHeaderNavLinks(locale: Locale) {
   const dictionary = getDictionary(locale)
 
   return [
-    { href: localizePath('/', locale), title: dictionary.nav.home },
+    { href: '/', title: dictionary.nav.home },
     { href: localizePath('/blog', locale), title: dictionary.nav.blog },
     { href: localizePath('/tags', locale), title: dictionary.nav.tags },
     { href: localizePath('/projects', locale), title: dictionary.nav.projects },

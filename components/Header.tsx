@@ -23,7 +23,8 @@ const Header = () => {
   const pathname = usePathname() || '/'
   const locale = getLocaleFromPathname(pathname)
   const headerNavLinks = getHeaderNavLinks(locale)
-  let headerClass = 'flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10'
+  let headerClass =
+    'flex items-center justify-between py-10 w-full bg-[var(--site-surface)] backdrop-blur-sm'
   if (siteMetadata.stickyNav) {
     headerClass += ' sticky top-0 z-50'
   }
@@ -44,7 +45,7 @@ const Header = () => {
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
             <div
-              className={`${posterTitleFont.className} hidden text-[1.65rem] leading-none font-black tracking-[0.18em] text-gray-900 sm:block dark:text-gray-100`}
+              className={`${posterTitleFont.className} hidden bg-linear-to-b from-sky-500 via-slate-400 via-60% to-stone-100 bg-clip-text text-[1.65rem] leading-none font-black tracking-[0.18em] text-transparent [text-shadow:0_1px_0_rgba(255,255,255,0.5),0_2px_5px_rgba(15,23,42,0.1)] sm:block dark:from-sky-300 dark:via-slate-200 dark:to-stone-50 dark:[text-shadow:0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.24)]`}
             >
               {siteMetadata.headerTitle}
             </div>
@@ -55,7 +56,7 @@ const Header = () => {
       </Link>
       <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
         <div className="no-scrollbar hidden max-w-40 items-center gap-x-4 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
-          {headerNavLinks.slice(1).map((link) => (
+          {headerNavLinks.map((link) => (
             <Link
               key={link.title}
               href={link.href}
