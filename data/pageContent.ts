@@ -369,13 +369,13 @@ const pageContent: Record<Locale, LocaleContent> = {
     },
     home: {
       eyebrow: 'Sean Chen / Entry',
-      title: 'Choose the path that fits your visit best',
+      title: "Sean's Space for Thoughts",
       description:
-        'This site mainly serves two audiences: recruiters or non-technical collaborators who want a fast overview, and technical readers who want to jump straight into articles. If you are in recruiting, hiring, or a cross-functional role, start with About. If you are a technical reader, the Blog or Projects page will get you to the most relevant work faster.',
+        'This is a place for people who want to know me to quickly understand my background, and also a space where I push myself to keep learning. If you are here for recruiting, collaboration, or simply to get to know me, start with About. If you are a technical reader, jump straight into the Blog or Projects.',
       audiences: [
         {
           badge: 'HR / Recruiting / Non-technical readers',
-          title: 'Start with About',
+          title: 'About Me',
           description:
             'Get a fast overview of my background, positioning, working style, and the career timeline that shows how my work evolved.',
           href: '/about',
@@ -394,9 +394,9 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
         {
           badge: 'Engineers / Tech leads / PMs',
-          title: 'Go straight to the Blog',
+          title: 'Read the Blog',
           description:
-            'Jump directly into my writing on frontend architecture, enterprise systems, AI-assisted engineering workflows, and side project implementation.',
+            'My writing and side project work on frontend architecture, enterprise systems, and AI engineering workflows.',
           href: '/blog',
           label: 'Go to the Blog',
           actions: [
@@ -419,19 +419,17 @@ const pageContent: Record<Locale, LocaleContent> = {
     },
     about: {
       liveActivityTitle: 'Live Activity',
-      liveActivityDescription:
-        'A compact view of the public engineering signals that keep changing, so visitors can quickly see what I have been doing recently.',
+      liveActivityDescription: '',
       liveActivityCta: 'View GitHub',
       liveActivityGithubTitle: 'GitHub Activity Heatmap',
-      liveActivityGithubDescription:
-        'A compact 35-day view of my recent public activity so the current development rhythm is easier to scan.',
+      liveActivityGithubDescription: '',
       liveActivityRepoTitle: 'Active Repos',
       liveActivityLeetcodeTitle: 'LeetCode Practice',
     },
     experience: {
       title: 'Experience',
       intro:
-        'I started as a Junior Developer at SunYoung Computer, moved into e-commerce website development and Scrum Master responsibilities at Newegg Business, then shifted into the mobile domain as a Senior Developer and Team Leader at Newegg, and more recently planned 0-to-1 frontend architecture at SJClemenger.',
+        'I started as a Junior Developer at SunYoung Computer, then worked on North American e-commerce websites and took on Scrum Master responsibilities at Newegg Business. After that, I moved across departments into the mobile domain as a frontend Senior Developer and Team Leader on Newegg Mobile, and more recently planned the 0-to-1 frontend architecture for international logistics systems at SJClemenger.',
       focusLabel: 'Focus',
       entries: [
         {
@@ -511,8 +509,7 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
       ],
       highlightsTitle: 'Selected Work',
-      highlightsIntro:
-        'A few representative cases that make the product context, engineering scope, and delivery impact easier to understand at a glance, with screenshots and public links where available.',
+      highlightsIntro: '',
       highlights: [
         {
           title: 'FirstHorizon Frontend 0-to-1 and Azure CI/CD',
@@ -588,8 +585,7 @@ const pageContent: Record<Locale, LocaleContent> = {
     },
     projects: {
       title: 'Projects',
-      intro:
-        'This page now focuses on public GitHub side projects instead of career experience, so personal product work and professional background stay clearly separated.',
+      intro: '',
       stackLabel: 'Stack and Platforms',
       impactLabel: 'Highlights',
       callsToAction: [
