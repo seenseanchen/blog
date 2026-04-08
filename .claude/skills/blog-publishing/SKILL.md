@@ -17,4 +17,5 @@ Workflow:
 2. Keep public posts and personal pages bilingual unless the task is explicitly single-language.
 3. Keep blog slugs aligned across locales.
 4. Preserve factual claims, dates, company names, and measurable outcomes exactly across translations.
-5. Use explicit disclosure text when a post is AI-assisted and not fully reviewed.
+5. Keep personal claims aligned with the entry page, about page, representative experience, and GitHub side projects.
+6. Use explicit disclosure text when a post is AI-assisted and not fully reviewed.

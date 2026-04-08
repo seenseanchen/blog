@@ -29,8 +29,15 @@ Publishing rules should make it obvious how AI was used and what level of human 
 - The post has both `zh-TW` and English versions when it is part of the public blog.
 - The slug matches across locales.
 - Title, summary, tags, and core claims match across locales.
-- Personal claims align with current public positioning in `about`, `projects`, and `home`.
+- Personal claims align with the current public positioning across the entry page, `about`, experience sections, `projects`, and related personal posts.
 - AI disclosure language matches the actual review state.
+
+## Personal Page Alignment
+
+- `Home` is a routing page for reader intent and should stay lightweight.
+- `About` carries the main background narrative plus representative career experience.
+- `Projects` is for public GitHub side projects, not the main job-history narrative.
+- If a post references experience, side projects, or personal positioning, keep those claims synchronized with the matching public page.
 
 ## Translation Rules
 

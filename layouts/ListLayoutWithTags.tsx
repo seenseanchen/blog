@@ -97,7 +97,7 @@ export default function ListLayoutWithTags({
         </div>
         <div className="flex sm:space-x-24">
           <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm bg-gray-50 pt-5 shadow-md sm:flex dark:bg-gray-900/70 dark:shadow-gray-800/40">
-            <div className="px-6 py-4">
+            <div className="flex min-h-full flex-col px-6 py-4">
               {pathname === blogPath || pathname.startsWith(`${blogPath}/page/`) ? (
                 <h3 className="text-primary-500 font-bold uppercase">{dictionary.tags.allPosts}</h3>
               ) : (
@@ -127,6 +127,14 @@ export default function ListLayoutWithTags({
                   </li>
                 ))}
               </ul>
+              <div className="mt-auto border-t border-gray-200 pt-5 dark:border-gray-800">
+                <Link
+                  href={localizePath('/tags', locale)}
+                  className="hover:text-primary-500 dark:hover:text-primary-500 text-sm font-semibold text-gray-700 uppercase dark:text-gray-300"
+                >
+                  {dictionary.tags.directoryLink}
+                </Link>
+              </div>
             </div>
           </div>
           <div>

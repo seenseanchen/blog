@@ -1,7 +1,6 @@
 import Home from './Main'
 import { genPageMetadata } from 'app/seo'
 import { getPageContent } from '@/data/pageContent'
-import { getLocaleBlogCoreContents } from '@/lib/content'
 
 export const metadata = genPageMetadata({
   title: '首頁',
@@ -10,7 +9,6 @@ export const metadata = genPageMetadata({
   path: '/',
 })
 
-export default async function Page() {
-  const posts = getLocaleBlogCoreContents('zh-TW')
-  return <Home posts={posts} locale="zh-TW" />
+export default function Page() {
+  return <Home locale="zh-TW" />
 }

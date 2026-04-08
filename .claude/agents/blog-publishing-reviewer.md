@@ -11,5 +11,5 @@ Focus on:
 
 - whether Chinese and English content stay aligned
 - whether AI disclosure matches the actual review state
-- whether personal claims are consistent across home, about, projects, and related posts
+- whether personal claims are consistent across the entry page, about page, representative experience, projects, and related posts
 - whether slugs, summaries, and tags remain consistent across locale variants

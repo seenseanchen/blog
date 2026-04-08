@@ -20,13 +20,22 @@ The site is not a resume dump and should not read like a job-board profile.
 
 ## Source Of Truth
 
-- `data/pageContent.ts`: localized home/projects/site copy
+- `data/pageContent.ts`: localized entry page, about-page sections, experience timeline, side-project copy
 - `data/authors/default.mdx`: Traditional Chinese about content
 - `data/authors/default.en.mdx`: English about content
 - `data/blog/*.mdx`: Traditional Chinese posts
 - `data/blog/en/*.mdx`: English post counterparts
 - `lib/i18n.ts`: locale labels, route helpers, navigation text
 - `lib/content.ts`: locale-aware content queries and tag metadata
+
+## Public Information Architecture
+
+- Main navigation is `Home`, `Blog`, `Projects`, `About`.
+- `Home` is an entry page that routes readers by intent, not a full biography page.
+- `About` is the main profile page for background, working style, and the five representative career experiences.
+- `Blog` is the primary destination for technical readers.
+- `Tags` still exists as a route, but the entry point now lives at the bottom of the blog sidebar instead of the top navigation.
+- `Projects` is reserved for public GitHub side projects, not the main career experience timeline.
 
 ## Locale Model
 
@@ -42,7 +51,7 @@ The site is not a resume dump and should not read like a job-board profile.
 - Traditional Chinese should use `zh-TW`, natural technical wording, and concise phrasing.
 - English should stay aligned with the Chinese source, not a loose rewrite with different claims.
 - Personal pages and published blog posts should exist in both languages.
-- When updating personal positioning, keep `home`, `about`, `projects`, author files, and related personal posts aligned.
+- When updating personal positioning, keep the entry page, about page, experience entries, projects page, author files, and related personal posts aligned.
 
 ## Engineering Rules
 

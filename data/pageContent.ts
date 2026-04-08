@@ -1,22 +1,35 @@
 import type { Locale } from '@/lib/i18n'
 
-type HomeHighlight = {
-  value: string
-  label: string
-}
-
-type CallToAction = {
+export type CallToAction = {
   label: string
   href: string
 }
 
-type ProjectEntry = {
+type AudiencePath = CallToAction & {
+  badge: string
+  title: string
+  description: string
+  bullets: string[]
+  actions: CallToAction[]
+}
+
+type ShowcaseEntry = {
   title: string
   role: string
   period: string
   summary: string
   stack: string[]
   impact: string[]
+  links?: CallToAction[]
+}
+
+export type ShowcaseSectionContent = {
+  title: string
+  intro: string
+  stackLabel: string
+  impactLabel: string
+  entries: ShowcaseEntry[]
+  callsToAction?: CallToAction[]
 }
 
 type LocaleContent = {
@@ -32,16 +45,15 @@ type LocaleContent = {
     eyebrow: string
     title: string
     description: string
-    intro: string
-    highlights: HomeHighlight[]
-    topics: string[]
-    callsToAction: CallToAction[]
+    audiences: AudiencePath[]
   }
-  projects: {
-    title: string
-    intro: string
-    entries: ProjectEntry[]
+  about: {
+    projectsPromptTitle: string
+    projectsPromptDescription: string
+    projectsPromptCta: string
   }
+  experience: ShowcaseSectionContent
+  projects: ShowcaseSectionContent
 }
 
 const pageContent: Record<Locale, LocaleContent> = {
@@ -50,61 +62,71 @@ const pageContent: Record<Locale, LocaleContent> = {
       title: 'Sean Chen',
       description: '專注於企業級前端架構、系統設計與 AI-assisted development 的資深前端工程師。',
       homeDescription:
-        'Sean Chen 的個人技術網站，聚焦於企業級前端架構、物流與電商系統經驗，以及 AI-assisted software engineering。',
-      aboutDescription: '關於 Sean Chen 的背景、技術定位、跨域系統經驗與 AI 工程方向。',
-      projectsDescription: 'Sean Chen 近年代表性的物流、電商與 AI-assisted engineering 專案整理。',
-      tagsDescription: 'Sean Chen 持續關注與撰寫的技術主題。',
+        'Sean Chen 的網站入口頁，協助 HR / 非技術讀者快速了解背景，也引導技術讀者直接進入文章。',
+      aboutDescription:
+        '關於 Sean Chen 的背景、工作方式，以及 5 段代表性的電商、物流與前端架構經歷。',
+      projectsDescription: 'Sean Chen 目前公開在 GitHub 的 side projects 與實作方向。',
+      tagsDescription: 'Sean Chen 文章的標籤總覽與主題入口。',
     },
     home: {
-      eyebrow: 'Sean Chen / 陳智興',
-      title: '打造可擴展的前端系統，並將 AI 真正整合進開發流程',
+      eyebrow: 'Sean Chen / 入口頁',
+      title: '選擇最適合你的閱讀路徑',
       description:
-        '我是一位擁有 10+ 年 Web 與 Mobile 經驗的資深前端工程師，曾參與 Newegg 大型電商平台與國際物流系統的核心產品開發，長期聚焦前端架構、企業系統與 AI-assisted software engineering。',
-      intro:
-        '這個 blog 不是單純的履歷站，也不只是技術筆記庫。我希望它能同時呈現我對前端架構、跨團隊協作與 AI 工程化流程的實際思考。',
-      highlights: [
+        '這個網站主要服務兩類讀者：想快速理解我背景的 HR / 非技術夥伴，以及想直接看技術觀點與實戰文章的工程師。如果你是招募、合作或跨部門夥伴，建議先看「關於」；如果你是技術讀者，直接進入「文章」或「專案」會最快。',
+      audiences: [
         {
-          value: '10+ 年',
-          label: 'Web 與 Mobile 開發經驗',
-        },
-        {
-          value: 'Newegg',
-          label: 'B2B / B2C 電商與 React Native App',
-        },
-        {
-          value: 'Logistics',
-          label: 'Booking、Trucking、TMS 與多語系企業系統',
-        },
-        {
-          value: 'AI Workflow',
-          label: 'Copilot、Codex、Claude、MCP、Skill / Instruction',
-        },
-      ],
-      topics: [
-        'Frontend Architecture',
-        'Enterprise Systems',
-        'AI-assisted Development',
-        'Next.js / React / TypeScript',
-        'Logistics & E-commerce Domain',
-      ],
-      callsToAction: [
-        {
-          label: '查看專案',
-          href: '/projects',
-        },
-        {
-          label: '閱讀文章',
-          href: '/blog',
-        },
-        {
-          label: '了解我的工作方式',
+          badge: 'HR / 招募 / 非技術讀者',
+          title: '先看關於',
+          description: '快速掌握我的背景、角色定位、工作方式，以及 5 段最能代表我的經歷。',
           href: '/about',
+          label: '前往關於',
+          actions: [
+            {
+              label: '前往關於',
+              href: '/about',
+            },
+          ],
+          bullets: [
+            '10+ 年 Web / Mobile 經驗與跨域系統背景',
+            'Newegg、物流系統與 AI-assisted engineering 脈絡',
+            '適合面談前、合作前或快速建立第一印象',
+          ],
+        },
+        {
+          badge: '工程師 / 技術主管 / PM',
+          title: '直接看文章',
+          description: '直接進入我對前端架構、企業系統與 AI 工程流程的文章與 side project 實作。',
+          href: '/blog',
+          label: '前往文章',
+          actions: [
+            {
+              label: '前往文章',
+              href: '/blog',
+            },
+            {
+              label: '查看專案',
+              href: '/projects',
+            },
+          ],
+          bullets: [
+            '以實戰經驗整理 frontend architecture 與 enterprise systems',
+            '涵蓋 Next.js / React / TypeScript 與 AI-assisted development',
+            '適合快速判斷技術深度、設計思維與工程方法',
+          ],
         },
       ],
     },
-    projects: {
-      title: '專案',
-      intro: '以下是我近年較具代表性的產品與系統實作，以及我在其中實際負責的技術與業務價值。',
+    about: {
+      projectsPromptTitle: '也可以看看我的 side projects',
+      projectsPromptDescription:
+        '專案頁現在整理的是我公開在 GitHub 的 side projects，與職涯經歷分開呈現。',
+      projectsPromptCta: '前往專案',
+    },
+    experience: {
+      title: '代表經歷',
+      intro: '以下 5 段經歷，濃縮了我在電商、物流、企業系統與前端架構上的主要工作脈絡。',
+      stackLabel: '技術與平台',
+      impactLabel: '重點整理',
       entries: [
         {
           title: 'Logistics Platform',
@@ -181,6 +203,40 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
       ],
     },
+    projects: {
+      title: '專案',
+      intro:
+        '這裡整理的是我目前公開在 GitHub 的 side projects。它們與職涯經歷分開，專注呈現我主動發起的產品與工程實作。',
+      stackLabel: '技術與平台',
+      impactLabel: '重點整理',
+      callsToAction: [
+        {
+          label: 'GitHub repo 列表',
+          href: 'https://github.com/seenseanchen?tab=repositories',
+        },
+      ],
+      entries: [
+        {
+          title: 'EC Order Aggregator',
+          role: '以 Chrome Extension 整合台灣電商平台訂單紀錄的個人 side project',
+          period: 'Public side project / 2026',
+          summary:
+            '把分散在 PChome、momo、Shopee、Yahoo 購物中心的訂單資料，收斂成可搜尋、可排序、可持續累積的個人購買清單。',
+          stack: ['TypeScript', 'React 19', 'Vite', 'Dexie', 'Zustand', 'Chrome Extension MV3'],
+          impact: [
+            '目前支援 PChome、momo、Shopee、Yahoo 購物中心的訂單資料彙整。',
+            '使用 content script、background service worker、Dexie 與 side panel 建立可持續擴充的資料採集流程。',
+            '已具備搜尋、排序、狀態篩選與手動重新抓取等 MVP 到 early product 能力。',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/ec-order-aggregator-ext',
+            },
+          ],
+        },
+      ],
+    },
   },
   en: {
     site: {
@@ -188,65 +244,75 @@ const pageContent: Record<Locale, LocaleContent> = {
       description:
         'Senior frontend engineer focused on enterprise frontend architecture, system design, and AI-assisted development.',
       homeDescription:
-        "Sean Chen's personal technical site on frontend architecture, enterprise systems, and AI-assisted software engineering.",
+        "Sean Chen's entry page for recruiters, non-technical collaborators, and technical readers to choose the right path into the site.",
       aboutDescription:
-        "Sean Chen's background, technical positioning, cross-domain system experience, and AI engineering direction.",
+        "Sean Chen's background, working style, and five representative experiences across e-commerce, logistics, and frontend architecture.",
       projectsDescription:
-        "A selection of Sean Chen's logistics, e-commerce, and AI-assisted engineering projects.",
-      tagsDescription: 'Topics Sean Chen writes about and continues to explore.',
+        "Sean Chen's public GitHub side projects and current implementation focus.",
+      tagsDescription: 'A tag directory for Sean Chen’s blog topics.',
     },
     home: {
-      eyebrow: 'Sean Chen / Senior Frontend Engineer',
-      title:
-        'Building scalable frontend systems and integrating AI into real engineering workflows',
+      eyebrow: 'Sean Chen / Entry',
+      title: 'Choose the path that fits your visit best',
       description:
-        'I am a senior frontend engineer with 10+ years of Web and Mobile experience across Newegg, enterprise logistics platforms, and AI-assisted software engineering workflows.',
-      intro:
-        'This site is not just a resume page or a notebook of technical notes. It is a place to document how I think about frontend architecture, cross-team delivery, and engineering systems that work well with AI collaborators.',
-      highlights: [
+        'This site mainly serves two audiences: recruiters or non-technical collaborators who want a fast overview, and technical readers who want to jump straight into articles. If you are in recruiting, hiring, or a cross-functional role, start with About. If you are a technical reader, the Blog or Projects page will get you to the most relevant work faster.',
+      audiences: [
         {
-          value: '10+ years',
-          label: 'Web and Mobile engineering experience',
-        },
-        {
-          value: 'Newegg',
-          label: 'B2B / B2C e-commerce and React Native app work',
-        },
-        {
-          value: 'Logistics',
-          label: 'Booking, Trucking, TMS, and multilingual enterprise systems',
-        },
-        {
-          value: 'AI Workflow',
-          label: 'Copilot, Codex, Claude, MCP, skills, and instructions',
-        },
-      ],
-      topics: [
-        'Frontend Architecture',
-        'Enterprise Systems',
-        'AI-assisted Development',
-        'Next.js / React / TypeScript',
-        'Logistics & E-commerce Domain',
-      ],
-      callsToAction: [
-        {
-          label: 'View projects',
-          href: '/projects',
-        },
-        {
-          label: 'Read blog posts',
-          href: '/blog',
-        },
-        {
-          label: 'Learn how I work',
+          badge: 'HR / Recruiting / Non-technical readers',
+          title: 'Start with About',
+          description:
+            'Get a fast overview of my background, positioning, working style, and the five experiences that best represent my work.',
           href: '/about',
+          label: 'Go to About',
+          actions: [
+            {
+              label: 'Go to About',
+              href: '/about',
+            },
+          ],
+          bullets: [
+            '10+ years across Web, Mobile, and business-critical product systems',
+            'Context across Newegg, logistics platforms, and AI-assisted engineering',
+            'A practical path for interviews, collaboration, or quick screening',
+          ],
+        },
+        {
+          badge: 'Engineers / Tech leads / PMs',
+          title: 'Go straight to the Blog',
+          description:
+            'Jump directly into my writing on frontend architecture, enterprise systems, AI-assisted engineering workflows, and side project implementation.',
+          href: '/blog',
+          label: 'Go to the Blog',
+          actions: [
+            {
+              label: 'Go to the Blog',
+              href: '/blog',
+            },
+            {
+              label: 'View Projects',
+              href: '/projects',
+            },
+          ],
+          bullets: [
+            'Real-world thinking on frontend architecture and enterprise systems',
+            'Writing across Next.js, React, TypeScript, and AI-assisted development',
+            'A fast way to evaluate technical depth, tradeoff thinking, and delivery style',
+          ],
         },
       ],
     },
-    projects: {
-      title: 'Projects',
+    about: {
+      projectsPromptTitle: 'You can also browse my side projects',
+      projectsPromptDescription:
+        'The Projects page now focuses on public GitHub side projects and keeps them separate from career experience.',
+      projectsPromptCta: 'View Projects',
+    },
+    experience: {
+      title: 'Representative Experience',
       intro:
-        'These are the products and systems that best represent how I approach architecture, delivery, and engineering collaboration.',
+        'These five experiences capture the work that best represents how I approach e-commerce, logistics, enterprise systems, and frontend architecture.',
+      stackLabel: 'Stack and Platforms',
+      impactLabel: 'Highlights',
       entries: [
         {
           title: 'Logistics Platform',
@@ -319,6 +385,40 @@ const pageContent: Record<Locale, LocaleContent> = {
             'Supported real-world B2B customer retention and membership scenarios.',
             'Extended the end-to-end shopping journey across account and order flows.',
             'Built practical experience turning complex business rules into maintainable product behavior.',
+          ],
+        },
+      ],
+    },
+    projects: {
+      title: 'Projects',
+      intro:
+        'This page now focuses on public GitHub side projects instead of career experience, so personal product work and professional background stay clearly separated.',
+      stackLabel: 'Stack and Platforms',
+      impactLabel: 'Highlights',
+      callsToAction: [
+        {
+          label: 'GitHub repositories',
+          href: 'https://github.com/seenseanchen?tab=repositories',
+        },
+      ],
+      entries: [
+        {
+          title: 'EC Order Aggregator',
+          role: 'A personal Chrome Extension side project for consolidating order history across Taiwan e-commerce platforms',
+          period: 'Public side project / 2026',
+          summary:
+            'It turns order data scattered across PChome, momo, Shopee, and Yahoo Shopping into a searchable, sortable, and continuously growing personal purchase history.',
+          stack: ['TypeScript', 'React 19', 'Vite', 'Dexie', 'Zustand', 'Chrome Extension MV3'],
+          impact: [
+            'Currently supports purchase aggregation from PChome, momo, Shopee, and Yahoo Shopping.',
+            'Uses content scripts, a background service worker, Dexie, and a side panel to build a reusable collection pipeline.',
+            'Already supports search, sorting, status filtering, and manual refresh as part of an MVP-to-early-product workflow.',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/ec-order-aggregator-ext',
+            },
           ],
         },
       ],

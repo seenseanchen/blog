@@ -15,6 +15,7 @@ Sean Chen's bilingual personal site and technical blog, focused on frontend arch
 
 - Keep `zh-TW` at root routes and English under `/en`.
 - Maintain Chinese and English parity for public personal pages and published posts.
+- Keep the main IA as `Home`, `Blog`, `Projects`, `About`; `Tags` should be accessed from the blog sidebar, not the top navigation.
 - Use `localizePath()` for static internal links and `post.path` for MDX post URLs.
 - Keep top-level agent files concise; move deeper detail into `docs/ai/*`.
 - Never commit `.claude/worktrees/`.

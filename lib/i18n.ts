@@ -9,7 +9,6 @@ type Dictionary = {
   nav: {
     home: string
     blog: string
-    tags: string
     projects: string
     about: string
   }
@@ -32,6 +31,7 @@ type Dictionary = {
     title: string
     description: string
     allPosts: string
+    directoryLink: string
     viewPosts: (tag: string) => string
   }
   post: {
@@ -46,9 +46,6 @@ type Dictionary = {
   }
   projects: {
     title: string
-    intro: string
-    stack: string
-    impact: string
   }
   about: {
     title: string
@@ -61,7 +58,6 @@ const dictionaries: Record<Locale, Dictionary> = {
     nav: {
       home: '首頁',
       blog: '文章',
-      tags: '標籤',
       projects: '專案',
       about: '關於',
     },
@@ -84,6 +80,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       title: '標籤',
       description: '我關注與書寫的主題',
       allPosts: '所有文章',
+      directoryLink: '標籤總覽',
       viewPosts: (tag) => `查看 ${tag} 相關文章`,
     },
     post: {
@@ -98,9 +95,6 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     projects: {
       title: '專案',
-      intro: '以下整理了我近年較具代表性的產品與系統實作。',
-      stack: '技術與平台',
-      impact: '技術與業務價值',
     },
     about: {
       title: '關於',
@@ -111,7 +105,6 @@ const dictionaries: Record<Locale, Dictionary> = {
     nav: {
       home: 'Entry',
       blog: 'Blog',
-      tags: 'Tags',
       projects: 'Projects',
       about: 'About',
     },
@@ -134,6 +127,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       title: 'Tags',
       description: 'Topics I write and think about',
       allPosts: 'All Posts',
+      directoryLink: 'Tag directory',
       viewPosts: (tag) => `View posts tagged ${tag}`,
     },
     post: {
@@ -148,9 +142,6 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     projects: {
       title: 'Projects',
-      intro: 'A selection of the systems and product work I have focused on in recent years.',
-      stack: 'Stack',
-      impact: 'Impact',
     },
     about: {
       title: 'About',

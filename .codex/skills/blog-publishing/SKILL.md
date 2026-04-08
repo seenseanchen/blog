@@ -16,4 +16,5 @@ Checklist:
 2. Keep public blog posts and personal pages bilingual.
 3. Keep locale variants on the same slug.
 4. Preserve factual claims and measurable outcomes exactly across translations.
-5. Keep AI disclosure wording honest about the real review state.
+5. Keep personal claims aligned with the entry page, about page, representative experience, and GitHub side projects.
+6. Keep AI disclosure wording honest about the real review state.

@@ -14,5 +14,6 @@ Checklist:
 1. Confirm locale impact for both root `zh-TW` routes and `/en` routes.
 2. Prefer shared helpers in `lib/` over copy-pasted page logic.
 3. Use `localizePath()` for static routes and `post.path` for contentlayer post links.
-4. Update sitemap, metadata, tags, and pagination if locale or URL rules change.
-5. Ignore `.claude/worktrees/` and other transient agent artifacts.
+4. Preserve the current IA: `Home` routes readers, `About` carries profile + representative experience, `Blog` is the main technical surface, `Tags` is reached from the blog sidebar, and `Projects` is for GitHub side projects.
+5. Update sitemap, metadata, tags, and pagination if locale or URL rules change.
+6. Ignore `.claude/worktrees/` and other transient agent artifacts.
