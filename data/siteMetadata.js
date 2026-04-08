@@ -16,7 +16,7 @@ const siteMetadata = {
   x: '',
   facebook: '',
   youtube: '',
-  linkedin: 'https://www.linkedin.com/in/seenseanchen',
+  linkedin: 'https://www.linkedin.com/in/livebreeze',
   threads: '',
   instagram: '',
   medium: '',

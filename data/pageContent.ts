@@ -13,7 +13,24 @@ type AudiencePath = CallToAction & {
   actions: CallToAction[]
 }
 
-type ShowcaseEntry = {
+type CareerEntry = {
+  company: string
+  role: string
+  period: string
+  yearLabel: string
+  summary: string
+  focus: string[]
+}
+
+type ExperienceHighlightEntry = {
+  title: string
+  company: string
+  period: string
+  summary: string
+  stack: string[]
+}
+
+type ProjectEntry = {
   title: string
   role: string
   period: string
@@ -23,12 +40,22 @@ type ShowcaseEntry = {
   links?: CallToAction[]
 }
 
+export type CareerSectionContent = {
+  title: string
+  intro: string
+  focusLabel: string
+  entries: CareerEntry[]
+  highlightsTitle: string
+  highlightsIntro: string
+  highlights: ExperienceHighlightEntry[]
+}
+
 export type ShowcaseSectionContent = {
   title: string
   intro: string
   stackLabel: string
   impactLabel: string
-  entries: ShowcaseEntry[]
+  entries: ProjectEntry[]
   callsToAction?: CallToAction[]
 }
 
@@ -48,11 +75,15 @@ type LocaleContent = {
     audiences: AudiencePath[]
   }
   about: {
-    projectsPromptTitle: string
-    projectsPromptDescription: string
-    projectsPromptCta: string
+    liveActivityTitle: string
+    liveActivityDescription: string
+    liveActivityCta: string
+    liveActivityGithubTitle: string
+    liveActivityGithubDescription: string
+    liveActivityRepoTitle: string
+    liveActivityLeetcodeTitle: string
   }
-  experience: ShowcaseSectionContent
+  experience: CareerSectionContent
   projects: ShowcaseSectionContent
 }
 
@@ -64,7 +95,7 @@ const pageContent: Record<Locale, LocaleContent> = {
       homeDescription:
         'Sean Chen 的網站入口頁，協助 HR / 非技術讀者快速了解背景，也引導技術讀者直接進入文章。',
       aboutDescription:
-        '關於 Sean Chen 的背景、工作方式，以及 5 段代表性的電商、物流與前端架構經歷。',
+        '關於 Sean Chen 的背景、工作方式，以及從物流到電商的職涯經歷時間軸。',
       projectsDescription: 'Sean Chen 目前公開在 GitHub 的 side projects 與實作方向。',
       tagsDescription: 'Sean Chen 文章的標籤總覽與主題入口。',
     },
@@ -77,7 +108,7 @@ const pageContent: Record<Locale, LocaleContent> = {
         {
           badge: 'HR / 招募 / 非技術讀者',
           title: '先看關於',
-          description: '快速掌握我的背景、角色定位、工作方式，以及 5 段最能代表我的經歷。',
+          description: '快速掌握我的背景、角色定位、工作方式，以及從最近一路回看職涯歷程的時間軸。',
           href: '/about',
           label: '前往關於',
           actions: [
@@ -88,7 +119,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           ],
           bullets: [
             '10+ 年 Web / Mobile 經驗與跨域系統背景',
-            'Newegg、物流系統與 AI-assisted engineering 脈絡',
+            '從大型電商到物流平台的職涯脈絡',
             '適合面談前、合作前或快速建立第一印象',
           ],
         },
@@ -117,89 +148,104 @@ const pageContent: Record<Locale, LocaleContent> = {
       ],
     },
     about: {
-      projectsPromptTitle: '也可以看看我的 side projects',
-      projectsPromptDescription:
-        '專案頁現在整理的是我公開在 GitHub 的 side projects，與職涯經歷分開呈現。',
-      projectsPromptCta: '前往專案',
+      liveActivityTitle: '近期動態',
+      liveActivityDescription: '把最近持續變動的公開工程活動集中在這裡，方便快速理解我最近的開發節奏。',
+      liveActivityCta: '查看 GitHub',
+      liveActivityGithubTitle: 'GitHub 月活躍熱區',
+      liveActivityGithubDescription: '用最近 5 週的公開活動密度，快速看我的月度開發節奏。',
+      liveActivityRepoTitle: '活躍 Repo',
+      liveActivityLeetcodeTitle: 'LeetCode 練習紀錄',
     },
     experience: {
-      title: '代表經歷',
-      intro: '以下 5 段經歷，濃縮了我在電商、物流、企業系統與前端架構上的主要工作脈絡。',
-      stackLabel: '技術與平台',
-      impactLabel: '重點整理',
+      title: '經歷',
+      intro: '依角色與時間軸從最近排到最初，濃縮我從物流平台、Newegg 到職涯起點的工作歷程。',
+      focusLabel: '關鍵脈絡',
       entries: [
         {
+          company: 'SJC',
+          role: '資深前端開發',
+          period: '2024 - 2026',
+          yearLabel: '2024',
+          summary:
+            '主導物流與貨代管理平台的前端架構與核心流程開發，從 0 到 1 建立 React / Next.js 工程基礎，並整合既有 OutSystems 與 .NET 系統。',
+          focus: ['物流平台', '前端架構', '0-to-1'],
+        },
+        {
+          company: 'Newegg',
+          role: 'Staff Engineer',
+          period: '2021 - 2024',
+          yearLabel: '2021',
+          summary:
+            '在 B2C Mobile Site 與 React Native App 承擔技術帶領角色，聚焦產品穩定性、關鍵體驗效能與跨地區協作節奏。',
+          focus: ['Mobile Site', 'React Native', '技術帶領'],
+        },
+        {
+          company: 'Newegg',
+          role: 'Senior Developer',
+          period: '2019 - 2021',
+          yearLabel: '2019',
+          summary:
+            '推動統一登入、站點拆分與跨平台體驗重整，把大型電商前端從功能維護帶往更可持續的結構。',
+          focus: ['統一登入', '站點拆分', '跨平台'],
+        },
+        {
+          company: 'Newegg',
+          role: 'Developer',
+          period: '2016 - 2019',
+          yearLabel: '2016',
+          summary:
+            '在 Newegg Business 參與 B2B Rewards、會員分級與帳戶流程，把複雜商業規則轉成可營運的電商功能。',
+          focus: ['B2B 電商', '會員機制', '商業規則'],
+        },
+        {
+          company: '新陽',
+          role: 'Junior Software Developer',
+          period: '職涯起點',
+          yearLabel: '起點',
+          summary:
+            '從早期商業系統開發累積需求理解、系統實作與團隊協作的基本功，建立後續投入企業系統與前端工程的起點。',
+          focus: ['商業系統', '需求理解', '開發基礎'],
+        },
+      ],
+      highlightsTitle: '經歷代表作',
+      highlightsIntro: '先以目前站內可對齊的版本整理代表作，延續你在職涯中最具代表性的系統與架構工作。',
+      highlights: [
+        {
           title: 'Logistics Platform',
-          role: '從 0 到 1 建立企業級物流與貨代管理平台前端架構',
+          company: 'SJC',
           period: '2024 - 2026',
           summary:
-            '在昭津國際物流主導新一代物流與貨代管理系統前端架構，使用 React / Next.js / TypeScript 建構 Booking、Trucking 等核心業務系統，並串接既有 OutSystems 平台與 .NET backend。',
-          stack: [
-            'React',
-            'Next.js',
-            'TypeScript',
-            '.NET RESTful API',
-            'Azure CI/CD',
-            'i18n',
-            'OutSystems',
-          ],
-          impact: [
-            '建立共用元件、頁面模式與多語系規則，降低跨模組維護成本。',
-            '讓新系統與既有 TMS / 倉儲流程並行整合，降低企業導入風險。',
-            '補齊技術文件、開發規範與 code review 流程，提升團隊協作效率。',
-          ],
+            '主導新一代物流與貨代管理平台前端架構，建立 Booking、Trucking 等核心流程與多語系基礎。',
+          stack: ['React', 'Next.js', 'TypeScript', '.NET', 'OutSystems'],
         },
         {
           title: 'Newegg Mobile Site & App',
-          role: 'B2C 電商平台與 React Native App 的技術領導與穩定性優化',
-          period: '2019 - 2024',
+          company: 'Newegg',
+          period: '2021 - 2024',
           summary:
-            '在 Newegg B2C Mobile 團隊負責 Mobile Site 與 Mobile App 的開發維護、架構調整與跨國團隊協作，並逐步承擔 Frontend Leader / Staff Engineer 角色。',
-          stack: ['React.js', 'React Native', 'MobX', 'GA4', 'RESTful API', 'Scrum'],
-          impact: [
-            '推進 App 穩定度達 99.9X%，並讓 App Store 評分維持在 4.6 星以上。',
-            '優化 App WebView 與首屏呈現，讓關鍵頁面效能顯著提升。',
-            '重整推播與分析流程，將通知開啟率從 2% 提升至 5%。',
-          ],
+            '在 B2C Mobile Site 與 React Native App 承擔穩定性、效能優化與技術帶領工作。',
+          stack: ['React', 'React Native', 'MobX', 'GA4'],
         },
         {
           title: 'Newegg Unify Login',
-          role: '建立 B2B / B2C Website 與 App 的統一登入流程',
+          company: 'Newegg',
           period: '2019 - 2021',
-          summary:
-            '跨中國與台灣團隊合作，規劃 Landing Page、Cookie / LocalStorage / AsyncStorage 持久化策略，整合多平台登入體驗。',
-          stack: ['React.js', 'Cookie / LocalStorage', 'AsyncStorage', 'Cross-team collaboration'],
-          impact: [
-            '建立一致的跨平台登入流程並提升安全性。',
-            '降低各產品線重複維護登入邏輯的成本。',
-            '強化前後端與跨區團隊協作節奏。',
-          ],
+          summary: '整合 B2B / B2C Website 與 App 登入流程，重整跨平台身份驗證體驗。',
+          stack: ['React', 'Cookie', 'LocalStorage', 'AsyncStorage'],
         },
         {
           title: 'Secure Site Split / Monorepo Evolution',
-          role: '將大型單體站點拆分為多個可獨立部署單位',
+          company: 'Newegg',
           period: '2019 - 2021',
-          summary:
-            '依照業務與模組相依性進行拆分，將單一前端站點演進為多個獨立部署單位，改善部署彈性與回歸風險。',
-          stack: ['React.js', 'Monorepo', 'Module decoupling', 'Deployment workflow'],
-          impact: [
-            '提升版本發布彈性，降低單點改版風險。',
-            '讓不同模組可以以更清楚的邊界持續演進。',
-            '減少整體回歸測試成本與跨模組干擾。',
-          ],
+          summary: '將大型前端站點拆分為可獨立部署單位，降低發布風險並強化模組邊界。',
+          stack: ['React', 'Monorepo', 'Deployment Workflow'],
         },
         {
           title: 'Newegg B2B Rewards',
-          role: '將商業規則轉化為可營運的 B2B 會員機制',
+          company: 'Newegg',
           period: '2016 - 2019',
-          summary:
-            '在 Newegg Business 期間參與 B2B Rewards 等電商功能，將會員分級、積分與優惠策略轉化為站點實際功能。',
-          stack: ['ASP.NET MVC', 'JavaScript', 'jQuery', 'Business rules'],
-          impact: [
-            '支援 B2B 電商會員經營與留存場景。',
-            '強化從商品展示到帳戶管理的完整購物流程。',
-            '累積將複雜商業規則落地到產品功能的經驗。',
-          ],
+          summary: '把 B2B 會員分級、積分與優惠規則轉成可營運的實際產品功能。',
+          stack: ['ASP.NET MVC', 'JavaScript', 'jQuery'],
         },
       ],
     },
@@ -246,7 +292,7 @@ const pageContent: Record<Locale, LocaleContent> = {
       homeDescription:
         "Sean Chen's entry page for recruiters, non-technical collaborators, and technical readers to choose the right path into the site.",
       aboutDescription:
-        "Sean Chen's background, working style, and five representative experiences across e-commerce, logistics, and frontend architecture.",
+        "Sean Chen's background, working style, and career timeline across logistics, e-commerce, and frontend architecture.",
       projectsDescription:
         "Sean Chen's public GitHub side projects and current implementation focus.",
       tagsDescription: 'A tag directory for Sean Chen’s blog topics.',
@@ -261,7 +307,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           badge: 'HR / Recruiting / Non-technical readers',
           title: 'Start with About',
           description:
-            'Get a fast overview of my background, positioning, working style, and the five experiences that best represent my work.',
+            'Get a fast overview of my background, positioning, working style, and the career timeline that shows how my work evolved.',
           href: '/about',
           label: 'Go to About',
           actions: [
@@ -272,7 +318,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           ],
           bullets: [
             '10+ years across Web, Mobile, and business-critical product systems',
-            'Context across Newegg, logistics platforms, and AI-assisted engineering',
+            'A career path that runs from large-scale e-commerce into logistics platforms',
             'A practical path for interviews, collaboration, or quick screening',
           ],
         },
@@ -302,90 +348,111 @@ const pageContent: Record<Locale, LocaleContent> = {
       ],
     },
     about: {
-      projectsPromptTitle: 'You can also browse my side projects',
-      projectsPromptDescription:
-        'The Projects page now focuses on public GitHub side projects and keeps them separate from career experience.',
-      projectsPromptCta: 'View Projects',
+      liveActivityTitle: 'Live Activity',
+      liveActivityDescription:
+        'A compact view of the public engineering signals that keep changing, so visitors can quickly see what I have been doing recently.',
+      liveActivityCta: 'View GitHub',
+      liveActivityGithubTitle: 'GitHub Monthly Heatmap',
+      liveActivityGithubDescription:
+        'A month-scale view of my recent public activity so the current development rhythm is easier to scan.',
+      liveActivityRepoTitle: 'Active Repos',
+      liveActivityLeetcodeTitle: 'LeetCode Practice',
     },
     experience: {
-      title: 'Representative Experience',
+      title: 'Experience',
       intro:
-        'These five experiences capture the work that best represents how I approach e-commerce, logistics, enterprise systems, and frontend architecture.',
-      stackLabel: 'Stack and Platforms',
-      impactLabel: 'Highlights',
+        'Organized by role from the most recent chapter back to my starting point, this is the shortest useful view of how my work evolved.',
+      focusLabel: 'Focus',
       entries: [
         {
+          company: 'SJC',
+          role: 'Senior Frontend Developer',
+          period: '2024 - 2026',
+          yearLabel: '2024',
+          summary:
+            'Led frontend architecture and core workflow delivery for a logistics and forwarding platform, building the React / Next.js foundation from 0 to 1 while integrating with existing OutSystems and .NET systems.',
+          focus: ['Logistics platform', 'Frontend architecture', '0-to-1'],
+        },
+        {
+          company: 'Newegg',
+          role: 'Staff Engineer',
+          period: '2021 - 2024',
+          yearLabel: '2021',
+          summary:
+            'Took on technical leadership across the B2C Mobile Site and React Native App, with emphasis on product stability, critical-path performance, and cross-region execution.',
+          focus: ['Mobile Site', 'React Native', 'Technical leadership'],
+        },
+        {
+          company: 'Newegg',
+          role: 'Senior Developer',
+          period: '2019 - 2021',
+          yearLabel: '2019',
+          summary:
+            'Drove unified login, site splitting, and cross-platform experience improvements that moved a large e-commerce frontend toward a more sustainable structure.',
+          focus: ['Unified login', 'Site split', 'Cross-platform'],
+        },
+        {
+          company: 'Newegg',
+          role: 'Developer',
+          period: '2016 - 2019',
+          yearLabel: '2016',
+          summary:
+            'Worked on Newegg Business features such as B2B Rewards, membership tiers, and account flows, turning complex business rules into operable e-commerce behavior.',
+          focus: ['B2B e-commerce', 'Membership', 'Business rules'],
+        },
+        {
+          company: 'Shin Yang',
+          role: 'Junior Software Developer',
+          period: 'Career start',
+          yearLabel: 'Start',
+          summary:
+            'Built the early foundation around business-system delivery, requirements understanding, and team collaboration that shaped my later work in enterprise systems and frontend engineering.',
+          focus: ['Business systems', 'Requirements', 'Engineering basics'],
+        },
+      ],
+      highlightsTitle: 'Selected Work',
+      highlightsIntro:
+        'This rebuild uses the representative work already described in the site so the section stays aligned until I can map it directly to the resume attachment.',
+      highlights: [
+        {
           title: 'Logistics Platform',
-          role: 'Built the frontend architecture for a 0-to-1 enterprise logistics and forwarding platform',
+          company: 'SJC',
           period: '2024 - 2026',
           summary:
-            'Led the frontend architecture for SJ Clemenger’s next-generation logistics and forwarding platform, using React / Next.js / TypeScript for Booking, Trucking, and other core workflows while integrating with legacy OutSystems systems and .NET backend services.',
-          stack: [
-            'React',
-            'Next.js',
-            'TypeScript',
-            '.NET RESTful API',
-            'Azure CI/CD',
-            'i18n',
-            'OutSystems',
-          ],
-          impact: [
-            'Established shared UI patterns, multilingual conventions, and reusable frontend building blocks.',
-            'Bridged new systems with legacy TMS and warehouse flows to reduce adoption risk.',
-            'Improved developer efficiency through documentation, standards, and code review practices.',
-          ],
+            'Led the frontend architecture for a next-generation logistics and forwarding platform across core business workflows and multilingual system foundations.',
+          stack: ['React', 'Next.js', 'TypeScript', '.NET', 'OutSystems'],
         },
         {
           title: 'Newegg Mobile Site & App',
-          role: 'Technical leadership for a B2C mobile site and React Native app',
-          period: '2019 - 2024',
+          company: 'Newegg',
+          period: '2021 - 2024',
           summary:
-            'Worked across Newegg’s B2C mobile web and app products, taking on Frontend Leader and Staff Engineer responsibilities around delivery quality, performance, and cross-region collaboration.',
-          stack: ['React.js', 'React Native', 'MobX', 'GA4', 'RESTful API', 'Scrum'],
-          impact: [
-            'Helped maintain 99.9X% app stability and 4.6+ App Store ratings.',
-            'Improved WebView architecture and first-screen performance on critical journeys.',
-            'Reworked analytics and notification flows, increasing push open rate from 2% to 5%.',
-          ],
+            'Owned reliability, performance, and technical leadership across the B2C Mobile Site and React Native App.',
+          stack: ['React', 'React Native', 'MobX', 'GA4'],
         },
         {
           title: 'Newegg Unify Login',
-          role: 'Unified login across B2B / B2C web and app products',
+          company: 'Newegg',
           period: '2019 - 2021',
           summary:
-            'Partnered with teams in Taiwan and China to design landing flows, persistence strategies, and cross-platform authentication behavior.',
-          stack: ['React.js', 'Cookie / LocalStorage', 'AsyncStorage', 'Cross-team collaboration'],
-          impact: [
-            'Created a more consistent login experience across products and platforms.',
-            'Reduced the long-term maintenance cost of fragmented authentication logic.',
-            'Strengthened collaboration between frontend, backend, and distributed teams.',
-          ],
+            'Unified authentication flows across B2B / B2C websites and mobile applications to improve cross-platform consistency.',
+          stack: ['React', 'Cookie', 'LocalStorage', 'AsyncStorage'],
         },
         {
           title: 'Secure Site Split / Monorepo Evolution',
-          role: 'Split a large frontend site into independently deployable units',
+          company: 'Newegg',
           period: '2019 - 2021',
           summary:
-            'Drove a structural split based on business characteristics and module boundaries, turning a single frontend site into multiple deployable units.',
-          stack: ['React.js', 'Monorepo', 'Module decoupling', 'Deployment workflow'],
-          impact: [
-            'Increased deployment flexibility and reduced release risk.',
-            'Created clearer module boundaries for long-term evolution.',
-            'Lowered regression testing overhead across teams.',
-          ],
+            'Split a large frontend site into independently deployable units and clarified module boundaries for safer releases.',
+          stack: ['React', 'Monorepo', 'Deployment Workflow'],
         },
         {
           title: 'Newegg B2B Rewards',
-          role: 'Translated business rules into an operable B2B membership system',
+          company: 'Newegg',
           period: '2016 - 2019',
           summary:
-            'Implemented B2B rewards, membership tiers, and related account experiences as part of the broader Newegg Business e-commerce platform.',
-          stack: ['ASP.NET MVC', 'JavaScript', 'jQuery', 'Business rules'],
-          impact: [
-            'Supported real-world B2B customer retention and membership scenarios.',
-            'Extended the end-to-end shopping journey across account and order flows.',
-            'Built practical experience turning complex business rules into maintainable product behavior.',
-          ],
+            'Turned B2B rewards, membership, and account rules into maintainable product behavior inside a real e-commerce platform.',
+          stack: ['ASP.NET MVC', 'JavaScript', 'jQuery'],
         },
       ],
     },
