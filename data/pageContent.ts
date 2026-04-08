@@ -288,7 +288,7 @@ const pageContent: Record<Locale, LocaleContent> = {
             '支撐月活躍 200 萬的 Mobile Site，持續優化效能與前端體驗。',
             '經歷 Secure Site Split、Unify Login、WebView 與 GA4 等跨階段重構與產品演進。',
           ],
-          imageSrc: '/static/images/newegg-mobile-app-showcase.jpg',
+          imageSrc: '/static/images/newegg-mobile-site-showcase.jpg',
           imageAlt: 'Newegg mobile experience screenshot',
           stack: ['React', 'MobX', 'GA4', 'WebView', 'Performance Tuning', 'Cross-team Delivery'],
           links: [
@@ -555,7 +555,7 @@ const pageContent: Record<Locale, LocaleContent> = {
             'Supported 2M monthly active users while improving performance and frontend experience quality.',
             'Worked through Secure Site Split, Unify Login, WebView, and GA4 across multiple stages of product evolution.',
           ],
-          imageSrc: '/static/images/newegg-mobile-app-showcase.jpg',
+          imageSrc: '/static/images/newegg-mobile-site-showcase.jpg',
           imageAlt: 'Newegg mobile experience screenshot',
           stack: ['React', 'MobX', 'GA4', 'WebView', 'Performance Tuning', 'Cross-team Delivery'],
           links: [
