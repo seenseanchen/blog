@@ -107,13 +107,13 @@ const pageContent: Record<Locale, LocaleContent> = {
     },
     home: {
       eyebrow: 'Sean Chen / 入口頁',
-      title: '選擇最適合你的閱讀路徑',
+      title: 'Sean\'s 心想空間',
       description:
-        '這個網站主要服務兩類讀者：想快速理解我背景的 HR / 非技術夥伴，以及想直接看技術觀點與實戰文章的工程師。如果你是招募、合作或跨部門夥伴，建議先看「關於」；如果你是技術讀者，直接進入「文章」或「專案」會最快。',
+        '這裡，是想讓了解我的人，快速了解我的背景；以及，也是我自己強迫自主學習的空間。如果你是招募、合作或想了解我的人，建議先看「關於」；如果你是技術讀者，直接進入「文章」或「專案」。',
       audiences: [
         {
           badge: 'HR / 招募 / 非技術讀者',
-          title: '先看關於',
+          title: '關於我',
           description: '快速掌握我的背景、角色定位、工作方式，以及從最近一路回看職涯歷程的時間軸。',
           href: '/about',
           label: '前往關於',
@@ -131,8 +131,8 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
         {
           badge: '工程師 / 技術主管 / PM',
-          title: '直接看文章',
-          description: '直接進入我對前端架構、企業系統與 AI 工程流程的文章與 side project 實作。',
+          title: '看文章',
+          description: '我對前端架構、企業系統與 AI 工程流程的文章與 side project 實作。',
           href: '/blog',
           label: '前往文章',
           actions: [
@@ -155,17 +155,17 @@ const pageContent: Record<Locale, LocaleContent> = {
     },
     about: {
       liveActivityTitle: '近期動態',
-      liveActivityDescription: '把最近持續變動的公開工程活動集中在這裡，方便快速理解我最近的開發節奏。',
+      liveActivityDescription: '',
       liveActivityCta: '查看 GitHub',
       liveActivityGithubTitle: 'GitHub 活躍熱區',
-      liveActivityGithubDescription: '用最近 35 天的公開活動密度，快速看我最近的日常開發節奏。',
+      liveActivityGithubDescription: '',
       liveActivityRepoTitle: '活躍 Repo',
       liveActivityLeetcodeTitle: 'LeetCode 練習紀錄',
     },
     experience: {
       title: '經歷',
       intro:
-        '我從新陽電腦的 Junior Developer 起步，經歷 Newegg Business 的電商網站開發與擔任 Scrum Master，再跨門轉往 mobile 領域，擔任 Newegg 的前端 Senior Developer 與 Team Leader，近期到 SJClemenger 規劃 0-1 前端架構。',
+        '從新陽電腦的 Junior Developer 起步，經歷 Newegg Business 的北美電商網站開發與擔任 Scrum Master，再跨部門轉往 Mobile 領域，擔任 Newegg Mobile 的前端 Senior Developer 與 Team Leader，近期到 SJClemenger 規劃國際物流系統的 0-1 前端架構。',
       focusLabel: '關鍵脈絡',
       entries: [
         {
@@ -245,7 +245,7 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
       ],
       highlightsTitle: '經歷代表作',
-      highlightsIntro: '挑幾個最能快速理解產業場景、產品型態與工程影響力的代表案例，搭配實際畫面與對外連結。',
+      highlightsIntro: '',
       highlights: [
         {
           title: 'FirstHorizon 前端 0-1 與 Azure CI/CD',
@@ -322,7 +322,7 @@ const pageContent: Record<Locale, LocaleContent> = {
     projects: {
       title: '專案',
       intro:
-        '這裡整理的是我目前公開在 GitHub 的 side projects。它們與職涯經歷分開，專注呈現我主動發起的產品與工程實作。',
+        '',
       stackLabel: '技術與平台',
       impactLabel: '重點整理',
       callsToAction: [

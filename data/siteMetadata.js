@@ -11,7 +11,7 @@ const siteMetadata = {
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/seenseanchen-logo-v2.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
   mastodon: '',
-  email: 'livebreeze@gmail.com',
+  email: 'seenseanchen@gmail.com',
   github: 'https://github.com/seenseanchen',
   x: '',
   facebook: '',
