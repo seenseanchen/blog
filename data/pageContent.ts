@@ -18,16 +18,22 @@ type CareerEntry = {
   role: string
   period: string
   yearLabel: string
-  summary: string
+  bullets: string[]
   focus: string[]
+  logoSrc?: string
+  logoAlt?: string
+  links?: CallToAction[]
 }
 
 type ExperienceHighlightEntry = {
   title: string
   company: string
   period: string
-  summary: string
+  bullets: string[]
+  imageSrc: string
+  imageAlt: string
   stack: string[]
+  links?: CallToAction[]
 }
 
 type ProjectEntry = {
@@ -151,101 +157,165 @@ const pageContent: Record<Locale, LocaleContent> = {
       liveActivityTitle: '近期動態',
       liveActivityDescription: '把最近持續變動的公開工程活動集中在這裡，方便快速理解我最近的開發節奏。',
       liveActivityCta: '查看 GitHub',
-      liveActivityGithubTitle: 'GitHub 月活躍熱區',
-      liveActivityGithubDescription: '用最近 5 週的公開活動密度，快速看我的月度開發節奏。',
+      liveActivityGithubTitle: 'GitHub 活躍熱區',
+      liveActivityGithubDescription: '用最近 35 天的公開活動密度，快速看我最近的日常開發節奏。',
       liveActivityRepoTitle: '活躍 Repo',
       liveActivityLeetcodeTitle: 'LeetCode 練習紀錄',
     },
     experience: {
       title: '經歷',
-      intro: '依角色與時間軸從最近排到最初，濃縮我從物流平台、Newegg 到職涯起點的工作歷程。',
+      intro:
+        '我從新陽電腦的 Junior Developer 起步，經歷 Newegg Business 的電商網站開發與擔任 Scrum Master，再跨門轉往 mobile 領域，擔任 Newegg 的前端 Senior Developer 與 Team Leader，近期到 SJClemenger 規劃 0-1 前端架構。',
       focusLabel: '關鍵脈絡',
       entries: [
         {
-          company: 'SJC',
-          role: '資深前端開發',
-          period: '2024 - 2026',
+          company: 'SJClemenger',
+          role: '資深軟體工程師',
+          period: '2024/5 - 2026/2 · 1y10m',
           yearLabel: '2024',
-          summary:
-            '主導物流與貨代管理平台的前端架構與核心流程開發，從 0 到 1 建立 React / Next.js 工程基礎，並整合既有 OutSystems 與 .NET 系統。',
-          focus: ['物流平台', '前端架構', '0-to-1'],
+          bullets: [
+            '負責 FirstHorizon 物流與貨代管理平台的前端 0-1 架構建置。',
+            '使用 React / Next.js / TypeScript 建立共用元件、流程頁與多語系基礎。',
+            '整合 .NET RESTful API，並完成 Azure 測試、驗收與部署。',
+            'OutSystems(低代碼平台)上的 TMS 與倉儲系統的維護與優化',
+          ],
+          focus: ['FirstHorizon', 'Booking / Trucking', 'Azure CI/CD', 'OutSystems低代碼'],
+          logoSrc: '/static/images/sjclemenger-logo.jpeg',
+          logoAlt: 'SJClemenger logo',
         },
         {
           company: 'Newegg',
           role: 'Staff Engineer',
-          period: '2021 - 2024',
+          period: '2021/10 - 2024/2 · 2y5m',
           yearLabel: '2021',
-          summary:
-            '在 B2C Mobile Site 與 React Native App 承擔技術帶領角色，聚焦產品穩定性、關鍵體驗效能與跨地區協作節奏。',
-          focus: ['Mobile Site', 'React Native', '技術帶領'],
+          bullets: [
+            '擔任 B2C Mobile Site 與 React Native App 的 Frontend Leader，帶領 6 人團隊與美國、中國團隊協作。',
+            '支撐月活躍 200 萬的 Mobile Site 與 100 萬的 Mobile App，持續優化穩定性、效能與交付流程。',
+            '推進 WebView 架構、GA4 導入與 Team Leader 協作機制，讓產品與前端工程節奏更穩定。',
+          ],
+          focus: ['6 人團隊', '200萬 / 100萬 MAU', '99.9X% 穩定度', 'GA4'],
+          logoSrc: '/static/images/newegg-logo.jpeg',
+          logoAlt: 'Newegg logo',
+          links: [
+            {
+              label: '2024 Work Introduction',
+              href: 'https://youtu.be/JelAveQVqoU',
+            },
+          ],
         },
         {
           company: 'Newegg',
           role: 'Senior Developer',
-          period: '2019 - 2021',
+          period: '2019/9 - 2021/10 · 2y2m',
           yearLabel: '2019',
-          summary:
-            '推動統一登入、站點拆分與跨平台體驗重整，把大型電商前端從功能維護帶往更可持續的結構。',
-          focus: ['統一登入', '站點拆分', '跨平台'],
+          bullets: [
+            '負責 Newegg B2C Mobile Site 的日常開發、維護與跨區交付。',
+            '主導 Secure Site Split 與 Unify Login 等跨團隊重構專案。',
+            '把大型電商前端從單站點模式推向更可持續的多站點與跨平台架構。',
+          ],
+          focus: ['1 站拆成 6 站', 'Unify Login', '跨區協作', '2020 獎項'],
+          logoSrc: '/static/images/newegg-logo.jpeg',
+          logoAlt: 'Newegg logo',
         },
         {
-          company: 'Newegg',
-          role: 'Developer',
-          period: '2016 - 2019',
-          yearLabel: '2016',
-          summary:
-            '在 Newegg Business 參與 B2B Rewards、會員分級與帳戶流程，把複雜商業規則轉成可營運的電商功能。',
-          focus: ['B2B 電商', '會員機制', '商業規則'],
+          company: 'Newegg Business',
+          role: 'Developer / Scrum Master',
+          period: '2013/9 - 2019/9 · 6y1m',
+          yearLabel: '2013',
+          bullets: [
+            '長期負責 Newegg Business B2B 電商平台，從 ASP.NET MVC 重構到 Secure 站點功能維護。',
+            '2016 年後擔任 Scrum Master，協調開發節奏、需求拆解與跨角色合作。',
+            '推進購物車、結帳、歷史訂單、Message Center 與 Rewards 等核心商務流程。',
+          ],
+          focus: ['B2B E-Commerce', 'Scrum Master', '2-Step 專案', 'Rewards'],
+          logoSrc: '/static/images/newegg-business-logo.jpeg',
+          logoAlt: 'Newegg Business logo',
         },
         {
           company: '新陽',
           role: 'Junior Software Developer',
-          period: '職涯起點',
-          yearLabel: '起點',
-          summary:
-            '從早期商業系統開發累積需求理解、系統實作與團隊協作的基本功，建立後續投入企業系統與前端工程的起點。',
-          focus: ['商業系統', '需求理解', '開發基礎'],
+          period: '2012/12 - 2013/9 · 10m',
+          yearLabel: '2012',
+          bullets: [
+            '在系統整合型專案中負責維護與擴充客戶系統。',
+            '處理 C#、JavaScript、HTML、MS SQL、Windows Form 與說明文件。',
+            '建立面對客戶、需求與實務系統的基礎能力。',
+          ],
+          focus: ['系統整合', 'C# / MS SQL', 'Windows Form', '客戶支援'],
         },
       ],
       highlightsTitle: '經歷代表作',
-      highlightsIntro: '先以目前站內可對齊的版本整理代表作，延續你在職涯中最具代表性的系統與架構工作。',
+      highlightsIntro: '挑幾個最能快速理解產業場景、產品型態與工程影響力的代表案例，搭配實際畫面與對外連結。',
       highlights: [
         {
-          title: 'Logistics Platform',
-          company: 'SJC',
-          period: '2024 - 2026',
-          summary:
-            '主導新一代物流與貨代管理平台前端架構，建立 Booking、Trucking 等核心流程與多語系基礎。',
-          stack: ['React', 'Next.js', 'TypeScript', '.NET', 'OutSystems'],
+          title: 'FirstHorizon 前端 0-1 與 Azure CI/CD',
+          company: 'SJClemenger',
+          period: '2024/5 - 2026/2',
+          bullets: [
+            '從 0 到 1 建立物流與貨代管理平台的前端工程架構。',
+            '涵蓋 Booking / Trucking 核心流程、多語系規則、共用元件與 RESTful API 串接。',
+            '完成 Azure CI/CD、自動化部署，以及系統測試與驗收上線。',
+          ],
+          imageSrc: '/static/images/firsthorizon-showcase.jpg',
+          imageAlt: 'FirstHorizon booking dashboard screenshot',
+          stack: ['React', 'Next.js', 'TypeScript', '.NET RESTful API', 'Azure CI/CD', 'OutSystems'],
         },
         {
-          title: 'Newegg Mobile Site & App',
+          title: 'Newegg Mobile App',
           company: 'Newegg',
-          period: '2021 - 2024',
-          summary:
-            '在 B2C Mobile Site 與 React Native App 承擔穩定性、效能優化與技術帶領工作。',
-          stack: ['React', 'React Native', 'MobX', 'GA4'],
+          period: '2021/10 - 2024/2',
+          bullets: [
+            '支撐月活躍 100 萬的 Mobile App，持續優化穩定度與使用體驗。',
+            '把 App 穩定度維持在 99.9X%，App Store 維持 4.6+ 評分。',
+            '推進 WebView 架構與 GA4 事件追蹤，讓產品與資料分析更完整。',
+          ],
+          imageSrc: '/static/images/newegg-mobile-app-showcase.jpg',
+          imageAlt: 'Newegg mobile app screenshot',
+          stack: ['React Native', 'MobX', 'WebView', 'GA4', 'Performance Tuning'],
+          links: [
+            {
+              label: 'App Store',
+              href: 'https://apps.apple.com/us/app/newegg-tech-shopping-online/id345188269',
+            },
+          ],
         },
         {
-          title: 'Newegg Unify Login',
+          title: 'Newegg Mobile Site',
           company: 'Newegg',
-          period: '2019 - 2021',
-          summary: '整合 B2B / B2C Website 與 App 登入流程，重整跨平台身份驗證體驗。',
-          stack: ['React', 'Cookie', 'LocalStorage', 'AsyncStorage'],
+          period: '2019/9 - 2024/2',
+          bullets: [
+            '負責 B2C Mobile Site 的日常開發、維護與跨區交付。',
+            '支撐月活躍 200 萬的 Mobile Site，持續優化效能與前端體驗。',
+            '經歷 Secure Site Split、Unify Login、WebView 與 GA4 等跨階段重構與產品演進。',
+          ],
+          imageSrc: '/static/images/newegg-mobile-app-showcase.jpg',
+          imageAlt: 'Newegg mobile experience screenshot',
+          stack: ['React', 'MobX', 'GA4', 'WebView', 'Performance Tuning', 'Cross-team Delivery'],
+          links: [
+            {
+              label: 'Website',
+              href: 'https://www.newegg.com',
+            },
+          ],
         },
         {
-          title: 'Secure Site Split / Monorepo Evolution',
-          company: 'Newegg',
-          period: '2019 - 2021',
-          summary: '將大型前端站點拆分為可獨立部署單位，降低發布風險並強化模組邊界。',
-          stack: ['React', 'Monorepo', 'Deployment Workflow'],
-        },
-        {
-          title: 'Newegg B2B Rewards',
-          company: 'Newegg',
-          period: '2016 - 2019',
-          summary: '把 B2B 會員分級、積分與優惠規則轉成可營運的實際產品功能。',
-          stack: ['ASP.NET MVC', 'JavaScript', 'jQuery'],
+          title: 'Newegg Business',
+          company: 'Newegg Business',
+          period: '2013/9 - 2019/9',
+          bullets: [
+            '從 Secure 站點 MVC 重構一路做到 Scrum Master，長期負責 B2B 電商平台。',
+            '推進購物車、結帳、歷史訂單、帳戶流程與 Message Center 等核心商務體驗。',
+            '參與 2019 B2B 2-Step 與 2015 Rewards 等專案，支撐會員與交易流程演進。',
+          ],
+          imageSrc: '/static/images/newegg-business-showcase.jpg',
+          imageAlt: 'Newegg Business website screenshot',
+          stack: ['C#', 'ASP.NET MVC', 'JavaScript', 'jQuery', 'AJAX', 'React'],
+          links: [
+            {
+              label: 'Website',
+              href: 'https://www.neweggbusiness.com',
+            },
+          ],
         },
       ],
     },
@@ -352,107 +422,167 @@ const pageContent: Record<Locale, LocaleContent> = {
       liveActivityDescription:
         'A compact view of the public engineering signals that keep changing, so visitors can quickly see what I have been doing recently.',
       liveActivityCta: 'View GitHub',
-      liveActivityGithubTitle: 'GitHub Monthly Heatmap',
+      liveActivityGithubTitle: 'GitHub Activity Heatmap',
       liveActivityGithubDescription:
-        'A month-scale view of my recent public activity so the current development rhythm is easier to scan.',
+        'A compact 35-day view of my recent public activity so the current development rhythm is easier to scan.',
       liveActivityRepoTitle: 'Active Repos',
       liveActivityLeetcodeTitle: 'LeetCode Practice',
     },
     experience: {
       title: 'Experience',
       intro:
-        'Organized by role from the most recent chapter back to my starting point, this is the shortest useful view of how my work evolved.',
+        'I started as a Junior Developer at SunYoung Computer, moved into e-commerce website development and Scrum Master responsibilities at Newegg Business, then shifted into the mobile domain as a Senior Developer and Team Leader at Newegg, and more recently planned 0-to-1 frontend architecture at SJClemenger.',
       focusLabel: 'Focus',
       entries: [
         {
-          company: 'SJC',
-          role: 'Senior Frontend Developer',
-          period: '2024 - 2026',
+          company: 'SJClemenger',
+          role: 'Senior Software Engineer',
+          period: '2024/5 - 2026/2 · 1y10m',
           yearLabel: '2024',
-          summary:
-            'Led frontend architecture and core workflow delivery for a logistics and forwarding platform, building the React / Next.js foundation from 0 to 1 while integrating with existing OutSystems and .NET systems.',
-          focus: ['Logistics platform', 'Frontend architecture', '0-to-1'],
+          bullets: [
+            'Led the 0-to-1 frontend architecture for the FirstHorizon logistics and forwarding platform.',
+            'Built the React / Next.js / TypeScript foundation, shared components, workflow pages, and multilingual UI patterns.',
+            'Integrated .NET RESTful APIs and completed Azure testing, acceptance, and deployment.',
+            'Maintained and optimized TMS and warehouse systems built on OutSystems, a low-code platform.',
+          ],
+          focus: ['FirstHorizon', 'Booking / Trucking', 'Azure CI/CD', 'OutSystems low-code'],
+          logoSrc: '/static/images/sjclemenger-logo.jpeg',
+          logoAlt: 'SJClemenger logo',
         },
         {
           company: 'Newegg',
           role: 'Staff Engineer',
-          period: '2021 - 2024',
+          period: '2021/10 - 2024/2 · 2y5m',
           yearLabel: '2021',
-          summary:
-            'Took on technical leadership across the B2C Mobile Site and React Native App, with emphasis on product stability, critical-path performance, and cross-region execution.',
-          focus: ['Mobile Site', 'React Native', 'Technical leadership'],
+          bullets: [
+            'Served as Frontend Leader for the B2C Mobile Site and React Native App, leading a team of 6 across Taiwan, the US, and China.',
+            'Supported 2M monthly active users on mobile web and 1M on the app while improving stability, performance, and delivery rhythm.',
+            'Rolled out WebView architecture, GA4 instrumentation, and stronger team-level frontend collaboration.',
+          ],
+          focus: ['Team of 6', '2M / 1M MAU', '99.9X% stability', 'GA4'],
+          logoSrc: '/static/images/newegg-logo.jpeg',
+          logoAlt: 'Newegg logo',
+          links: [
+            {
+              label: '2024 Work Introduction',
+              href: 'https://youtu.be/JelAveQVqoU',
+            },
+          ],
         },
         {
           company: 'Newegg',
           role: 'Senior Developer',
-          period: '2019 - 2021',
+          period: '2019/9 - 2021/10 · 2y2m',
           yearLabel: '2019',
-          summary:
-            'Drove unified login, site splitting, and cross-platform experience improvements that moved a large e-commerce frontend toward a more sustainable structure.',
-          focus: ['Unified login', 'Site split', 'Cross-platform'],
+          bullets: [
+            'Owned day-to-day development on the B2C Mobile Site and cross-region delivery work.',
+            'Drove Secure Site Split and Unify Login as two signature cross-team projects.',
+            'Moved a large e-commerce frontend toward a more sustainable multi-site and cross-platform architecture.',
+          ],
+          focus: ['1 site to 6 sites', 'Unify Login', 'Cross-region delivery', '2020 awards'],
+          logoSrc: '/static/images/newegg-logo.jpeg',
+          logoAlt: 'Newegg logo',
         },
         {
-          company: 'Newegg',
-          role: 'Developer',
-          period: '2016 - 2019',
-          yearLabel: '2016',
-          summary:
-            'Worked on Newegg Business features such as B2B Rewards, membership tiers, and account flows, turning complex business rules into operable e-commerce behavior.',
-          focus: ['B2B e-commerce', 'Membership', 'Business rules'],
+          company: 'Newegg Business',
+          role: 'Developer / Scrum Master',
+          period: '2013/9 - 2019/9 · 6y1m',
+          yearLabel: '2013',
+          bullets: [
+            'Worked across the Newegg Business B2B platform from secure-site refactoring into broader feature ownership.',
+            'Stepped into Scrum leadership to coordinate delivery cadence, requirement breakdown, and cross-role collaboration.',
+            'Covered cart, checkout, order history, account flows, Message Center, and Rewards.',
+          ],
+          focus: ['B2B e-commerce', 'Scrum Master', '2-Step project', 'Rewards'],
+          logoSrc: '/static/images/newegg-business-logo.jpeg',
+          logoAlt: 'Newegg Business logo',
         },
         {
-          company: 'Shin Yang',
+          company: 'SunYoung Computer',
           role: 'Junior Software Developer',
-          period: 'Career start',
-          yearLabel: 'Start',
-          summary:
-            'Built the early foundation around business-system delivery, requirements understanding, and team collaboration that shaped my later work in enterprise systems and frontend engineering.',
-          focus: ['Business systems', 'Requirements', 'Engineering basics'],
+          period: '2012/12 - 2013/9 · 10m',
+          yearLabel: '2012',
+          bullets: [
+            'Built my foundation in client-facing system integration work.',
+            'Handled web maintenance, new feature delivery, Windows Forms updates, database operations, and documentation.',
+            'Learned how to work directly with user needs, system constraints, and day-to-day support scenarios.',
+          ],
+          focus: ['System integration', 'C# / MS SQL', 'Windows Forms', 'User support'],
         },
       ],
       highlightsTitle: 'Selected Work',
       highlightsIntro:
-        'This rebuild uses the representative work already described in the site so the section stays aligned until I can map it directly to the resume attachment.',
+        'A few representative cases that make the product context, engineering scope, and delivery impact easier to understand at a glance, with screenshots and public links where available.',
       highlights: [
         {
-          title: 'Logistics Platform',
-          company: 'SJC',
-          period: '2024 - 2026',
-          summary:
-            'Led the frontend architecture for a next-generation logistics and forwarding platform across core business workflows and multilingual system foundations.',
-          stack: ['React', 'Next.js', 'TypeScript', '.NET', 'OutSystems'],
+          title: 'FirstHorizon Frontend 0-to-1 and Azure CI/CD',
+          company: 'SJClemenger',
+          period: '2024/5 - 2026/2',
+          bullets: [
+            'Built the frontend engineering foundation for the FirstHorizon logistics platform from scratch.',
+            'Covered Booking / Trucking workflows, multilingual UI rules, shared components, and RESTful API integration.',
+            'Completed Azure CI/CD, automated deployment, and production-ready delivery through testing and acceptance.',
+          ],
+          imageSrc: '/static/images/firsthorizon-showcase.jpg',
+          imageAlt: 'FirstHorizon booking dashboard screenshot',
+          stack: ['React', 'Next.js', 'TypeScript', '.NET RESTful API', 'Azure CI/CD', 'OutSystems'],
         },
         {
-          title: 'Newegg Mobile Site & App',
+          title: 'Newegg Mobile App',
           company: 'Newegg',
-          period: '2021 - 2024',
-          summary:
-            'Owned reliability, performance, and technical leadership across the B2C Mobile Site and React Native App.',
-          stack: ['React', 'React Native', 'MobX', 'GA4'],
+          period: '2021/10 - 2024/2',
+          bullets: [
+            'Supported a mobile app with 1M monthly active users while improving stability and user experience.',
+            'Held app stability at 99.9X% and maintained 4.6+ App Store ratings.',
+            'Rolled out WebView architecture and GA4 tracking to strengthen product and analytics workflows.',
+          ],
+          imageSrc: '/static/images/newegg-mobile-app-showcase.jpg',
+          imageAlt: 'Newegg mobile app screenshot',
+          stack: ['React Native', 'MobX', 'WebView', 'GA4', 'Performance Tuning'],
+          links: [
+            {
+              label: 'App Store',
+              href: 'https://apps.apple.com/us/app/newegg-tech-shopping-online/id345188269',
+            },
+          ],
         },
         {
-          title: 'Newegg Unify Login',
+          title: 'Newegg Mobile Site',
           company: 'Newegg',
-          period: '2019 - 2021',
-          summary:
-            'Unified authentication flows across B2B / B2C websites and mobile applications to improve cross-platform consistency.',
-          stack: ['React', 'Cookie', 'LocalStorage', 'AsyncStorage'],
+          period: '2019/9 - 2024/2',
+          bullets: [
+            'Owned ongoing development and cross-region delivery for the B2C Mobile Site.',
+            'Supported 2M monthly active users while improving performance and frontend experience quality.',
+            'Worked through Secure Site Split, Unify Login, WebView, and GA4 across multiple stages of product evolution.',
+          ],
+          imageSrc: '/static/images/newegg-mobile-app-showcase.jpg',
+          imageAlt: 'Newegg mobile experience screenshot',
+          stack: ['React', 'MobX', 'GA4', 'WebView', 'Performance Tuning', 'Cross-team Delivery'],
+          links: [
+            {
+              label: 'Website',
+              href: 'https://www.newegg.com',
+            },
+          ],
         },
         {
-          title: 'Secure Site Split / Monorepo Evolution',
-          company: 'Newegg',
-          period: '2019 - 2021',
-          summary:
-            'Split a large frontend site into independently deployable units and clarified module boundaries for safer releases.',
-          stack: ['React', 'Monorepo', 'Deployment Workflow'],
-        },
-        {
-          title: 'Newegg B2B Rewards',
-          company: 'Newegg',
-          period: '2016 - 2019',
-          summary:
-            'Turned B2B rewards, membership, and account rules into maintainable product behavior inside a real e-commerce platform.',
-          stack: ['ASP.NET MVC', 'JavaScript', 'jQuery'],
+          title: 'Newegg Business',
+          company: 'Newegg Business',
+          period: '2013/9 - 2019/9',
+          bullets: [
+            'Moved from secure-site MVC refactoring into long-term ownership of the B2B commerce platform.',
+            'Covered cart, checkout, order history, account management, and Message Center across core business flows.',
+            'Contributed to projects such as 2019 B2B 2-Step and the 2015 Rewards rollout that supported membership and transaction growth.',
+          ],
+          imageSrc: '/static/images/newegg-business-showcase.jpg',
+          imageAlt: 'Newegg Business website screenshot',
+          stack: ['C#', 'ASP.NET MVC', 'JavaScript', 'jQuery', 'AJAX', 'React'],
+          links: [
+            {
+              label: 'Website',
+              href: 'https://www.neweggbusiness.com',
+            },
+          ],
         },
       ],
     },

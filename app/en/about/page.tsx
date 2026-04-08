@@ -24,7 +24,7 @@ export default function Page() {
   const mainContent = getLocaleAuthorCore(locale)
 
   return (
-    <AuthorLayout content={mainContent} title={dictionary.about.title}>
+    <AuthorLayout content={mainContent} title={dictionary.about.title} showTitle={false}>
       <>
         <MDXLayoutRenderer code={author.body.code} />
         <div className="not-prose mt-16 space-y-16">
