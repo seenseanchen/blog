@@ -174,7 +174,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: '資深軟體工程師',
           period: '2024/5 - 2026/2 · 1y10m',
           yearLabel: '2024',
-          location: '台灣',
+          location: '台中',
           bullets: [
             '負責 FirstHorizon 物流與貨代管理平台的前端 0-1 架構建置。',
             '使用 React / Next.js / TypeScript 建立共用元件、流程頁與多語系基礎。',
@@ -186,11 +186,11 @@ const pageContent: Record<Locale, LocaleContent> = {
           logoAlt: 'SJClemenger logo',
         },
         {
-          company: 'Newegg',
+          company: '台灣新蛋',
           role: 'Staff Engineer',
           period: '2021/10 - 2024/2 · 2y5m',
           yearLabel: '2021',
-          location: '台灣',
+          location: '台中',
           bullets: [
             '擔任 B2C Mobile Site 與 React Native App 的 Frontend Leader，帶領 6 人團隊與美國、中國團隊協作。',
             '支撐月活躍 200 萬的 Mobile Site 與 100 萬的 Mobile App，持續優化穩定性、效能與交付流程。',
@@ -207,17 +207,17 @@ const pageContent: Record<Locale, LocaleContent> = {
           ],
         },
         {
-          company: 'Newegg',
+          company: '台灣新蛋',
           role: 'Senior Developer',
           period: '2019/9 - 2021/10 · 2y2m',
           yearLabel: '2019',
-          location: '台灣',
+          location: '台中',
           bullets: [
             '負責 Newegg B2C Mobile Site 的日常開發、維護與跨區交付。',
             '主導 Secure Site Split 與 Unify Login 等跨團隊重構專案。',
             '把大型電商前端從單站點模式推向更可持續的多站點與跨平台架構。',
           ],
-          focus: ['1 站拆成 6 站', 'Unify Login', '跨區協作', '2020 獎項'],
+          focus: ['1 站拆成 6 站', 'Unify Login', '跨區協作', '2020 優秀員工'],
           logoSrc: '/static/images/newegg-logo.jpeg',
           logoAlt: 'Newegg logo',
         },
@@ -226,7 +226,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Developer / Scrum Master',
           period: '2013/9 - 2019/9 · 6y1m',
           yearLabel: '2013',
-          location: '台灣',
+          location: '台中',
           bullets: [
             '長期負責 Newegg Business B2B 電商平台，從 ASP.NET MVC 重構到 Secure 站點功能維護。',
             '2016 年後擔任 Scrum Master，協調開發節奏、需求拆解與跨角色合作。',
@@ -241,7 +241,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Junior Software Developer',
           period: '2012/12 - 2013/9 · 10m',
           yearLabel: '2012',
-          location: '台灣',
+          location: '台中',
           bullets: [
             '在系統整合型專案中負責維護與擴充客戶系統。',
             '處理 C#、JavaScript、HTML、MS SQL、Windows Form 與說明文件。',
@@ -268,7 +268,7 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
         {
           title: 'Newegg Mobile App',
-          company: 'Newegg',
+          company: '台灣新蛋',
           period: '2021/10 - 2024/2',
           bullets: [
             '支撐月活躍 100 萬的 Mobile App，持續優化穩定度與使用體驗。',
@@ -287,7 +287,7 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
         {
           title: 'Newegg Mobile Site',
-          company: 'Newegg',
+          company: '台灣新蛋',
           period: '2019/9 - 2024/2',
           bullets: [
             '負責 B2C Mobile Site 的日常開發、維護與跨區交付。',
@@ -455,7 +455,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           logoAlt: 'SJClemenger logo',
         },
         {
-          company: 'Newegg',
+          company: '台灣新蛋',
           role: 'Staff Engineer',
           period: '2021/10 - 2024/2 · 2y5m',
           yearLabel: '2021',
