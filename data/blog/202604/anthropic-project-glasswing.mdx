@@ -1,0 +1,100 @@
+---
+title: 'Anthropic 發布 Project Glasswing：跨企業資安防禦新紀元'
+date: '2026-04-09'
+tags: ['ai', 'cybersecurity', 'anthropic']
+draft: false
+authors: ['default']
+summary: '探討 Anthropic 為何選擇不公開破壞力強大的 Claude Mythos Preview 模型，並透過 Project Glasswing 計畫優先武裝資安防禦者，以及多位跨界專家的觀點。'
+---
+
+Anthropic 近期發表了全新的 **Claude Mythos Preview** 模型，但他們做了一個罕見的決定：不對大眾公開這個模型，而是將其限制在內部與少數夥伴使用。Mythos 並非一開始就完全專為尋找資安漏洞而開發，但在測試過程中，團隊驚訝地發現這個新世代模型在漏洞挖掘與利用上展現了極端強大且危險的能力。為此，Anthropic 決定暫緩全面釋出，並啟動了 **Project Glasswing**（[官方網站](https://www.anthropic.com/glasswing)），一個旨在提升全球軟體、數據與基礎設施安全的長期倡議。
+
+Project Glasswing 並非單打獨鬥，它集結了全球頂尖的資安、網路通訊及開源社群巨頭的共同參與，共同面對「零日漏洞」等深層的安全挑戰。
+
+> 💡 **名詞小科普：什麼是「零日漏洞（Zero-day vulnerability）」？**
+> 零日漏洞是指已經存在於軟體中（甚至已被駭客掌握），但軟體開發商或維護者**尚未知曉、也還沒有發布修復更新**的漏洞。因為開發商「連一天的時間（Zero days）」都沒來得及修補，這段防禦空窗期的攻擊威脅極端致命，往往能讓攻擊者無聲無息地入侵系統。
+
+## 為什麼我們需要 Project Glasswing？
+
+在過去，軟體漏洞的發現與修復往往耗時費力。然而，AI 的出現徹底改變了這個局勢。Claude Mythos Preview 展現了直逼頂尖人類駭客的資安能力，不僅能自動化發現漏洞，甚至能編寫漏洞利用程式。
+
+正如參與此倡議的多位跨領域資安專家所言，AI 既可以成為攻擊者的武器，也必須成為防禦者的利器。
+
+## 模型能力與延遲發布的抉擇
+
+在發布 Claude Mythos Preview 的同時，Anthropic 做出了一個罕見的決定：不對大眾公開這個模型。其原因是該模型在資安攻防上的能力過於強大，直接釋出風險極高。
+
+Claude Code 創辦人 Boris Cherny 表示：「Mythos 非常強大，強大到應該讓人感到害怕。我很驕傲我們選擇了負責任的方式，先讓資安防禦者使用，而不是直接丟到市場上。」
+
+從測試數據來看，Mythos 的表現相當驚人：
+- 在 **SWE-bench Verified**（衡量 AI 寫程式能力的標準測試）中，解題率高達 93.9%（上一代 Claude Opus 4.6 為 80.8%）。
+- 在 **Cybench**（35 道 CTF 資安挑戰題）中，通過率為 100%，全部解開。
+- 在 **CyberGym**（針對真實開源軟體的漏洞重現測試）中，取得 83.1%（Opus 4.6 為 66.6%）。
+
+更關鍵的是 Mythos 在真實世界尋找漏洞的表現。在過去幾週的測試中，Mythos 成功於每個主要作業系統及瀏覽器中找到了**數千個零日漏洞**（許多為高嚴重性等級），遠高於 Opus 4.6 之前在開源軟體中找到的大約 500 個。具體案例包含：
+- 一個潛藏 27 年、可讓攻擊者遠端癱瘓系統的 OpenBSD 漏洞。
+- 一個存在 16 年、曾被自動化工具掃描 500 萬次都未被發現的 FFmpeg 漏洞。
+- 一組可讓攻擊者取得 root 權限的 Linux 核心漏洞鏈。
+
+這些經過數十年人工審查與自動化掃描都未曾被抓到的漏洞，全部被 Mythos 找了出來。
+
+### 選擇武裝防守方
+
+為此，Anthropic 透過 Project Glasswing 計畫，將 Mythos 限定提供給 12 家核心合作夥伴（共約 40 家組織）作為防禦用途，包括 AWS、Apple、Google、Microsoft、NVIDIA、CrowdStrike、Palo Alto Networks、Broadcom、Cisco、JPMorganChase 與 Linux Foundation 等頂尖企業。
+
+除限制存取外，Anthropic 承諾投入 1 億美元的模型使用額度及 400 萬美元資助開源資安組織，以便在類似技術被廣泛釋出之前，讓防禦者優先修補關鍵系統。
+
+（定價方面為每百萬輸入 tokens 25 美元、輸出 125 美元，透過 Claude API、Amazon Bedrock、Google Vertex AI 與 Microsoft Foundry 提供。）
+
+這是 AI 產業首度有公司主動聲明「模型太危險而不能直接販售」。Anthropic 選擇先武裝防守方而非搶佔市場的策略，是否將帶動產業跟進，將成為未來的關注焦點。
+
+## 跨界資安專家的觀點
+
+這項計畫獲得了眾多業界核心人物的背書，以下是他們在官方[發布影片](https://www.facebook.com/watch/?v=2013451539525487)中的核心觀點：
+
+### Elia Zaitsev (CrowdStrike CTO)
+
+他代表了全球頂尖的資安公司，指出軟體漏洞並非新問題，但 AI 的出現大幅改變了發現與修復漏洞的效率與速度。
+
+### Igor Tsyganskiy (Microsoft Global CISO 兼副總裁)
+
+代表微軟及其安全研究部門，他強調對一般人來說，雖然平時對軟體漏洞可能無感，但一旦發生災難，影響將是全球級的。他認為目前的人工智能模型在辨識漏洞的能力上，已與專業人類專家不相上下。
+
+### Lee Klarich (Palo Alto Networks CPTO)
+
+從網路安全防禦的角度出發，他解釋了單一漏洞如何透過共享的軟體生態系被無限放大到全球。他強調，Project Glasswing 能夠讓防禦方提早獲得先進的 AI 工具，爭取至關重要的防護時間。
+
+### Jim Zemlin (Linux 基金會 CEO)
+
+代表開源軟體界，他指出 Linux 是現代網路基礎設施的核心。如果 AI 能夠達到頂尖開發者的程式碼水準，那麼它同樣適合被用來高效地挖掘並修復這些底層基礎系統深處的複雜漏洞。
+
+### Anthony Grieco (Cisco 副總裁、CISO)
+
+代表全球網路通訊巨頭，他認為這些進階 AI 模型已經提升了整個資安領域的門檻。由於 AI 可以同時為防禦者和攻擊者所用，跨行業合作建立整體防禦能力已成為當務之急。
+
+### Anthropic 與 Google DeepMind 的內部視角
+
+計畫的發起方也分享了對於模型能力的觀察：
+
+- **Dario Amodei (Anthropic CEO)**：身為計畫發起人，他說明 Claude Mythos Preview 模型在資安能力上取得了顯著的跳躍。這並非一個為期幾週的短期專案，而是長達數月甚至數年的任務，最終目標是讓全球的軟體基礎設施更為安全。
+- **Logan Graham (Anthropic 前沿紅隊負責人)**：負責測試 AI 模型的極限與風險。他詳細說明了模型現在具備了「自主性」——能夠像真正的人類研究員一樣，處理並執行長期的安全任務。
+- **Nicholas Carlini (Google DeepMind 研究科學家)**：分享了實際利用該模型在 OpenBSD 與 Linux 中成功尋獲底層漏洞的具體數據與豐碩成果。
+- **Jared Kaplan (Anthropic 共同創辦人)**：探討了模型將多個小缺陷「串聯漏洞」形成複雜攻擊鏈的高級能力。
+- **Amanda Askell (Anthropic 研究員)**：深入解釋了模型的開發與訓練細節。
+
+## 結語與心得反思
+
+Project Glasswing 展示了 AI 在網路安全領域中的雙面刃特性，以及業界選擇「主動防禦」的決心。這是一個跨企業、跨領域的重大倡議，未來的防禦重點將不再只是單點的漏洞修補，而是如何利用更高階的 AI 技術，跑在威脅到來之前。
+
+現在的 AI 模型已經在資安層面上展現了足以突破作業系統核心等級的能力。這讓人感覺，我們距離前些日子大家所熱議的「AI 奇異點」似乎又更近了——大型語言模型（LLM）如今已能自主做到資深軟體工程師才能勝任的事。大企業此時展現了他們的社會責任，主動限制並避免強大的工具淪為特定人士攻擊的武器。
+
+而身為軟體開發者的我們，更應該要懂得善用這些利器。透過現在相對低廉的 AI 呼叫成本，我們就能在產品與新功能推出前，提早發現並保障系統免於潛在的資安漏洞。我相信在不久的將來，在程式碼正式發布前，由 AI 自動進行弱點掃描將會成為開發流程的標準基本配備；甚至在撰寫程式碼的最初階段，直接透過 AI 輔助開發（AI Coding），就已經能從源頭規避掉絕大多數的資安風險了。
+
+## 參考資料
+
+- [iThome - Anthropic 發布 Claude Mythos Preview](https://www.ithome.com.tw/news/174898)
+- [Anthropic 官方研究報告 (PDF)](https://www-cdn.anthropic.com/8b8380204f74670be75e81c820ca8dda846ab289.pdf)
+- [Boris Cherny 推文聲明](https://x.com/bcherny/status/2041605852382351666)
+- [Project Glasswing 官方專家訪談影片](https://www.facebook.com/watch/?v=2013451539525487)
+
+> 📝 本文由 AI 輔助撰寫，已經過作者本人校稿

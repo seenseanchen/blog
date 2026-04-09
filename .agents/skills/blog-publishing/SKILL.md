@@ -22,3 +22,4 @@ Workflow:
 7. If the Traditional Chinese post is AI-assisted and not yet author-proofread, append this exact bottom note: `本文由 AI 輔助撰寫，尚未經過作者本人校稿`
 8. After the author reviews the AI-assisted post, replace that bottom note with: `本文由 AI 輔助撰寫，已經過作者本人校稿`
 9. Keep AI disclosure text explicit and synchronized across locale variants.
+10. If the task requests generating a 10-minute oral podcast script/summary, output the script as a bulleted outline focusing on key points and data, rather than a detailed word-for-word script (to allow the speaker to use their own tone). Save it to a new Markdown file in `.md` format. Create a new directory named `podcasts` at the same level as the `blog` folder (e.g. `data/podcasts/`) and place the script there. Do not publish podcast scripts on the website.

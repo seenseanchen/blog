@@ -1,0 +1,96 @@
+---
+title: 'Anthropic Announces Project Glasswing: A New Era of Cross-Enterprise Cybersecurity'
+date: '2026-04-09'
+tags: ['ai', 'cybersecurity', 'anthropic']
+draft: false
+authors: ['default.en']
+summary: 'An overview of Anthropic''s decision to withhold the powerful Claude Mythos Preview model, prioritizing arming defenders via Project Glasswing with insights from cross-industry experts.'
+---
+
+Anthropic recently announced the existence of its new **Claude Mythos Preview** model, but with a highly unusual caveat: the model will not be publicly released, and access is strictly restricted. Mythos was not explicitly developed from the ground up solely to find and patch vulnerabilities; rather, during its testing phase, the team discovered that this next-generation model possesses incredibly powerful—and potentially dangerous—capabilities in vulnerability discovery and exploitation. In response, Anthropic decided to withhold a general release and instead launched **Project Glasswing** ([Official Website](https://www.anthropic.com/glasswing)), a long-term initiative aimed at improving the security of global software, data, and infrastructure.
+
+Project Glasswing is not a solo effort. It brings together leaders from top cybersecurity firms, networking giants, and the open-source community to collaboratively address deep-seated security challenges like zero-day vulnerabilities.
+
+> 💡 **What is a "Zero-day vulnerability"?**
+> A zero-day vulnerability refers to a software flaw that already exists (and may be exploited by malicious actors) but remains **unknown to the software vendor**, meaning no official patch exists. Because the vendor has had "zero days" to fix it, this window of exposure is incredibly dangerous, often allowing attackers to seamlessly compromise systems before any defense can be mounted.
+
+## Why Do We Need Project Glasswing?
+
+In the past, discovering and fixing software vulnerabilities has always been a time-consuming and labor-intensive process. However, the advent of advanced AI has fundamentally shifted this landscape. Claude Mythos Preview demonstrates cybersecurity capabilities that rival top human hackers—not only automating vulnerability discovery but even generating exploit code.
+
+As noted by the cross-industry experts participating in this initiative, while AI can be used as a weapon by attackers, it must also be wielded as an essential shield for defenders.
+
+## Model Capabilities and the Choice to Withhold Release
+
+Alongside the announcement of Claude Mythos Preview, Anthropic made a rare decision: the model will not be publicly released. The reasoning is that the model's cybersecurity capabilities are so formidable that releasing it directly to the public poses too high a risk.
+
+Boris Cherny, creator of Claude Code, stated: "Mythos is incredibly powerful, powerful enough that it should be slightly terrifying. I am proud that we chose the responsible path of putting this in the hands of cyber defenders first, rather than just throwing it out into the market."
+
+The testing metrics for Mythos are staggering:
+- On **SWE-bench Verified** (a benchmark for AI coding ability), it achieved a 93.9% resolution rate, compared to 80.8% for the previous Claude Opus 4.6.
+- On **Cybench** (a suite of 35 CTF cybersecurity challenges), it achieved a 100% pass rate, solving every single challenge.
+- On **CyberGym** (a vulnerability reproduction test for real open-source software), it scored 83.1%, up from Opus 4.6's 66.6%.
+
+Even more concerning is Mythos's performance in discovering real-world vulnerabilities. During the testing phase over the past few weeks, Mythos found **thousands of zero-day vulnerabilities** across every major operating system and browser, many of which were designated as high severity. By comparison, Opus 4.6 found roughly 500 zero-day vulnerabilities in open-source software. Notable cases include:
+- A 27-year-old OpenBSD vulnerability that could allow attackers to remotely crash the system.
+- A 16-year-old FFmpeg vulnerability that remained undetected despite being scanned 5 million times by automated testing tools.
+- A chain of Linux kernel vulnerabilities that could grant an attacker root access.
+
+These vulnerabilities, which had evaded decades of human review and automated scanning, were successfully uncovered by Mythos.
+
+### Arming the Defenders
+
+In response to these findings, Anthropic launched Project Glasswing to restrict Mythos access to 12 core partners (totaling around 40 organizations) strictly for defensive cybersecurity work. This elite roster includes AWS, Apple、Google、Microsoft、NVIDIA、CrowdStrike、Palo Alto Networks、Broadcom、Cisco、JPMorganChase, and the Linux Foundation.
+
+This marks the first time an AI company has proactively declared a model "too dangerous to sell directly." Anthropic chose the path of arming the defense over rushing to market—a pivotal decision that will shape whether others in the industry follow suit or simply release comparable capabilities, leaving attackers and defenders to race each other.
+
+## Perspectives from Cybersecurity Experts
+
+This initiative has gained endorsements from core figures across the industry. Here are their key perspectives shared in the [official announcement video](https://www.facebook.com/watch/?v=2013451539525487):
+
+### Elia Zaitsev (CTO, CrowdStrike)
+
+Representing one of the world's leading cybersecurity companies, he points out that while software vulnerabilities are not a new problem, the emergence of AI drastically changes the speed and efficiency with which these vulnerabilities can be discovered and remediated.
+
+### Igor Tsyganskiy (Global CISO & VP, Microsoft)
+
+Representing Microsoft and its security research division, he emphasizes that while everyday users might not notice software vulnerabilities in their daily lives, the impact is global when a disaster strikes. He believes that current AI models have reached parity with human professionals in their ability to identify vulnerabilities.
+
+### Lee Klarich (CPTO, Palo Alto Networks)
+
+From a network security defense perspective, he explains how a single vulnerability can be amplified globally through shared software ecosystems. He stresses that Project Glasswing allows defenders to gain early access to advanced AI tools, buying critical time for protection.
+
+### Jim Zemlin (CEO, Linux Foundation)
+
+Representing the open-source software community, he notes that Linux is the core of modern internet infrastructure. If AI can reach the coding proficiency of top-tier developers, it is equally suited to efficiently uncover and patch complex vulnerabilities buried deep within these foundational systems.
+
+### Anthony Grieco (VP & CISO, Cisco)
+
+Representing a global networking leader, he believes these advanced AI models have raised the bar across the entire cybersecurity landscape. Since AI can be utilized by both defenders and adversaries, cross-industry collaboration to build collective defensive capabilities is now an urgent necessity.
+
+### Internal Perspectives from Anthropic and Google DeepMind
+
+The initiators of the project also shared their observations on the model's capabilities:
+
+- **Dario Amodei (CEO, Anthropic)**: As the initiator of the project, he explains that the Claude Mythos Preview model represents a significant leap in cybersecurity capabilities. This is not a project that will wrap up in a few weeks; it is a long-term mission spanning months or even years, with the ultimate goal of making global software infrastructure safer.
+- **Logan Graham (Frontier Red Team Lead, Anthropic)**: Tasked with testing the limits and risks of AI models. He details how the model now possesses "autonomy"—the ability to process and execute long-term security tasks much like an actual human researcher.
+- **Nicholas Carlini (Research Scientist, Google DeepMind)**: Shares concrete data and successful outcomes of practically applying the model to uncover low-level vulnerabilities in OpenBSD and Linux.
+- **Jared Kaplan (Co-founder, Anthropic)**: Discusses the model's advanced capability to "chain vulnerabilities," stringing together minor flaws to form complex attack chains.
+- **Amanda Askell (Researcher, Anthropic)**: Provides an in-depth explanation of the model's development and training details.
+
+## Conclusion and Author's Reflection
+
+Project Glasswing highlights the double-edged nature of AI in cybersecurity and demonstrates the industry's commitment to "proactive defense." It is a major cross-enterprise, cross-industry initiative signaling that the future of defense is no longer just about patching isolated vulnerabilities, but about utilizing higher-level AI to stay ahead of threats before they arrive.
+
+Current AI models have already reached a level in cybersecurity where they can breach core operating system functions. It feels as though we are stepping much closer to the "AI Singularity" people have been talking about recently, with LLMs now capable of autonomously performing tasks that were once exclusively the domain of senior human software developers. Large corporations are fulfilling their social responsibilities by actively preventing these powerful tools from becoming weaponized by specific threat actors.
+
+As developers, we must also actively start leveraging these tools. Thanks to the relatively low costs of running these models today, we can easily use AI to safeguard against potential security vulnerabilities before launching our products or new features. I firmly believe that in the near future, having AI automatically perform vulnerability scanning before deploying code will simply be a standard operational procedure. Moreover, by utilizing AI coding assistants from the very beginning, we will be able to bypass the vast majority of cybersecurity risks directly at the source.
+
+## References
+
+- [iThome - Anthropic announces Claude Mythos Preview (ZH)](https://www.ithome.com.tw/news/174898)
+- [Anthropic Official Research Report (PDF)](https://www-cdn.anthropic.com/8b8380204f74670be75e81c820ca8dda846ab289.pdf)
+- [Boris Cherny's Statement on X (Twitter)](https://x.com/bcherny/status/2041605852382351666)
+- [Project Glasswing Official Interview Video](https://www.facebook.com/watch/?v=2013451539525487)
+
+> 📝 This post was AI-assisted and has been fully reviewed by the author.
