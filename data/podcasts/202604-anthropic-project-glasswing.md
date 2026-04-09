@@ -34,10 +34,9 @@
   - Cloud / Tech: AWS, Apple, Google, Microsoft, NVIDIA, Broadcom
   - Cybersecurity: CrowdStrike, Palo Alto Networks, Cisco
   - 其他巨頭: JPMorganChase, Linux Foundation
-- **資源投入與定價**：
+- **資源投入**：
   - **1 億美元**：投入供防禦方使用的模型額度。
   - **400 萬美元**：直接贊助給開源資安組織。
-  - **內部 API 訂價表**：每百萬 Input tokens 25 美元 / Output 125 美元。
 
 ### [Part 4] 專家視角與結語反思（約 2 分鐘）
 - **各界專家呼應（供選擇引用）**：
