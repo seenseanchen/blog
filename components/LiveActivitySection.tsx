@@ -21,13 +21,13 @@ function formatDate(dateString: string, locale: Locale) {
 function heatmapCellClass(level: 0 | 1 | 2 | 3 | 4) {
   switch (level) {
     case 4:
-      return 'bg-cyan-600 dark:bg-cyan-400'
+      return 'bg-emerald-700 dark:bg-emerald-500'
     case 3:
-      return 'bg-cyan-500 dark:bg-cyan-500'
+      return 'bg-emerald-500 dark:bg-emerald-400'
     case 2:
-      return 'bg-cyan-300 dark:bg-cyan-600/80'
+      return 'bg-emerald-300 dark:bg-emerald-600'
     case 1:
-      return 'bg-cyan-100 dark:bg-cyan-900/80'
+      return 'bg-emerald-100 dark:bg-emerald-800'
     default:
       return 'bg-gray-100 dark:bg-gray-800'
   }
@@ -42,67 +42,117 @@ export default async function LiveActivitySection({ locale }: LiveActivitySectio
     return null
   }
 
+  const weekLabels = [
+    { index: 1, label: 'Mon' },
+    { index: 3, label: 'Wed' },
+    { index: 5, label: 'Fri' },
+  ]
+
   return (
     <section className="space-y-8">
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <h2 className="text-3xl leading-tight font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">
-            {aboutContent.liveActivityTitle}
-          </h2>
-          {githubActivity && (
-            <Link
-              href={githubActivity.profileUrl}
-              className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-400 hover:text-gray-950 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-500 dark:hover:text-white"
-            >
-              {aboutContent.liveActivityCta}
-            </Link>
-          )}
-        </div>
-        <p className="max-w-3xl text-lg leading-8 text-gray-600 dark:text-gray-300">
-          {aboutContent.liveActivityDescription}
-        </p>
+        <h2 className="text-3xl leading-tight font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">
+          {aboutContent.liveActivityTitle}
+        </h2>
+        {aboutContent.liveActivityDescription && (
+          <p className="max-w-3xl text-lg leading-8 text-gray-600 dark:text-gray-300">
+            {aboutContent.liveActivityDescription}
+          </p>
+        )}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
         {githubActivity && (
           <article className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/60">
-            <div className="space-y-3">
-              <p className="text-sm font-semibold tracking-[0.22em] text-cyan-600 uppercase dark:text-cyan-400">
-                GitHub
-              </p>
-              <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-                {aboutContent.liveActivityGithubTitle}
-              </h3>
-              <p className="max-w-2xl text-sm leading-7 text-gray-600 dark:text-gray-300">
-                {aboutContent.liveActivityGithubDescription}
-              </p>
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="space-y-3">
+                <p className="text-sm font-semibold tracking-[0.22em] text-cyan-600 uppercase dark:text-cyan-400">
+                  GitHub
+                </p>
+                <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+                  {aboutContent.liveActivityGithubTitle}
+                </h3>
+                {aboutContent.liveActivityGithubDescription && (
+                  <p className="max-w-2xl text-sm leading-7 text-gray-600 dark:text-gray-300">
+                    {aboutContent.liveActivityGithubDescription}
+                  </p>
+                )}
+              </div>
+
+              <Link
+                href={githubActivity.profileUrl}
+                className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-400 hover:text-gray-950 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-500 dark:hover:text-white"
+              >
+                {aboutContent.liveActivityCta}
+              </Link>
             </div>
 
             <div className="mt-6 grid gap-5 xl:grid-cols-2">
               <div className="rounded-[1.5rem] border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-950/40">
-                <div className="mx-auto w-fit">
-                  <div className="grid grid-cols-[18px_repeat(5,12px)] gap-1">
-                    {githubActivity.heatmapCells.map((row, rowIndex) => (
-                      <Fragment key={`row-${rowIndex}`}>
-                        <div className="flex items-center text-[10px] font-medium text-gray-400 dark:text-gray-500">
-                          {row[0]?.dayLabel.slice(0, 1)}
-                        </div>
-                        {row.map((cell) => (
-                          <div
-                            key={cell.date}
-                            className={`h-3 w-3 rounded-[0.25rem] border border-white/60 ${heatmapCellClass(cell.level)}`}
-                            title={`${cell.date} · ${cell.count}`}
-                          />
-                        ))}
-                      </Fragment>
-                    ))}
+                <div className="overflow-x-auto">
+                  <div className="inline-block min-w-full">
+                    <div
+                      className="mb-2 grid items-end gap-1 text-[11px] text-gray-500 dark:text-gray-400"
+                      style={{
+                        gridTemplateColumns: `32px repeat(${githubActivity.heatmapWeeks.length}, 12px)`,
+                      }}
+                    >
+                      <div />
+                      {Array.from({ length: githubActivity.heatmapWeeks.length }, (_, column) => {
+                        const month = githubActivity.heatmapMonths.find(
+                          (item) => item.column === column
+                        )
+
+                        return (
+                          <div key={`month-${column}`} className="relative h-4 overflow-visible">
+                            {month && (
+                              <span className="absolute left-0 whitespace-nowrap">
+                                {month.label}
+                              </span>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    <div
+                      className="grid gap-1"
+                      style={{
+                        gridTemplateColumns: `32px repeat(${githubActivity.heatmapWeeks.length}, 12px)`,
+                      }}
+                    >
+                      {Array.from({ length: 7 }, (_, dayIndex) => (
+                        <Fragment key={`row-${dayIndex}`}>
+                          <div className="flex items-center text-[11px] text-gray-500 dark:text-gray-400">
+                            {weekLabels.find((item) => item.index === dayIndex)?.label || ''}
+                          </div>
+                          {githubActivity.heatmapWeeks.map((week, weekIndex) => (
+                            <div
+                              key={`${week[dayIndex].date}-${weekIndex}`}
+                              className={`h-3 w-3 rounded-[0.2rem] border border-white/60 ${heatmapCellClass(
+                                week[dayIndex].level
+                              )}`}
+                              title={`${week[dayIndex].date} · ${week[dayIndex].count}`}
+                            />
+                          ))}
+                        </Fragment>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
-                  {locale === 'zh-TW'
-                    ? '最近 35 天的 GitHub 公開活動密度'
-                    : 'Public GitHub activity density over the last 35 days'}
-                </p>
+
+                <div className="mt-4 flex items-center justify-end gap-2 text-xs text-gray-500 dark:text-gray-400">
+                  <span>Less</span>
+                  {[0, 1, 2, 3, 4].map((level) => (
+                    <span
+                      key={`legend-${level}`}
+                      className={`h-3 w-3 rounded-[0.2rem] border border-white/60 ${heatmapCellClass(
+                        level as 0 | 1 | 2 | 3 | 4
+                      )}`}
+                    />
+                  ))}
+                  <span>More</span>
+                </div>
               </div>
 
               <div className="rounded-[1.5rem] border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-950/40">

@@ -18,6 +18,7 @@ type CareerEntry = {
   role: string
   period: string
   yearLabel: string
+  location?: string
   bullets: string[]
   focus: string[]
   logoSrc?: string
@@ -169,10 +170,11 @@ const pageContent: Record<Locale, LocaleContent> = {
       focusLabel: '關鍵脈絡',
       entries: [
         {
-          company: 'SJClemenger',
+          company: '新加坡商昭津國際物流有限公司台灣分公司',
           role: '資深軟體工程師',
           period: '2024/5 - 2026/2 · 1y10m',
           yearLabel: '2024',
+          location: '台灣',
           bullets: [
             '負責 FirstHorizon 物流與貨代管理平台的前端 0-1 架構建置。',
             '使用 React / Next.js / TypeScript 建立共用元件、流程頁與多語系基礎。',
@@ -188,6 +190,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Staff Engineer',
           period: '2021/10 - 2024/2 · 2y5m',
           yearLabel: '2021',
+          location: '台灣',
           bullets: [
             '擔任 B2C Mobile Site 與 React Native App 的 Frontend Leader，帶領 6 人團隊與美國、中國團隊協作。',
             '支撐月活躍 200 萬的 Mobile Site 與 100 萬的 Mobile App，持續優化穩定性、效能與交付流程。',
@@ -208,6 +211,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Senior Developer',
           period: '2019/9 - 2021/10 · 2y2m',
           yearLabel: '2019',
+          location: '台灣',
           bullets: [
             '負責 Newegg B2C Mobile Site 的日常開發、維護與跨區交付。',
             '主導 Secure Site Split 與 Unify Login 等跨團隊重構專案。',
@@ -222,6 +226,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Developer / Scrum Master',
           period: '2013/9 - 2019/9 · 6y1m',
           yearLabel: '2013',
+          location: '台灣',
           bullets: [
             '長期負責 Newegg Business B2B 電商平台，從 ASP.NET MVC 重構到 Secure 站點功能維護。',
             '2016 年後擔任 Scrum Master，協調開發節奏、需求拆解與跨角色合作。',
@@ -232,10 +237,11 @@ const pageContent: Record<Locale, LocaleContent> = {
           logoAlt: 'Newegg Business logo',
         },
         {
-          company: '新陽',
+          company: '新陽電腦',
           role: 'Junior Software Developer',
           period: '2012/12 - 2013/9 · 10m',
           yearLabel: '2012',
+          location: '台灣',
           bullets: [
             '在系統整合型專案中負責維護與擴充客戶系統。',
             '處理 C#、JavaScript、HTML、MS SQL、Windows Form 與說明文件。',
@@ -249,7 +255,7 @@ const pageContent: Record<Locale, LocaleContent> = {
       highlights: [
         {
           title: 'FirstHorizon 前端 0-1 與 Azure CI/CD',
-          company: 'SJClemenger',
+          company: '新加坡商昭津國際物流有限公司台灣分公司',
           period: '2024/5 - 2026/2',
           bullets: [
             '從 0 到 1 建立物流與貨代管理平台的前端工程架構。',
@@ -437,6 +443,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Senior Software Engineer',
           period: '2024/5 - 2026/2 · 1y10m',
           yearLabel: '2024',
+          location: 'Taiwan',
           bullets: [
             'Led the 0-to-1 frontend architecture for the FirstHorizon logistics and forwarding platform.',
             'Built the React / Next.js / TypeScript foundation, shared components, workflow pages, and multilingual UI patterns.',
@@ -452,6 +459,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Staff Engineer',
           period: '2021/10 - 2024/2 · 2y5m',
           yearLabel: '2021',
+          location: 'Taiwan',
           bullets: [
             'Served as Frontend Leader for the B2C Mobile Site and React Native App, leading a team of 6 across Taiwan, the US, and China.',
             'Supported 2M monthly active users on mobile web and 1M on the app while improving stability, performance, and delivery rhythm.',
@@ -472,6 +480,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Senior Developer',
           period: '2019/9 - 2021/10 · 2y2m',
           yearLabel: '2019',
+          location: 'Taiwan',
           bullets: [
             'Owned day-to-day development on the B2C Mobile Site and cross-region delivery work.',
             'Drove Secure Site Split and Unify Login as two signature cross-team projects.',
@@ -486,6 +495,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Developer / Scrum Master',
           period: '2013/9 - 2019/9 · 6y1m',
           yearLabel: '2013',
+          location: 'Taiwan',
           bullets: [
             'Worked across the Newegg Business B2B platform from secure-site refactoring into broader feature ownership.',
             'Stepped into Scrum leadership to coordinate delivery cadence, requirement breakdown, and cross-role collaboration.',
@@ -500,6 +510,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           role: 'Junior Software Developer',
           period: '2012/12 - 2013/9 · 10m',
           yearLabel: '2012',
+          location: 'Taiwan',
           bullets: [
             'Built my foundation in client-facing system integration work.',
             'Handled web maintenance, new feature delivery, Windows Forms updates, database operations, and documentation.',

@@ -27,14 +27,11 @@ export type GitHubHeatmapCell = {
   date: string
   count: number
   level: 0 | 1 | 2 | 3 | 4
-  dayLabel: string
-  monthLabel: string
-  isCurrentMonth: boolean
 }
 
 export type GitHubHeatmapMonth = {
+  column: number
   label: string
-  span: number
 }
 
 export type GitHubLiveActivity = {
@@ -42,7 +39,7 @@ export type GitHubLiveActivity = {
   profileUrl: string
   repos: GitHubRepoSummary[]
   heatmapMonths: GitHubHeatmapMonth[]
-  heatmapCells: GitHubHeatmapCell[][]
+  heatmapWeeks: GitHubHeatmapCell[][]
 }
 
 const GITHUB_HEADERS = {
@@ -71,6 +68,18 @@ function startOfDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
 
+function startOfWeek(date: Date) {
+  const value = startOfDay(date)
+  value.setDate(value.getDate() - value.getDay())
+  return value
+}
+
+function endOfWeek(date: Date) {
+  const value = startOfDay(date)
+  value.setDate(value.getDate() + (6 - value.getDay()))
+  return value
+}
+
 function formatDay(date: Date) {
   return date.toISOString().slice(0, 10)
 }
@@ -97,8 +106,11 @@ function getLevel(count: number): 0 | 1 | 2 | 3 | 4 {
 
 function buildHeatmap(events: GitHubEvent[]) {
   const today = startOfDay(new Date())
-  const gridStart = new Date(today)
-  gridStart.setDate(today.getDate() - 34)
+  const rangeStart = new Date(today)
+  rangeStart.setDate(today.getDate() - 90)
+
+  const gridStart = startOfWeek(rangeStart)
+  const gridEnd = endOfWeek(today)
 
   const counts = new Map<string, number>()
 
@@ -113,44 +125,42 @@ function buildHeatmap(events: GitHubEvent[]) {
     counts.set(key, (counts.get(key) || 0) + 1)
   }
 
-  const cells: GitHubHeatmapCell[] = []
+  const weeks: GitHubHeatmapCell[][] = []
+  const months: GitHubHeatmapMonth[] = []
+  const cursor = new Date(gridStart)
 
-  for (let offset = 0; offset < 35; offset += 1) {
-    const date = new Date(gridStart)
-    date.setDate(gridStart.getDate() + offset)
+  while (cursor <= gridEnd) {
+    const week: GitHubHeatmapCell[] = []
+    const weekIndex = weeks.length
+    let monthLabelAdded = false
 
-    const dateKey = formatDay(date)
-    const count = counts.get(dateKey) || 0
+    for (let dayIndex = 0; dayIndex < 7; dayIndex += 1) {
+      const date = new Date(cursor)
+      date.setDate(cursor.getDate() + dayIndex)
 
-    cells.push({
-      date: dateKey,
-      count,
-      level: getLevel(count),
-      dayLabel: new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date),
-      monthLabel: new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date),
-      isCurrentMonth:
-        date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear(),
-    })
+      const dateKey = formatDay(date)
+      const count = counts.get(dateKey) || 0
+
+      if (!monthLabelAdded && (date.getDate() <= 7 || weekIndex === 0)) {
+        months.push({
+          column: weekIndex,
+          label: new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date),
+        })
+        monthLabelAdded = true
+      }
+
+      week.push({
+        date: dateKey,
+        count,
+        level: getLevel(count),
+      })
+    }
+
+    weeks.push(week)
+    cursor.setDate(cursor.getDate() + 7)
   }
 
-  const heatmapCells = Array.from({ length: 7 }, (_, dayOfWeek) =>
-    Array.from({ length: 5 }, (_, weekIndex) => cells[weekIndex * 7 + dayOfWeek])
-  )
-
-  const monthMap = new Map<string, number>()
-
-  for (let weekIndex = 0; weekIndex < 5; weekIndex += 1) {
-    const weekCell = cells[weekIndex * 7]
-    const key = `${weekCell.monthLabel}-${weekCell.date.slice(0, 4)}`
-    monthMap.set(key, (monthMap.get(key) || 0) + 1)
-  }
-
-  const heatmapMonths = Array.from(monthMap.entries()).map(([key, span]) => ({
-    label: key.split('-')[0],
-    span,
-  }))
-
-  return { heatmapCells, heatmapMonths }
+  return { heatmapWeeks: weeks, heatmapMonths: months }
 }
 
 export async function getGitHubLiveActivity(): Promise<GitHubLiveActivity | null> {
@@ -175,7 +185,7 @@ export async function getGitHubLiveActivity(): Promise<GitHubLiveActivity | null
     return null
   }
 
-  const { heatmapCells, heatmapMonths } = buildHeatmap(events || [])
+  const { heatmapWeeks, heatmapMonths } = buildHeatmap(events || [])
 
   return {
     username,
@@ -193,7 +203,7 @@ export async function getGitHubLiveActivity(): Promise<GitHubLiveActivity | null
           stars: repo.stargazers_count,
           pushedAt: repo.pushed_at,
         })) || [],
-    heatmapCells,
+    heatmapWeeks,
     heatmapMonths,
   }
 }

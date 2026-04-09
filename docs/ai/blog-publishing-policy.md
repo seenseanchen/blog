@@ -37,6 +37,8 @@ Publishing rules should make it obvious how AI was used and what level of human 
 - New Traditional Chinese posts should be created at `data/blog/YYYYMM/{post-name}.mdx`.
 - New English counterparts should be created at `data/blog/en/YYYYMM/{post-name}.mdx`.
 - The `YYYYMM` folder is for source organization only. The public slug should remain `{post-name}` and stay aligned across locales.
+- Podcast manuscripts and speaking outlines are working materials, not site content. Save them under `podcasts/` at the repository root, not anywhere under `data/`.
+- Do not publish podcast manuscripts on the website unless the task explicitly asks to turn them into public blog content.
 
 ## Required AI Disclosure Copy
 

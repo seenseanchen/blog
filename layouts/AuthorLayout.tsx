@@ -34,8 +34,10 @@ export default function AuthorLayout({ children, content, title, showTitle = tru
                   <h1 className="text-4xl leading-tight font-extrabold tracking-tight text-gray-900 sm:text-5xl dark:text-gray-100">
                     {name}
                   </h1>
-                  <p className="text-lg text-gray-600 dark:text-gray-300">{occupation}</p>
-                  {company && <p className="text-sm text-gray-500 dark:text-gray-400">{company}</p>}
+                  <p className="text-lg text-gray-600 dark:text-gray-300">
+                    {occupation}
+                    {company ? ` · ${company}` : ''}
+                  </p>
                 </div>
 
                 <a

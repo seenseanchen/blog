@@ -70,13 +70,20 @@ export default function ExperienceShowcase({ locale }: ExperienceShowcaseProps) 
 
                   <div className="min-w-0 flex-1 space-y-4">
                     <div className="space-y-2">
-                      <div className="flex flex-wrap items-center gap-3">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
                         <p className="text-sm font-semibold tracking-[0.18em] text-cyan-600 uppercase dark:text-cyan-400">
                           {entry.company}
                         </p>
-                        <p className="text-xs font-medium tracking-[0.18em] text-gray-400 uppercase lg:hidden dark:text-gray-500">
-                          {entry.period}
-                        </p>
+                        <div className="flex items-center gap-3">
+                          {entry.location && (
+                            <p className="text-xs font-medium tracking-[0.18em] text-gray-400 uppercase dark:text-gray-500">
+                              {entry.location}
+                            </p>
+                          )}
+                          <p className="text-xs font-medium tracking-[0.18em] text-gray-400 uppercase lg:hidden dark:text-gray-500">
+                            {entry.period}
+                          </p>
+                        </div>
                       </div>
                       <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
                         {entry.role}
