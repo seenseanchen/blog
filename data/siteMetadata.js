@@ -29,6 +29,11 @@ const siteMetadata = {
     },
   },
   newsletter: { provider: '' },
+  discussion: {
+    enabled: true,
+    status: 'planned',
+    baseUrl: '',
+  },
   comments: {},
   search: {
     provider: 'kbar',

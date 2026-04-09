@@ -3,6 +3,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
+import PostEngagement from '@/components/PostEngagement'
 import PageTitle from '@/components/PageTitle'
 import PostMetaLine from '@/components/PostMetaLine'
 import SectionContainer from '@/components/SectionContainer'
@@ -20,7 +21,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, locale, next, prev, children }: LayoutProps) {
-  const { slug, date, title, readingTime } = content
+  const { slug, filePath, translationKey, date, title, readingTime } = content
   const dictionary = getDictionary(locale)
 
   return (
@@ -37,6 +38,9 @@ export default function PostLayout({ content, locale, next, prev, children }: La
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
+              <div className="pt-6 pb-6">
+                <PostEngagement filePath={filePath} threadKey={translationKey} locale={locale} />
+              </div>
             </div>
             {siteMetadata.comments && (
               <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">

@@ -3,6 +3,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
+import PostEngagement from '@/components/PostEngagement'
 import PageTitle from '@/components/PageTitle'
 import PostMetaLine from '@/components/PostMetaLine'
 import SectionContainer from '@/components/SectionContainer'
@@ -11,10 +12,6 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import { getDictionary, localizePath, type Locale } from '@/lib/i18n'
-
-const editUrl = (path: string) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
-const discussUrl = (path: string) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}`
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -33,7 +30,7 @@ export default function PostLayout({
   prev,
   children,
 }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, readingTime } = content
+  const { filePath, translationKey, slug, date, title, tags, readingTime } = content
   const dictionary = getDictionary(locale)
 
   return (
@@ -87,12 +84,8 @@ export default function PostLayout({
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
-              <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                <Link href={discussUrl(path)} rel="nofollow">
-                  {dictionary.post.discussOnX}
-                </Link>
-                {` • `}
-                <Link href={editUrl(filePath)}>{dictionary.post.viewOnGitHub}</Link>
+              <div className="pt-6 pb-6">
+                <PostEngagement filePath={filePath} threadKey={translationKey} locale={locale} />
               </div>
               {siteMetadata.comments && (
                 <div

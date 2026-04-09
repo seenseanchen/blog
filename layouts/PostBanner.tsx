@@ -5,6 +5,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
+import PostEngagement from '@/components/PostEngagement'
 import PageTitle from '@/components/PageTitle'
 import PostMetaLine from '@/components/PostMetaLine'
 import SectionContainer from '@/components/SectionContainer'
@@ -22,7 +23,7 @@ interface LayoutProps {
 }
 
 export default function PostMinimal({ content, locale, next, prev, children }: LayoutProps) {
-  const { slug, title, date, images, readingTime } = content
+  const { slug, filePath, translationKey, title, date, images, readingTime } = content
   const dictionary = getDictionary(locale)
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
@@ -46,6 +47,9 @@ export default function PostMinimal({ content, locale, next, prev, children }: L
             </div>
           </div>
           <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
+          <div className="pt-6 pb-6">
+            <PostEngagement filePath={filePath} threadKey={translationKey} locale={locale} />
+          </div>
           {siteMetadata.comments && (
             <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
               <Comments slug={slug} />

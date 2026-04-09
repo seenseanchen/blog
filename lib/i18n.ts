@@ -41,7 +41,11 @@ type Dictionary = {
     previousArticle: string
     nextArticle: string
     backToBlog: string
-    discussOnX: string
+    discussionTitle: string
+    discussionDescription: string
+    discussionPlannedDescription: string
+    openDiscussion: string
+    discussionComingSoon: string
     viewOnGitHub: string
   }
   projects: {
@@ -90,7 +94,11 @@ const dictionaries: Record<Locale, Dictionary> = {
       previousArticle: '上一篇文章',
       nextArticle: '下一篇文章',
       backToBlog: '返回文章列表',
-      discussOnX: '在 X 上討論',
+      discussionTitle: '加入文章討論',
+      discussionDescription: '透過自架討論串留下想法、回覆彼此，並接收後續通知。',
+      discussionPlannedDescription: '自架討論串功能建置中，之後會支援留言、回覆與通知。',
+      openDiscussion: '前往討論串',
+      discussionComingSoon: '即將開放',
       viewOnGitHub: '在 GitHub 查看',
     },
     projects: {
@@ -137,7 +145,13 @@ const dictionaries: Record<Locale, Dictionary> = {
       previousArticle: 'Previous Article',
       nextArticle: 'Next Article',
       backToBlog: 'Back to the blog',
-      discussOnX: 'Discuss on X',
+      discussionTitle: 'Join the discussion',
+      discussionDescription:
+        'Reply in the self-hosted thread and follow the conversation in one place.',
+      discussionPlannedDescription:
+        'The self-hosted discussion feature is in progress and will support replies and notifications soon.',
+      openDiscussion: 'Open thread',
+      discussionComingSoon: 'Coming soon',
       viewOnGitHub: 'View on GitHub',
     },
     projects: {
