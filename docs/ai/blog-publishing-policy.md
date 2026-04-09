@@ -32,6 +32,18 @@ Publishing rules should make it obvious how AI was used and what level of human 
 - Personal claims align with the current public positioning across the entry page, `about`, experience sections, `projects`, and related personal posts.
 - AI disclosure language matches the actual review state.
 
+## File Placement
+
+- New Traditional Chinese posts should be created at `data/blog/YYYYMM/{post-name}.mdx`.
+- New English counterparts should be created at `data/blog/en/YYYYMM/{post-name}.mdx`.
+- The `YYYYMM` folder is for source organization only. The public slug should remain `{post-name}` and stay aligned across locales.
+
+## Required AI Disclosure Copy
+
+- If a post is AI-assisted and not yet author-proofread, append this exact note at the bottom of the Traditional Chinese post body: `本文由 AI 輔助撰寫，尚未經過作者本人校稿`
+- If the author has reviewed and proofread the AI-assisted post, replace that note with this exact Traditional Chinese message: `本文由 AI 輔助撰寫，已經過作者本人校稿`
+- If a public English counterpart exists, keep the disclosure state aligned and translate the message faithfully.
+
 ## Personal Page Alignment
 
 - `Home` is a routing page for reader intent and should stay lightweight.

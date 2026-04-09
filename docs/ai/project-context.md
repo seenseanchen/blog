@@ -23,8 +23,8 @@ The site is not a resume dump and should not read like a job-board profile.
 - `data/pageContent.ts`: localized entry page, about-page sections, experience timeline, side-project copy
 - `data/authors/default.mdx`: Traditional Chinese about content
 - `data/authors/default.en.mdx`: English about content
-- `data/blog/*.mdx`: Traditional Chinese posts
-- `data/blog/en/*.mdx`: English post counterparts
+- `data/blog/**/*.mdx`: Traditional Chinese posts. New posts should live under `data/blog/YYYYMM/{post-name}.mdx`.
+- `data/blog/en/**/*.mdx`: English post counterparts. New posts should live under `data/blog/en/YYYYMM/{post-name}.mdx`.
 - `lib/i18n.ts`: locale labels, route helpers, navigation text
 - `lib/content.ts`: locale-aware content queries and tag metadata
 
@@ -41,8 +41,9 @@ The site is not a resume dump and should not read like a job-board profile.
 
 - `zh-TW` is the default locale and lives at root paths such as `/`, `/blog`, `/about`.
 - English lives under `/en`, `/en/blog`, `/en/about`, and so on.
-- Published blog posts should keep the same slug across locales.
+- Published blog posts should keep the same public slug across locales.
 - English blog files live under `data/blog/en/`.
+- The `YYYYMM` folder is for source organization only and should not change the public post slug.
 - Use `localizePath()` for static internal links.
 - Use `post.path` for links to contentlayer blog entries.
 

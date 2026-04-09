@@ -26,11 +26,24 @@ import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer.js'
 
 const root = process.cwd()
 const EN_BLOG_PREFIX = 'blog/en/'
+const ARCHIVE_SEGMENT_PATTERN = /^\d{6}$/
 
 const getBlogLocaleFromPath = (flattenedPath: string) =>
   flattenedPath.startsWith(EN_BLOG_PREFIX) ? 'en' : 'zh-TW'
 
-const getInternalBlogSlug = (flattenedPath: string) => flattenedPath.replace(/^blog\//, '')
+const stripArchiveSegment = (segments: string[]) =>
+  segments[0] && ARCHIVE_SEGMENT_PATTERN.test(segments[0]) ? segments.slice(1) : segments
+
+const getInternalBlogSlug = (flattenedPath: string) => {
+  const internalPath = flattenedPath.replace(/^blog\//, '')
+  const segments = internalPath.split('/')
+
+  if (segments[0] === 'en') {
+    return ['en', ...stripArchiveSegment(segments.slice(1))].join('/')
+  }
+
+  return stripArchiveSegment(segments).join('/')
+}
 
 const getLocalizedBlogSlug = (flattenedPath: string) =>
   getInternalBlogSlug(flattenedPath).replace(/^en\//, '')
