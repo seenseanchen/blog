@@ -171,6 +171,7 @@ export const Authors = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'data',
+  // Keep podcast manuscripts under data/podcasts, but exclude them from the public site content pipeline.
   contentDirExclude: ['podcasts'],
   documentTypes: [Blog, Authors],
   mdx: {

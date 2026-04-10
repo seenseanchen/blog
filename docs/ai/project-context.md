@@ -25,6 +25,7 @@ The site is not a resume dump and should not read like a job-board profile.
 - `data/authors/default.en.mdx`: English about content
 - `data/blog/**/*.mdx`: Traditional Chinese posts. New posts should live under `data/blog/YYYYMM/{post-name}.mdx`.
 - `data/blog/en/**/*.mdx`: English post counterparts. New posts should live under `data/blog/en/YYYYMM/{post-name}.mdx`.
+- `data/podcasts/**/*.md`: podcast manuscripts, speaking outlines, and TTS source scripts. These are managed content assets, but not public blog posts by default.
 - `lib/i18n.ts`: locale labels, route helpers, navigation text
 - `lib/content.ts`: locale-aware content queries and tag metadata
 
