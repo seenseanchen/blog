@@ -12,6 +12,10 @@ interface Props {
 
 export default function AuthorLayout({ children, content, title, showTitle = true }: Props) {
   const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = content
+  const positioningLines = [
+    'Frontend specialist evolving into fullstack & system design,',
+    'focused on scalable systems and AI-assisted development',
+  ]
 
   if (!showTitle) {
     return (
@@ -38,6 +42,11 @@ export default function AuthorLayout({ children, content, title, showTitle = tru
                     {occupation}
                     {company ? ` · ${company}` : ''}
                   </p>
+                  <div className="pt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                    {positioningLines.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                  </div>
                 </div>
 
                 <a
