@@ -108,7 +108,7 @@ const pageContent: Record<Locale, LocaleContent> = {
     },
     home: {
       eyebrow: 'Sean Chen / 入口頁',
-      title: 'Sean\'s 心想空間',
+      title: '一次做好一件事',
       description:
         '這裡，是想讓了解我的人，快速了解我的背景；以及，也是我自己強迫自主學習的空間。如果你是招募、合作或想了解我的人，建議先看「關於」；如果你是技術讀者，直接進入「文章」或「專案」。',
       audiences: [
