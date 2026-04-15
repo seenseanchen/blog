@@ -1,69 +1,78 @@
 ---
-title: 'How I Integrate AI into Frontend Engineering Workflows'
+title: 'How I Use AI Tools in My Frontend Development Workflow'
 date: '2026-04-01'
 tags: ['ai-assisted-development', 'developer-productivity', 'workflow']
 draft: false
 authors: ['default.en']
-summary: 'AI is not only for answering questions. This post explains how I turn tools like Copilot, Codex, and Claude into part of the engineering workflow.'
+summary: 'AI is not just for answering questions. How I use Copilot, Codex, Claude, and other AI tools as part of my engineering workflow.'
 ---
 
-> 📝 **This post was AI-assisted and has not yet been fully reviewed by the author.**
+> 📝 **This post was AI-assisted and has been reviewed by the author.**
 
 ## Three Levels of AI Usage
 
-Most engineers I observe tend to use AI in roughly three levels:
+Most engineers tend to use AI tools in roughly three levels:
 
-1. **Q&A level**: treating AI like an interactive Stack Overflow
-2. **Assist level**: using AI for autocomplete, explanations, or simple refactors
-3. **Workflow level**: integrating AI into design, implementation planning, review, and documentation
+1. **Q&A level**: treating AI like an interactive Stack Overflow — asking about syntax and API usage
+2. **Assist level**: using AI for autocomplete, code explanations, or simple refactors
+3. **Workflow level**: integrating AI into the engineering process — architecture design, spec writing, code review, documentation
 
-Most teams stay in the first two levels.
-
-I have been trying to push further into the third.
+Most engineers stay in the first two levels. I am still working on getting further into the third.
 
 ## What I Actually Use
 
 ### GitHub Copilot
 
-I mainly use Copilot during day-to-day coding. The biggest value is not just autocomplete. It is speeding up the parts I already understand but do not want to rewrite by hand over and over.
+I mainly use Copilot during day-to-day coding. The biggest value is not autocomplete itself — it is speeding up the parts I already understand but do not want to retype by hand.
+
+These days I also use it to help me edit prompts. I paste in requirements from different specs and API interfaces, and let autocomplete fill in what I want the prompt to say.
+
+Once I have defined a set of AI instructions and skill descriptions, I can let an agent handle things like file templates and logic conventions directly.
+
+For understanding the logic of a specific part of the codebase, Copilot is especially useful — it helps me get up to speed quickly without digging manually.
+
+Also worth noting: Copilot still has a solid price-to-value ratio. It keeps up with new LLM models and the pace of support is fast.
 
 ### Claude Code / Codex CLI
 
-I use these tools for tasks that require more context and structure:
+I use these for larger, more self-contained tasks:
 
-- understanding an unfamiliar codebase
-- generating a first draft from specs or conventions
-- preparing the first pass of a broader refactor
+- Introducing specific technology — for example, adding OpenTelemetry to set up distributed tracing
+- Generating a first draft from a design document, creating new business pages
+- Preparing the first pass of a broader refactor
+- Something like vibe coding — when the expected boundary is clear, I can hand it off and let the CLI run asynchronously without interrupting my flow
 
-### Project instructions and skills
+### CLAUDE.md and skill files
 
-This is the part I find most structurally valuable.
+This is the practice I find most structurally valuable.
 
-When a project has clear instructions, skills, conventions, and publishing rules, AI agents can build context much faster and produce much more useful output.
+I put a `CLAUDE.md` at the root of each project, which defines:
 
-That is why I spend time on things like:
+- the tech stack and architecture principles
+- component naming and folder conventions
+- examples of common patterns
+- notes on specific business logic
 
-- repository-level instructions
-- project architecture notes
-- publishing workflows
-- prompts and skill files that explain how the codebase is organized
+Whether a new person is picking up the project or an AI agent is trying to understand it, this file helps build context quickly.
 
-### MCP
+### MCP (Model Context Protocol)
 
-I still think MCP is early, but it is one of the most interesting pieces of infrastructure in this space.
+On a real team with a real development process, requirements, design, code, tests, documentation, and deployments are spread across many different tools.
 
-It moves AI beyond code reading into something more connected to the real system: documentation, tools, and operational context.
+MCP gives AI a way to access that information, which leads to more automated and more accurate development.
+
+For example: we have Figma designs. Through MCP, AI can read Figma directly — which speeds up generating the initial code and significantly improves implementation accuracy for custom UI.
 
 ## Principles I Keep Coming Back To
 
-**AI does not replace architectural judgment.** It is good at producing a first draft, but engineers still need to decide what is safe, maintainable, and worth keeping.
+**AI does not replace architectural judgment.** It is good at producing a first draft, but the final call on what is safe, maintainable, and worth keeping still belongs to the engineer.
 
-**Context quality shapes output quality.** Better project instructions usually matter more than clever one-off prompts.
+**Context quality shapes output quality.** The more clearly you define the context, the more useful the output. That is why I put a lot of time into instruction design.
 
-**AI works best as a collaborator.** I define the problem, AI helps explore or draft, and I make the final engineering decision.
+**Treat AI as a collaborator, not the person in charge.** I define the problem, AI helps explore or draft, and I make the final engineering decision.
 
 ## What Comes Next
 
-I plan to keep writing about concrete tools, patterns, and workflows that make AI more useful inside real engineering teams.
+I plan to keep writing about concrete tools, workflows, and patterns.
 
-If you are thinking about how to move AI from autocomplete into actual engineering systems, that is exactly the space I want to keep exploring.
+If you are thinking about how to bring AI into your development process, I would love to exchange ideas.
