@@ -54,12 +54,23 @@ Publishing rules should make it obvious how AI was used and what level of human 
 - `Projects` is for public GitHub side projects, not the main job-history narrative.
 - If a post references experience, side projects, or personal positioning, keep those claims synchronized with the matching public page.
 
+## Writing Style
+
+All drafted posts must follow `docs/ai/writing-style-guide.md`. Key points:
+
+- Use a conversational, first-person tone — like an engineer talking to a peer.
+- Open with a personal experience or concrete observation, never an abstract introduction.
+- Keep paragraphs short (one to three sentences) and bold only core principles.
+- After drafting, self-check for unclear subject–object relationships, unnatural title word order, and inconsistent punctuation.
+- See the full guide for detailed rules, examples, and a pre-submission checklist.
+
 ## Translation Rules
 
 - Translate meaning, not just sentences.
 - Keep technical terms stable across both versions.
 - Preserve dates, employer names, product names, and measurable outcomes exactly.
 - Do not invent new claims in the English version.
+- Match the conversational register of the Chinese source — do not formalize the tone.
 
 ## Disclosure Guidance
 
