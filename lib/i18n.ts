@@ -42,6 +42,7 @@ type Dictionary = {
     nextArticle: string
     backToBlog: string
     viewOnGitHub: string
+    loadingComments: string
   }
   projects: {
     title: string
@@ -90,6 +91,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       nextArticle: '下一篇文章',
       backToBlog: '返回文章列表',
       viewOnGitHub: '在 GitHub 查看',
+      loadingComments: '載入留言中…',
     },
     projects: {
       title: '專案',
@@ -136,6 +138,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       nextArticle: 'Next Article',
       backToBlog: 'Back to the blog',
       viewOnGitHub: 'View on GitHub',
+      loadingComments: 'Loading comments…',
     },
     projects: {
       title: 'Projects',
