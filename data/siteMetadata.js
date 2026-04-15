@@ -29,12 +29,24 @@ const siteMetadata = {
     },
   },
   newsletter: { provider: '' },
-  discussion: {
-    enabled: true,
-    status: 'planned',
-    baseUrl: '',
+  comments: {
+    // Giscus 留言系統 — 由 GitHub Discussions 驅動
+    // categoryId 請至 https://giscus.app 取得，填入後即可正式啟用
+    provider: 'giscus',
+    giscusConfig: {
+      repo: 'seenseanchen/blog',
+      repositoryId: 'R_kgDOR23Vqw',
+      category: 'General',
+      categoryId: 'DIC_kwDOR23Vq84C635u',
+      mapping: 'pathname',
+      reactions: '1',
+      metadata: '0',
+      theme: 'light',
+      darkTheme: 'transparent_dark',
+      inputPosition: 'bottom',
+      lang: 'zh-TW',
+    },
   },
-  comments: {},
   search: {
     provider: 'kbar',
     kbarConfig: { searchDocumentsPath: `${process.env.BASE_PATH || ''}/search.json` },

@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react'
 
 const ScrollTopAndComment = () => {
   const [show, setShow] = useState(false)
-  const hasDiscussionEntry = Boolean(
-    siteMetadata.discussion?.enabled || siteMetadata.comments?.provider
-  )
+  const hasDiscussionEntry = Boolean(siteMetadata.comments?.provider)
 
   useEffect(() => {
     const handleWindowScroll = () => {
