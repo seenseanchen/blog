@@ -4,18 +4,20 @@ date: '2026-04-01'
 tags: ['frontend-architecture', 'react', 'next.js']
 draft: false
 authors: ['default.en']
-summary: 'Frontend architecture is not just framework selection. This post outlines the core principles I use when building enterprise frontend systems.'
+summary: 'When a system becomes too painful to maintain, reaching for a new framework sounds like the answer. It usually is not.'
 ---
 
-> 📝 **This post was AI-assisted and has not yet been fully reviewed by the author.**
+> 📝 **This post was AI-assisted and has been reviewed by the author.**
 
 ## The Real Question Behind Frontend Architecture
 
-When frontend engineers discuss architecture, the conversation often gets stuck on tool selection: Zustand or Redux? React Query or SWR?
+I have seen this more than once: someone wants to introduce new technology, and the reason they give is that the old stack is too hard to maintain.
 
-Those are implementation choices. They are not the center of the architecture problem.
+Then the conversation shifts to tool selection — Zustand or Redux? React Query or SWR?
 
-The real question is this:
+But those are not the core of the architecture problem. And honestly, with AI now, most technical questions like these can be answered pretty thoroughly with a quick search.
+
+The real question is:
 
 **Will different people still be able to change this system safely a year from now?**
 
@@ -25,11 +27,15 @@ The real question is this:
 
 One of the most common issues is a component that handles UI rendering, API calls, business logic, and state management all at once.
 
-It can work in the short term, but as business complexity grows, it becomes one of the most dangerous parts of the codebase.
+At first it moves fast. Everything lives in one file, easy to find, easy to change. But as the business keeps adding requirements, the same logic starts getting copy-pasted because the inputs and outputs are slightly different in each context.
 
-My usual split looks like this:
+Then one day someone says a piece of logic needs a small adjustment, or the backend is changing an API shape.
 
-- **UI components**: rendering only, props in and events out
+Now you are doing a full codebase search, and somewhere along the way a placeholder slips in — and a bug appears.
+
+So the baseline separation I rely on:
+
+- **UI components**: rendering only
 - **Container components**: data fetching and state coordination
 - **Business hooks**: reusable domain logic extracted into custom hooks
 - **API layer**: requests managed in one place instead of scattered across components
@@ -40,15 +46,15 @@ In large systems, messy data flow is one of the hardest things to maintain.
 
 I prefer to define data flow expectations early:
 
-- keep server state and client state clearly separated
-- make ownership explicit for data shared across modules
-- avoid prop drilling, but also avoid turning global state into a default answer for everything
+- Be clear about server state versus client state — know whether the data is being handled on the server or the client side
+- Make ownership explicit for data shared across modules — if data belongs to a module, that module should be the one managing it
+- Avoid prop drilling, but also avoid turning global state into a default answer for everything
 
 ### 3. Unclear module boundaries
 
-This becomes especially painful in monorepos or larger applications. When module boundaries are blurry, the cost of refactoring rises very quickly.
+There is value in sharing, but there also needs to be a boundary. Separate distinct business modules from each other. This becomes especially painful in monorepos or larger applications — when module boundaries are blurry, the cost of refactoring rises very quickly.
 
-I usually want each feature module to own its own:
+Each feature module should own its own:
 
 - components
 - hooks
