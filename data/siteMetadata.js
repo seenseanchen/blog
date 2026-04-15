@@ -41,6 +41,7 @@ const siteMetadata = {
       mapping: 'pathname',
       reactions: '1',
       metadata: '0',
+      themeURL: '',       // 空字串讓 pliny 根據 resolvedTheme 自動切換 light/dark
       theme: 'light',
       darkTheme: 'transparent_dark',
       inputPosition: 'bottom',
