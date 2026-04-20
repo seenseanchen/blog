@@ -37,6 +37,17 @@ type ExperienceHighlightEntry = {
   links?: CallToAction[]
 }
 
+export type ProjectDetailSection = {
+  heading: string
+  items: string[]
+}
+
+export type ProjectDetails = {
+  intro?: string
+  sections: ProjectDetailSection[]
+  actions?: CallToAction[]
+}
+
 type ProjectEntry = {
   title: string
   role: string
@@ -45,6 +56,7 @@ type ProjectEntry = {
   stack: string[]
   impact: string[]
   links?: CallToAction[]
+  details?: ProjectDetails
 }
 
 export type CareerSectionContent = {
@@ -64,6 +76,8 @@ export type ShowcaseSectionContent = {
   impactLabel: string
   entries: ProjectEntry[]
   callsToAction?: CallToAction[]
+  detailsButtonLabel?: string
+  detailsCloseLabel?: string
 }
 
 type LocaleContent = {
@@ -101,8 +115,7 @@ const pageContent: Record<Locale, LocaleContent> = {
       description: '專注於企業級前端架構、系統設計與 AI-assisted development 的資深前端工程師。',
       homeDescription:
         'Sean Chen 的網站入口頁，協助 HR / 非技術讀者快速了解背景，也引導技術讀者直接進入文章。',
-      aboutDescription:
-        '關於 Sean Chen 的背景、工作方式，以及從物流到電商的職涯經歷時間軸。',
+      aboutDescription: '關於 Sean Chen 的背景、工作方式，以及從物流到電商的職涯經歷時間軸。',
       projectsDescription: 'Sean Chen 目前公開在 GitHub 的 side projects 與實作方向。',
       tagsDescription: 'Sean Chen 文章的標籤總覽與主題入口。',
     },
@@ -264,7 +277,14 @@ const pageContent: Record<Locale, LocaleContent> = {
           ],
           imageSrc: '/static/images/firsthorizon-showcase.jpg',
           imageAlt: 'FirstHorizon booking dashboard screenshot',
-          stack: ['React', 'Next.js', 'TypeScript', '.NET RESTful API', 'Azure CI/CD', 'OutSystems'],
+          stack: [
+            'React',
+            'Next.js',
+            'TypeScript',
+            '.NET RESTful API',
+            'Azure CI/CD',
+            'OutSystems',
+          ],
         },
         {
           title: 'Newegg Mobile App',
@@ -327,10 +347,11 @@ const pageContent: Record<Locale, LocaleContent> = {
     },
     projects: {
       title: '專案',
-      intro:
-        '',
+      intro: '',
       stackLabel: '技術與平台',
       impactLabel: '重點整理',
+      detailsButtonLabel: '瀏覽細節',
+      detailsCloseLabel: '關閉',
       callsToAction: [
         {
           label: 'GitHub repo 列表',
@@ -338,6 +359,157 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
       ],
       entries: [
+        {
+          title: 'Secure Data Masker',
+          role: '在瀏覽器本地處理的敏感資料去識別化工具',
+          period: 'Public side project / 2026',
+          summary:
+            '針對 JSON、XML、純文字 / log 的敏感資料，提供智慧遮罩規則與自訂字典，全程在瀏覽器離線處理，不上傳任何資料。',
+          stack: [
+            'React 19',
+            'TypeScript',
+            'Vite',
+            'Tailwind CSS',
+            'Framer Motion',
+            'Lucide React',
+          ],
+          impact: [
+            '支援 JSON / XML / 純文字 / log 的多格式自動判斷與遮罩。',
+            '內建常見敏感關鍵字字典，可切換精準比對或模糊比對模式。',
+            '所有處理皆在瀏覽器離線完成，適合在受規範環境下快速脫敏測試資料。',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/Secure-Data-Masker',
+            },
+          ],
+          details: {
+            intro:
+              '給開發者與資安人員快速把 JSON、XML、純文字中的敏感欄位去識別化，保留資料結構與格式，方便用在測試、日誌分享或文件截圖。',
+            sections: [
+              {
+                heading: '核心功能',
+                items: [
+                  '隱私優先：所有處理都在瀏覽器本地完成，不會上傳到任何伺服器。',
+                  '多格式支援：自動判斷 JSON、XML、純文字與 log，並套用對應的遮罩邏輯。',
+                  '智慧遮罩策略：字串替換為 [KEYWORD_NAME] 保留語意、數字隨機化但保持原有位數、布林值自動翻轉以保護狀態旗標。',
+                  '規則管理：內建常見敏感字典（API Key、Password、SSN 等），支援精準 / 模糊比對，並可匯出 .json 規則與團隊共用。',
+                ],
+              },
+              {
+                heading: '支援格式',
+                items: ['JSON 物件與陣列。', 'XML 文件。', '純文字與 log 檔。'],
+              },
+              {
+                heading: '使用流程',
+                items: [
+                  '將原始敏感資料貼到左側 Raw Input 區。',
+                  '於左側側邊欄調整遮罩策略或新增自訂關鍵字。',
+                  '從右側 Masked Output 複製處理後的結果。',
+                ],
+              },
+              {
+                heading: '技術棧',
+                items: [
+                  'React 19 + Vite 作為前端基礎。',
+                  'TypeScript 強化型別安全。',
+                  'Tailwind CSS 處理高密度暗色 Dashboard UI。',
+                  'Framer Motion 提供介面動畫。',
+                  'Lucide React 提供 icon。',
+                ],
+              },
+              {
+                heading: '安全備註',
+                items: [
+                  '零伺服器通訊的 privacy-first 架構，適合處理高度敏感資料。',
+                  '適用場景：測試資料脫敏、log 分享、文件截圖前的快速遮罩。',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://secure-data-masker-phi.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/Secure-Data-Masker',
+              },
+            ],
+          },
+        },
+        {
+          title: 'Icon Resizer Pro',
+          role: '多平台圖示與截圖一鍵轉換的瀏覽器工具',
+          period: 'Public side project / 2026',
+          summary:
+            '一張原圖、一次產生 Chrome Extension、iOS、Android、Web / Favicon 需要的所有尺寸，全程在瀏覽器本地處理、不上傳任何檔案。',
+          stack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Vite', 'JSZip', 'FileSaver', 'Motion'],
+          impact: [
+            '支援 Chrome Extension、iOS App Store、Android、Web / Favicon 四大平台所需的完整尺寸規格。',
+            '自動化批次縮放與 .zip 打包，省掉逐一產圖與壓縮的重複流程。',
+            '純前端本地處理，圖片不會上傳至伺服器，兼顧隱私與速度。',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/Icon-Resizer',
+            },
+          ],
+          details: {
+            intro:
+              '把一張高解析原圖（建議 1024x1024 以上）轉成各平台需要的所有 icon 與 screenshot 尺寸，並以 .zip 一次下載。',
+            sections: [
+              {
+                heading: '核心功能',
+                items: [
+                  '多平台一次輸出：Chrome Extension、iOS、Android、Web / Favicon 同步產出。',
+                  '智慧縮放與置中：處理寬高比不同的輸出格式（例如 Chrome 商店截圖）。',
+                  '批次 .zip 下載：把所有尺寸檔案打包成單一壓縮檔。',
+                  '本地處理、保護隱私：不需後端，圖片不會離開瀏覽器。',
+                ],
+              },
+              {
+                heading: '支援規格',
+                items: [
+                  'Chrome Extension：16 / 32 / 48 / 128 PNG、1280x800 與 640x400 JPEG 截圖。',
+                  'iOS App Store：iPhone / iPad @2x、@3x 系列，以及 1024x1024 商店主圖。',
+                  'Android：mdpi 到 xxxhdpi 多密度、512x512 Google Play 主圖。',
+                  'Web / Favicon：16 / 32 favicon、180x180 Apple Touch、Android Chrome manifest icons。',
+                ],
+              },
+              {
+                heading: '使用流程',
+                items: [
+                  '上傳或拖曳一張高解析度原圖（建議 1024x1024 以上）。',
+                  '選擇目標平台（Chrome Extension / iOS / Android / Web）。',
+                  '一鍵下載打包好的 .zip，檔案皆為對應規格命名。',
+                ],
+              },
+              {
+                heading: '技術棧',
+                items: [
+                  'React 19 + TypeScript 的元件化結構。',
+                  'Tailwind CSS 處理 UI、Lucide React 提供 icon。',
+                  'Vite 作為開發與建置工具。',
+                  'JSZip + FileSaver 負責打包與下載流程。',
+                  'Motion 處理 UI 動畫互動。',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://icon-resizer-xi.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/Icon-Resizer',
+              },
+            ],
+          },
+        },
         {
           title: 'EC Order Aggregator',
           role: '以 Chrome Extension 整合台灣電商平台訂單紀錄的個人 side project',
@@ -533,7 +705,14 @@ const pageContent: Record<Locale, LocaleContent> = {
           ],
           imageSrc: '/static/images/firsthorizon-showcase.jpg',
           imageAlt: 'FirstHorizon booking dashboard screenshot',
-          stack: ['React', 'Next.js', 'TypeScript', '.NET RESTful API', 'Azure CI/CD', 'OutSystems'],
+          stack: [
+            'React',
+            'Next.js',
+            'TypeScript',
+            '.NET RESTful API',
+            'Azure CI/CD',
+            'OutSystems',
+          ],
         },
         {
           title: 'Newegg Mobile App',
@@ -599,6 +778,8 @@ const pageContent: Record<Locale, LocaleContent> = {
       intro: '',
       stackLabel: 'Stack and Platforms',
       impactLabel: 'Highlights',
+      detailsButtonLabel: 'View Details',
+      detailsCloseLabel: 'Close',
       callsToAction: [
         {
           label: 'GitHub repositories',
@@ -606,6 +787,157 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
       ],
       entries: [
+        {
+          title: 'Secure Data Masker',
+          role: 'A browser-based, offline tool for de-identifying sensitive data in JSON, XML, and plain text',
+          period: 'Public side project / 2026',
+          summary:
+            'A privacy-first client-side utility that masks sensitive fields in JSON, XML, and log-style text, with configurable rules and dictionaries — no data ever leaves the browser.',
+          stack: [
+            'React 19',
+            'TypeScript',
+            'Vite',
+            'Tailwind CSS',
+            'Framer Motion',
+            'Lucide React',
+          ],
+          impact: [
+            'Detects and masks data across JSON, XML, and plain text / logs with format-aware rules.',
+            'Ships a built-in dictionary of common sensitive keywords with exact and fuzzy matching modes.',
+            'Runs entirely offline in the browser, making it safe for quick de-identification in regulated environments.',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/Secure-Data-Masker',
+            },
+          ],
+          details: {
+            intro:
+              'Built for developers and security-minded engineers who need to quickly de-identify sensitive data while preserving structure and format for testing, log sharing, or screenshots.',
+            sections: [
+              {
+                heading: 'Core Features',
+                items: [
+                  'Privacy-first: every transformation runs locally in the browser, with zero server uploads.',
+                  'Multi-format support: auto-detects JSON, XML, plain text, and log files, applying the right masking logic for each.',
+                  'Smart masking strategies: strings become [KEYWORD_NAME] to preserve context, numbers are randomized while keeping original digit length, and booleans are flipped to protect status flags.',
+                  'Rule management: a built-in dictionary of sensitive terms (API Keys, Passwords, SSN, etc.) with exact / fuzzy matching and the ability to export custom rules as .json for team sharing.',
+                ],
+              },
+              {
+                heading: 'Supported Formats',
+                items: ['JSON objects and arrays.', 'XML documents.', 'Plain text and log files.'],
+              },
+              {
+                heading: 'Usage Flow',
+                items: [
+                  'Paste sensitive data into the Raw Input area on the left.',
+                  'Tune masking strategies or add custom keywords from the left sidebar.',
+                  'Copy the processed result from Masked Output on the right.',
+                ],
+              },
+              {
+                heading: 'Tech Stack',
+                items: [
+                  'React 19 + Vite as the frontend foundation.',
+                  'TypeScript for type safety.',
+                  'Tailwind CSS for a high-density dark-mode dashboard UI.',
+                  'Framer Motion for interface animations.',
+                  'Lucide React for icons.',
+                ],
+              },
+              {
+                heading: 'Security Notes',
+                items: [
+                  'Zero server communication — a privacy-first architecture suitable for highly sensitive data.',
+                  'Ideal for test-data de-identification, log sharing, and pre-screenshot redaction in compliance-sensitive workflows.',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://secure-data-masker-phi.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/Secure-Data-Masker',
+              },
+            ],
+          },
+        },
+        {
+          title: 'Icon Resizer Pro',
+          role: 'A browser-based tool that converts a single image into every icon and screenshot size each platform needs',
+          period: 'Public side project / 2026',
+          summary:
+            'One source image, every size that Chrome Extensions, iOS, Android, and the Web need — all processed locally in the browser with no uploads.',
+          stack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Vite', 'JSZip', 'FileSaver', 'Motion'],
+          impact: [
+            'Covers the full size spec for Chrome Extensions, the iOS App Store, Android, and Web / Favicon output.',
+            'Automates batch resizing and .zip packaging so no one has to export and compress images one by one.',
+            'Runs entirely in the browser, keeping images local to protect privacy while staying fast.',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/Icon-Resizer',
+            },
+          ],
+          details: {
+            intro:
+              'Upload one high-resolution source image (1024x1024 or larger recommended) and download a .zip with every icon and screenshot size each platform expects.',
+            sections: [
+              {
+                heading: 'Core Features',
+                items: [
+                  'Multi-platform export: Chrome Extension, iOS, Android, and Web / Favicon sizes in a single run.',
+                  'Smart scaling and centering: handles formats with different aspect ratios, such as Chrome store screenshots.',
+                  'Batch .zip download: packages every generated size into a single compressed archive.',
+                  'Local processing, privacy-first: no backend required, source images never leave the browser.',
+                ],
+              },
+              {
+                heading: 'Supported Specs',
+                items: [
+                  'Chrome Extension: 16 / 32 / 48 / 128 PNG icons plus 1280x800 and 640x400 JPEG screenshots.',
+                  'iOS App Store: iPhone / iPad @2x and @3x variants, plus the 1024x1024 App Store icon.',
+                  'Android: densities from mdpi through xxxhdpi, plus the 512x512 Google Play icon.',
+                  'Web / Favicon: 16 / 32 favicons, 180x180 Apple Touch Icon, and Android Chrome manifest icons.',
+                ],
+              },
+              {
+                heading: 'Usage Flow',
+                items: [
+                  'Upload or drag-and-drop a high-resolution source image (1024x1024 or larger recommended).',
+                  'Pick the target platform (Chrome Extension / iOS / Android / Web).',
+                  'Download a single .zip with every asset pre-named for its spec.',
+                ],
+              },
+              {
+                heading: 'Tech Stack',
+                items: [
+                  'React 19 + TypeScript component structure.',
+                  'Tailwind CSS for UI styling and Lucide React for icons.',
+                  'Vite for development and builds.',
+                  'JSZip + FileSaver to handle packaging and downloads.',
+                  'Motion for UI animation and interaction.',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://icon-resizer-xi.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/Icon-Resizer',
+              },
+            ],
+          },
+        },
         {
           title: 'EC Order Aggregator',
           role: 'A personal Chrome Extension side project for consolidating order history across Taiwan e-commerce platforms',

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from '@/components/Link'
+import ProjectDetailsDialog from '@/components/ProjectDetailsDialog'
 import type { ShowcaseSectionContent } from '@/data/pageContent'
 
 interface ShowcaseSectionProps {
@@ -104,9 +105,10 @@ export default function ShowcaseSection({
               </div>
             </div>
 
-            {entry.links && entry.links.length > 0 && (
+            {((entry.links && entry.links.length > 0) ||
+              (entry.details && section.detailsButtonLabel)) && (
               <div className="mt-6 flex flex-wrap gap-3 border-t border-gray-200 pt-6 dark:border-gray-800">
-                {entry.links.map((link) => (
+                {entry.links?.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
@@ -115,6 +117,14 @@ export default function ShowcaseSection({
                     {link.label}
                   </Link>
                 ))}
+                {entry.details && section.detailsButtonLabel && (
+                  <ProjectDetailsDialog
+                    title={entry.title}
+                    buttonLabel={section.detailsButtonLabel}
+                    closeLabel={section.detailsCloseLabel ?? 'Close'}
+                    details={entry.details}
+                  />
+                )}
               </div>
             )}
           </article>
