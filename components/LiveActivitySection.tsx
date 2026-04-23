@@ -42,6 +42,9 @@ export default async function LiveActivitySection({ locale }: LiveActivitySectio
     return null
   }
 
+  // TODO: 刷題記錄上來後改為 true 來重新開啟
+  const showLeetcode = false
+
   const weekLabels = [
     { index: 1, label: 'Mon' },
     { index: 3, label: 'Wed' },
@@ -203,8 +206,7 @@ export default async function LiveActivitySection({ locale }: LiveActivitySectio
         )}
 
         <div className="space-y-6">
-          {/* TODO: 刷題記錄上來後移除 false 來重新開啟 */}
-          {false && leetcodeUsername && (
+          {showLeetcode && leetcodeUsername && (
             <article className="rounded-[2rem] border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900/60">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="space-y-2">
