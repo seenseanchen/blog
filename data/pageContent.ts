@@ -120,8 +120,8 @@ const pageContent: Record<Locale, LocaleContent> = {
       tagsDescription: 'Sean Chen 文章的標籤總覽與主題入口。',
     },
     home: {
-      eyebrow: 'Sean Chen / 入口頁',
-      title: '一次做好一件事',
+      eyebrow: "Sean's 心想 Blog",
+      title: '「以好奇心探索新知，以責任感實踐卓越。」',
       description:
         '這裡，是想讓了解我的人，快速了解我的背景；以及，也是我自己強迫自主學習的空間。如果你是招募、合作或想了解我的人，建議先看「關於」；如果你是技術讀者，直接進入「文章」或「專案」。',
       audiences: [
@@ -546,8 +546,8 @@ const pageContent: Record<Locale, LocaleContent> = {
       tagsDescription: 'A tag directory for Sean Chen’s blog topics.',
     },
     home: {
-      eyebrow: 'Sean Chen / Entry',
-      title: "Sean's Space for Thoughts",
+      eyebrow: "Sean's 心想 Blog",
+      title: 'Explore with curiosity. Excel with responsibility.',
       description:
         'This is a place for people who want to know me to quickly understand my background, and also a space where I push myself to keep learning. If you are here for recruiting, collaboration, or simply to get to know me, start with About. If you are a technical reader, jump straight into the Blog or Projects.',
       audiences: [
