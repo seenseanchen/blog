@@ -360,6 +360,92 @@ const pageContent: Record<Locale, LocaleContent> = {
       ],
       entries: [
         {
+          title: 'HelloJavaInBancassurance',
+          role: '模擬銀保通路情境的 Spring Boot 後端 API 面試練習專案',
+          period: 'Public side project / 2026',
+          summary:
+            '以「銀保通路（Bancassurance）」業務情境為主軸，從零建構 Spring Boot 後端 API，涵蓋核保流程、保單查詢與變更、樂觀鎖、冪等性與 JSONB 稽核日誌，為銀行 / 壽險業 Java 後端面試做實戰準備。',
+          stack: [
+            'Java 21',
+            'Spring Boot 4.0.x',
+            'Spring Data JPA',
+            'PostgreSQL 16',
+            'Flyway',
+            'Testcontainers',
+            'Swagger UI',
+            'Docker',
+          ],
+          impact: [
+            '實作核保狀態機（6 狀態 EnumMap 表驅動）與完整的保單查詢 / 變更 API，共 17 支 endpoint。',
+            'M5 以 ETag + 樂觀鎖 + Idempotency Key + JSONB 稽核日誌實作金融級別的交易控制，並區分 412 / 409 兩種衝突語意。',
+            '以 Testcontainers 跑真實 PostgreSQL 整合測試，13 支測試涵蓋併發衝突、冪等重試與反向 case。',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/HelloJavaInBancassurance',
+            },
+          ],
+          details: {
+            intro:
+              '準備銀行 / 人壽保險業 Java 後端工程師面試。以「銀保通路（Bancassurance）」業務情境為主軸，從零建構一套 Spring Boot 後端 API 系統，分 M0–M8 八個 milestone 逐步推進，最終以 M5 保單變更作為設計高潮。',
+            sections: [
+              {
+                heading: '業務情境',
+                items: [
+                  '功能一：人壽審查契約（Underwriting）— 保戶投保 → 業務員送件 → 核保員審查 → 通過 / 退件 / 補件，重點在狀態機設計、多角色流程與稽核軌跡。',
+                  '功能二：保單查詢與變更（Policy Inquiry & Endorsement）— 查詢保單明細 / 受益人 / 繳費狀態；線上申請地址、受益人、繳費方式變更，重點在交易控制、樂觀鎖、冪等性與稽核。',
+                ],
+              },
+              {
+                heading: '核心設計決策',
+                items: [
+                  '狀態機（M3）：核保流程 6 狀態以 EnumMap 表驅動實作；非法跳轉拋 IllegalStateTransitionException → 409 Conflict。',
+                  '樂觀鎖 + @Transactional（M5）：GET 回應帶 ETag 版本號，PATCH 帶 If-Match header；412 表示應用層前置版本不符，409 表示真實 DB 層寫入衝突，兩者語意明確分開。',
+                  '冪等性（M5）：以 idempotency_key 為 PK 的 idempotency_record 表，記錄 request hash 與 response snapshot；併發雙 INSERT 靠 PK constraint 擋住，client 重試時 replay 成功結果。',
+                  '稽核日誌（M5）：policy_change_log 以 JSONB 記錄 before / after snapshot，與主交易共生死，避免「log 說改了但 DB 沒改」的稽核錯亂。',
+                  '統一回應格式（M6）：ResponseBodyAdvice<Object> 自動包裝所有 Controller 回傳；MDC traceId 同時寫進 log 與 response header，方便跨服務追蹤。',
+                ],
+              },
+              {
+                heading: '整合測試（M8）',
+                items: [
+                  '13 支測試以 Testcontainers 跑真實 PostgreSQL 16 alpine container。',
+                  'PolicyOptimisticLockConcurrencyTest：CountDownLatch 同步起跑，斷言「一勝一敗、version 只進 1」。',
+                  'PolicyChangeIdempotencyTest：同 key replay / 同 key 不同 body 422 / 無 key 正常執行三種情境。',
+                  'PolicyChangeNegativeTest：涵蓋 412 / 409 / 422 / 404 / 400 共 8 個反向 case。',
+                  'static @ServiceConnection PostgreSQLContainer 整個 JVM 共享，比每個 test class 重啟省約 6x 時間。',
+                ],
+              },
+              {
+                heading: '技術棧',
+                items: [
+                  'Java 21 LTS：Virtual Thread、record、sealed class；銀行新案採用率提升。',
+                  'Spring Boot 4.0.x + Spring Data JPA + Hibernate 6（@Version 樂觀鎖）。',
+                  'PostgreSQL 16（Docker）：ACID、JSONB、銀行 POC 常用。',
+                  'Flyway 版控 DDL；Swagger UI (springdoc-openapi) 自動產生文件。',
+                  'Lombok + MapStruct：減少樣板程式碼；DTO ↔ Entity 安全轉換。',
+                  'JUnit 5 + Testcontainers：用真實 PostgreSQL 跑整合測試，避免 H2 假象。',
+                ],
+              },
+              {
+                heading: '專案結構',
+                items: [
+                  'Package by Feature 而非 by Layer：underwriting / policy 兩個功能包各自完整，避免「Controller 包 1000 個 class」的維護災難。',
+                  'common 層統一管理 exception handling、JPA 稽核欄位與 OpenAPI / Jackson 設定。',
+                  'PolicyService（readOnly）與 PolicyChangeService（寫操作）職責分離，查詢與變更路徑清晰。',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/HelloJavaInBancassurance',
+              },
+            ],
+          },
+        },
+        {
           title: 'Secure Data Masker',
           role: '在瀏覽器本地處理的敏感資料去識別化工具',
           period: 'Public side project / 2026',
@@ -528,6 +614,59 @@ const pageContent: Record<Locale, LocaleContent> = {
               href: 'https://github.com/seenseanchen/ec-order-aggregator-ext',
             },
           ],
+          details: {
+            intro:
+              'EC Order Aggregator 是一個 Chrome Extension，旨在解決個人訂單資料分散在各個電商平台的問題。透過統一的資料採集與正規化流程，讓使用者能在 side panel 內快速檢索、管理所有的購買紀錄。',
+            sections: [
+              {
+                heading: '核心功能',
+                items: [
+                  '多平台彙整：支援 PChome、momo、蝦皮 (Shopee)、Yahoo 購物中心。',
+                  '自動採集：自動辨識訂單完成頁與歷史訂單頁，並將資料正規化為統一模型。',
+                  '邊欄管理：Side panel 提供列表瀏覽、關鍵字搜尋、排序與狀態篩選（包含退貨判斷）。',
+                  '手動同步：提供「重新抓取當前頁」功能，確保資料採集完整度。',
+                  '隱私優先：所有資料僅儲存在本地瀏覽器的 IndexedDB (Dexie)，不上傳至外部伺服器。',
+                ],
+              },
+              {
+                heading: '技術實作',
+                items: [
+                  '配置化 Adapter 架構：透過 PlatformAdapter 介面隔離平台差異，支援快速擴充新站點。',
+                  '混合擷取策略：結合 DOM 掃描、Network 攔截解析 (PChome/Shopee) 與 Page State 提取 (Yahoo)。',
+                  '冪等寫入機制：使用 deterministic ID 確保重複掃描或手動重抓時，資料不重複。',
+                  '強型別通訊：建立 content、background、sidepanel 三層間的 typed messaging contract。',
+                ],
+              },
+              {
+                heading: '使用流程',
+                items: [
+                  '於 Chrome 線上程式商店安裝擴充功能。',
+                  '登入並瀏覽支援的電商平台訂單頁。',
+                  '點擊瀏覽器側邊欄圖示，查看已彙整的個人購買清單。',
+                ],
+              },
+              {
+                heading: '技術棧',
+                items: [
+                  'TypeScript 為核心，強化跨層通訊的型別安全。',
+                  'React 19 + Vite 打造高性能的 Side Panel UI。',
+                  'Dexie.js (IndexedDB) 負責本地資料庫管理。',
+                  'Zustand 處理 UI 狀態管理。',
+                  'Chrome Extension MV3 架構。',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: '安裝擴充功能',
+                href: 'https://chromewebstore.google.com/detail/ec-order-aggregator/ilidpcejmonahdjoeilkjgmiogigknei',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/ec-order-aggregator-ext',
+              },
+            ],
+          },
         },
       ],
     },
@@ -788,6 +927,92 @@ const pageContent: Record<Locale, LocaleContent> = {
       ],
       entries: [
         {
+          title: 'HelloJavaInBancassurance',
+          role: 'A Spring Boot backend API project built around bancassurance workflows for Java interview preparation',
+          period: 'Public side project / 2026',
+          summary:
+            'A hands-on backend project built around bancassurance business scenarios — underwriting workflows, policy inquiry and endorsement, optimistic locking, idempotency, and JSONB audit logs — designed as interview-ready practice for Java backend roles in banking and life insurance.',
+          stack: [
+            'Java 21',
+            'Spring Boot 4.0.x',
+            'Spring Data JPA',
+            'PostgreSQL 16',
+            'Flyway',
+            'Testcontainers',
+            'Swagger UI',
+            'Docker',
+          ],
+          impact: [
+            'Implemented a 6-state underwriting state machine (EnumMap table-driven) and a full policy query / endorsement API across 17 endpoints.',
+            'M5 covers ETag-based optimistic locking, Idempotency Key, and JSONB audit logs at a financial-grade level, with 412 and 409 semantics clearly separated.',
+            'Integration tests using Testcontainers and a real PostgreSQL instance — 13 tests covering concurrency conflicts, idempotent retries, and negative cases.',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/HelloJavaInBancassurance',
+            },
+          ],
+          details: {
+            intro:
+              'A project built to prepare for Java backend engineering interviews in banking and life insurance. Structured around the bancassurance channel as the domain, it grows from a skeleton (M0) through eight milestones to a production-flavored system, with M5 policy endorsement as the design centerpiece.',
+            sections: [
+              {
+                heading: 'Business Context',
+                items: [
+                  'Feature 1 — Underwriting: policyholder applies → agent submits → underwriter reviews → approve / reject / request additional info. Focus: state machine design, multi-role workflow, audit trail.',
+                  'Feature 2 — Policy Inquiry & Endorsement: query policy details, beneficiaries, and payment status; submit online changes for address, beneficiaries, and payment method. Focus: transaction control, optimistic locking, idempotency, and audit.',
+                ],
+              },
+              {
+                heading: 'Core Design Decisions',
+                items: [
+                  'State machine (M3): 6-state underwriting flow implemented with an EnumMap table-driven approach; illegal transitions throw IllegalStateTransitionException → 409 Conflict.',
+                  'Optimistic locking + @Transactional (M5): GET returns an ETag version header; PATCH carries If-Match. 412 means the application-layer pre-check caught a stale version; 409 means a real concurrent DB write collision — two semantics, two codes.',
+                  'Idempotency (M5): idempotency_record table keyed by idempotency_key, storing the request hash and response snapshot. Concurrent double-INSERTs are blocked by the PK constraint; retrying clients replay the first successful response.',
+                  "Audit log (M5): policy_change_log stores JSONB before/after snapshots within the same @Transactional boundary, so a business rollback also rolls back the log — no 'log says changed but DB didn't' drift.",
+                  'Unified response format (M6): ResponseBodyAdvice<Object> wraps all controller returns automatically. MDC traceId flows into both logs and response headers for cross-service tracing.',
+                ],
+              },
+              {
+                heading: 'Integration Testing (M8)',
+                items: [
+                  '13 tests backed by a real PostgreSQL 16 alpine container via Testcontainers.',
+                  "PolicyOptimisticLockConcurrencyTest: CountDownLatch synchronized start, asserting 'one wins, one loses, version advances by exactly 1'.",
+                  'PolicyChangeIdempotencyTest: same-key replay, same-key different-body 422, and no-key normal execution.',
+                  'PolicyChangeNegativeTest: 8 negative cases covering 412 / 409 / 422 / 404 / 400.',
+                  'Static @ServiceConnection PostgreSQLContainer shared across the JVM — roughly 6x faster than restarting per test class.',
+                ],
+              },
+              {
+                heading: 'Tech Stack',
+                items: [
+                  'Java 21 LTS: Virtual Threads, records, sealed classes — growing adoption in new banking projects.',
+                  'Spring Boot 4.0.x + Spring Data JPA + Hibernate 6 with @Version optimistic locking.',
+                  'PostgreSQL 16 via Docker: ACID guarantees, JSONB, widely used in bank POC environments.',
+                  'Flyway for version-controlled DDL; springdoc-openapi for auto-generated Swagger UI.',
+                  'Lombok + MapStruct to reduce boilerplate and safely convert between DTOs and entities.',
+                  'JUnit 5 + Testcontainers: real database integration tests, no H2 false positives.',
+                ],
+              },
+              {
+                heading: 'Project Structure',
+                items: [
+                  'Package by Feature instead of by Layer: underwriting and policy are self-contained feature packages — avoids the "Controller with 1000 classes" maintenance problem common in large financial projects.',
+                  'common layer handles exception handling, JPA auditing fields, and OpenAPI / Jackson configuration.',
+                  'PolicyService (readOnly) and PolicyChangeService (write) have clearly separated responsibilities.',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/HelloJavaInBancassurance',
+              },
+            ],
+          },
+        },
+        {
           title: 'Secure Data Masker',
           role: 'A browser-based, offline tool for de-identifying sensitive data in JSON, XML, and plain text',
           period: 'Public side project / 2026',
@@ -956,6 +1181,59 @@ const pageContent: Record<Locale, LocaleContent> = {
               href: 'https://github.com/seenseanchen/ec-order-aggregator-ext',
             },
           ],
+          details: {
+            intro:
+              'EC Order Aggregator is a Chrome Extension designed to consolidate order history from multiple Taiwan e-commerce platforms. It builds a unified data pipeline that captures, normalizes, and stores purchase records locally, allowing users to search and manage their shopping history in a single side panel.',
+            sections: [
+              {
+                heading: 'Core Features',
+                items: [
+                  'Multi-platform aggregation: Supports PChome, momo, Shopee, and Yahoo Shopping.',
+                  'Automated capture: Identifies order success and history pages to extract data into a unified model.',
+                  'Side panel management: Search, sort, and filter purchase history directly in the browser sidebar.',
+                  'Manual sync: Re-capture data from the active tab to ensure collection completeness.',
+                  'Privacy-first: Uses Dexie (IndexedDB) for local storage; no purchase data ever leaves your machine.',
+                ],
+              },
+              {
+                heading: 'Technical Highlights',
+                items: [
+                  'Adapter-based architecture: Isolates platform-specific logic via a PlatformAdapter interface for easy extensibility.',
+                  'Mixed extraction strategy: Combines DOM scanning, network interception (PChome/Shopee), and page state extraction (Yahoo).',
+                  'Idempotent writes: Uses deterministic IDs to prevent duplicate records during repeated scans or manual refreshes.',
+                  'Typed contracts: Implements a strong messaging contract between content scripts, background workers, and the UI.',
+                ],
+              },
+              {
+                heading: 'How to Use',
+                items: [
+                  'Install the extension from the Chrome Web Store.',
+                  'Log in and browse order history pages on supported e-commerce sites.',
+                  'Open the side panel to view your consolidated purchase list.',
+                ],
+              },
+              {
+                heading: 'Tech Stack',
+                items: [
+                  'TypeScript for type-safe cross-layer communication.',
+                  'React 19 + Vite for a high-performance side panel UI.',
+                  'Dexie.js (IndexedDB) for local data persistence.',
+                  'Zustand for UI state management.',
+                  'Chrome Extension Manifest V3.',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Install Extension',
+                href: 'https://chromewebstore.google.com/detail/ec-order-aggregator/ilidpcejmonahdjoeilkjgmiogigknei',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/ec-order-aggregator-ext',
+              },
+            ],
+          },
         },
       ],
     },

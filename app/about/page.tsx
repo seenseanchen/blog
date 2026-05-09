@@ -1,6 +1,7 @@
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import AuthorLayout from '@/layouts/AuthorLayout'
 import ExperienceShowcase from '@/components/ExperienceShowcase'
+import SkillsSection from '@/components/SkillsSection'
 import LiveActivitySection from '@/components/LiveActivitySection'
 import { genPageMetadata } from 'app/seo'
 import { getPageContent } from '@/data/pageContent'
@@ -29,6 +30,7 @@ export default function Page() {
         <MDXLayoutRenderer code={author.body.code} />
         <div className="not-prose mt-16 space-y-16">
           <ExperienceShowcase locale={locale} />
+          <SkillsSection locale={locale} />
           <LiveActivitySection locale={locale} />
         </div>
       </>
