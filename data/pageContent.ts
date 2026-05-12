@@ -361,10 +361,10 @@ const pageContent: Record<Locale, LocaleContent> = {
       entries: [
         {
           title: 'HelloJavaInBancassurance',
-          role: '模擬銀保通路情境的 Spring Boot 後端 API 面試練習專案',
+          role: '以銀保通路情境從後端 API 到可觀測性平台、Vue 3 前端的全端 Java 面試練習專案',
           period: 'Public side project / 2026',
           summary:
-            '以「銀保通路（Bancassurance）」業務情境為主軸，從零建構 Spring Boot 後端 API，涵蓋核保流程、保單查詢與變更、樂觀鎖、冪等性與 JSONB 稽核日誌，為銀行 / 壽險業 Java 後端面試做實戰準備。',
+            '以「銀保通路（Bancassurance）」業務情境為主軸，從零建構 Spring Boot 後端 API，涵蓋核保流程、保單查詢 / 變更、樂觀鎖、冪等性、JSONB 稽核日誌（M0–M8），並延伸實作 Nginx Gateway、OTel + Jaeger + Prometheus + Grafana 可觀測性平台、EFK 集中日誌（M11–M13），以及 Vue 3 前端登入殼層（M16）。',
           stack: [
             'Java 21',
             'Spring Boot 4.0.x',
@@ -372,13 +372,17 @@ const pageContent: Record<Locale, LocaleContent> = {
             'PostgreSQL 16',
             'Flyway',
             'Testcontainers',
-            'Swagger UI',
+            'Nginx',
+            'OpenTelemetry + Jaeger',
+            'Prometheus + Grafana',
+            'EFK (Elasticsearch + Kibana + Fluent Bit)',
+            'Vue 3 + Vite + Pinia',
             'Docker',
           ],
           impact: [
-            '實作核保狀態機（6 狀態 EnumMap 表驅動）與完整的保單查詢 / 變更 API，共 17 支 endpoint。',
-            'M5 以 ETag + 樂觀鎖 + Idempotency Key + JSONB 稽核日誌實作金融級別的交易控制，並區分 412 / 409 兩種衝突語意。',
-            '以 Testcontainers 跑真實 PostgreSQL 整合測試，13 支測試涵蓋併發衝突、冪等重試與反向 case。',
+            '實作核保狀態機（6 狀態 EnumMap 表驅動）與完整保單查詢 / 變更 API，共 17 支 endpoint；M5 以 ETag + 樂觀鎖 + Idempotency Key + JSONB 稽核日誌達到金融級別交易控制。',
+            '以 Testcontainers 跑真實 PostgreSQL 整合測試，13 支測試涵蓋併發衝突、冪等重試與 8 個反向 case。',
+            'M11–M13 完成 Nginx Gateway、OTel + Jaeger + Prometheus + Grafana 可觀測性三柱，以及 EFK 集中日誌 + ILM 生命週期策略；M16 完成 Vue 3 前端登入流程與路由守衛。',
           ],
           links: [
             {
@@ -388,7 +392,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           ],
           details: {
             intro:
-              '準備銀行 / 人壽保險業 Java 後端工程師面試。以「銀保通路（Bancassurance）」業務情境為主軸，從零建構一套 Spring Boot 後端 API 系統，分 M0–M8 八個 milestone 逐步推進，最終以 M5 保單變更作為設計高潮。',
+              '準備銀行 / 人壽保險業 Java 後端工程師面試。以「銀保通路（Bancassurance）」業務情境為主軸，從零建構一套 Spring Boot 後端 API 系統，後端核心為 M0–M8，並延伸出 Infra 可觀測性（M11–M13）與 Vue 3 前端殼層（M16），最終以 M5 保單變更作為後端設計高潮。',
             sections: [
               {
                 heading: '業務情境',
@@ -398,7 +402,7 @@ const pageContent: Record<Locale, LocaleContent> = {
                 ],
               },
               {
-                heading: '核心設計決策',
+                heading: '核心設計決策（M0–M8）',
                 items: [
                   '狀態機（M3）：核保流程 6 狀態以 EnumMap 表驅動實作；非法跳轉拋 IllegalStateTransitionException → 409 Conflict。',
                   '樂觀鎖 + @Transactional（M5）：GET 回應帶 ETag 版本號，PATCH 帶 If-Match header；412 表示應用層前置版本不符，409 表示真實 DB 層寫入衝突，兩者語意明確分開。',
@@ -418,22 +422,25 @@ const pageContent: Record<Locale, LocaleContent> = {
                 ],
               },
               {
+                heading: 'Infra & Frontend 擴展（M11–M16）',
+                items: [
+                  'M11 Nginx Gateway：HTTP → HTTPS 轉址、/api reverse proxy、轉發標頭，統一前後端入口。',
+                  'M12 可觀測性平台：OTel Collector + Jaeger（Tracing）+ Prometheus + Grafana（Metrics / Dashboard），三柱閉環。',
+                  'M13 集中化日誌：EFK 架構（Elasticsearch + Kibana + Fluent Bit）+ ILM policy / index template / data view，讓應用日誌可集中查詢。',
+                  'M16 Vue 3 前端殼層：Vite + Pinia + Router + Tailwind + Element Plus，實作 Login flow 與路由守衛，串接後端 API。',
+                ],
+              },
+              {
                 heading: '技術棧',
                 items: [
                   'Java 21 LTS：Virtual Thread、record、sealed class；銀行新案採用率提升。',
                   'Spring Boot 4.0.x + Spring Data JPA + Hibernate 6（@Version 樂觀鎖）。',
-                  'PostgreSQL 16（Docker）：ACID、JSONB、銀行 POC 常用。',
-                  'Flyway 版控 DDL；Swagger UI (springdoc-openapi) 自動產生文件。',
-                  'Lombok + MapStruct：減少樣板程式碼；DTO ↔ Entity 安全轉換。',
+                  'PostgreSQL 16（Docker）：ACID、JSONB、銀行 POC 常用；Flyway 版控 DDL。',
+                  'Nginx（Docker Compose）：統一入口、TLS、反向代理，對接前後端。',
+                  'OpenTelemetry + Jaeger + Prometheus + Grafana：Tracing / Metrics / Dashboard 可觀測性三柱。',
+                  'EFK（Elasticsearch + Kibana + Fluent Bit）：集中查詢應用日誌，套用 ILM 生命週期策略。',
+                  'Vue 3 + Vite + Pinia + Router + Tailwind + Element Plus：M16 前端殼層與登入流程。',
                   'JUnit 5 + Testcontainers：用真實 PostgreSQL 跑整合測試，避免 H2 假象。',
-                ],
-              },
-              {
-                heading: '專案結構',
-                items: [
-                  'Package by Feature 而非 by Layer：underwriting / policy 兩個功能包各自完整，避免「Controller 包 1000 個 class」的維護災難。',
-                  'common 層統一管理 exception handling、JPA 稽核欄位與 OpenAPI / Jackson 設定。',
-                  'PolicyService（readOnly）與 PolicyChangeService（寫操作）職責分離，查詢與變更路徑清晰。',
                 ],
               },
             ],
@@ -441,6 +448,76 @@ const pageContent: Record<Locale, LocaleContent> = {
               {
                 label: 'GitHub Repo',
                 href: 'https://github.com/seenseanchen/HelloJavaInBancassurance',
+              },
+            ],
+          },
+        },
+        {
+          title: 'PlayReviewHarness',
+          role: 'AI 驅動的 Google Play 評論分析 Pipeline，以 LLM 聚類問題並自動在 Linear 建立工程任務',
+          period: 'Public side project / 2026',
+          summary:
+            '透過爬取低評分 Google Play 評論，以 LLM 聚類重複問題並分析根本原因，最終自動在 Linear 建立包含完整使用者回饋脈絡的工程任務——一條 CLI 指令跑完整個 Pipeline。',
+          stack: [
+            'Node.js 22',
+            'TypeScript 5',
+            'OpenAI SDK (gpt-4o-mini)',
+            'Zod',
+            'google-play-scraper',
+            'Linear SDK',
+            'Commander.js',
+            'tsx',
+          ],
+          impact: [
+            '以 Zod Schema 強制驗證 LLM 輸出結構，結合 Context Engineering（帶編號評論 + user metadata）讓 LLM 能精準回傳 reviewIndices 與根本原因。',
+            '自動將嚴重程度（critical / high / medium）對應到 Linear 優先級，每個 Issue 附上受影響使用者資料表格，讓工程師可以立即採取行動。',
+            '各 Pipeline 階段（爬取 → 過濾 → LLM 分析 → Linear 建立）獨立設計，可單獨重跑，便於除錯與擴充新平台。',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/PlayReviewHarness',
+            },
+          ],
+          details: {
+            intro:
+              'PlayReviewHarness 是一個 AI Harness 工程的實作練習，涵蓋結構化 LLM 工作流程設計、Context Engineering、Output Validation 以及 Tool 整合。從爬取原始評論到在 Linear 建立結構化 Issue，只需一條 CLI 指令即可完成。',
+            sections: [
+              {
+                heading: 'Pipeline 流程',
+                items: [
+                  '步驟一：google-play-scraper 爬取指定數量的 Google Play 評論。',
+                  '步驟二：依星等過濾低分評論，去除空白與重複內容。',
+                  '步驟三：OpenAI LLM 聚類重複問題、評估嚴重程度，回傳 reviewIndices + 根本原因假設 + 具體工程修復建議。',
+                  '步驟四：依分析結果自動在 Linear 建立 Issue，優先級對應 critical → Urgent / high → High，描述中附上受影響使用者資料表格。',
+                  '終端機輸出摘要報告，讓開發者確認 LLM 分析結果後再由 Linear Issues 接手。',
+                ],
+              },
+              {
+                heading: 'AI Harness 工程重點',
+                items: [
+                  '結構化 LLM 輸出：Prompt Engineering + Zod Schema 強制驗證，確保 LLM 回傳可被程式消費的結構。',
+                  'Context Engineering：評論列表帶編號與使用者 metadata，讓 LLM 能精準回傳 reviewIndices，追溯到具體使用者。',
+                  'Tool 整合：google-play-scraper + OpenAI SDK + Linear SDK 串接成單一 Pipeline，免除人工複製貼上。',
+                  '各階段獨立設計：每個步驟可單獨重跑，便於在 LLM prompt 調整或 API 異常時快速定位問題。',
+                ],
+              },
+              {
+                heading: '技術棧',
+                items: [
+                  'Node.js 22 + TypeScript 5：執行環境與型別安全基礎。',
+                  'tsx + Commander.js：免 build 直接執行 TypeScript CLI，提供乾淨的參數介面。',
+                  'google-play-scraper：爬取 Google Play 評論，支援 App ID 或完整 URL。',
+                  'OpenAI SDK（gpt-4o-mini）：LLM 聚類分析，預設使用 gpt-4o-mini 控制成本。',
+                  'Zod：強制驗證 LLM 輸出 Schema，防止非結構化回應破壞下游流程。',
+                  'Linear SDK（@linear/sdk）：官方 API Client，依嚴重程度建立 Issue 並附上使用者資料表格。',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/PlayReviewHarness',
               },
             ],
           },
@@ -928,10 +1005,10 @@ const pageContent: Record<Locale, LocaleContent> = {
       entries: [
         {
           title: 'HelloJavaInBancassurance',
-          role: 'A Spring Boot backend API project built around bancassurance workflows for Java interview preparation',
+          role: 'A full-stack Java interview practice project covering backend API, observability platform, and a Vue 3 frontend — all built around bancassurance workflows',
           period: 'Public side project / 2026',
           summary:
-            'A hands-on backend project built around bancassurance business scenarios — underwriting workflows, policy inquiry and endorsement, optimistic locking, idempotency, and JSONB audit logs — designed as interview-ready practice for Java backend roles in banking and life insurance.',
+            'A hands-on project built around bancassurance business scenarios — underwriting, policy inquiry and endorsement, optimistic locking, idempotency, and JSONB audit logs (M0–M8) — extended with an Nginx Gateway, OTel + Jaeger + Prometheus + Grafana observability stack, EFK centralized logging (M11–M13), and a Vue 3 frontend login shell (M16).',
           stack: [
             'Java 21',
             'Spring Boot 4.0.x',
@@ -939,13 +1016,17 @@ const pageContent: Record<Locale, LocaleContent> = {
             'PostgreSQL 16',
             'Flyway',
             'Testcontainers',
-            'Swagger UI',
+            'Nginx',
+            'OpenTelemetry + Jaeger',
+            'Prometheus + Grafana',
+            'EFK (Elasticsearch + Kibana + Fluent Bit)',
+            'Vue 3 + Vite + Pinia',
             'Docker',
           ],
           impact: [
-            'Implemented a 6-state underwriting state machine (EnumMap table-driven) and a full policy query / endorsement API across 17 endpoints.',
-            'M5 covers ETag-based optimistic locking, Idempotency Key, and JSONB audit logs at a financial-grade level, with 412 and 409 semantics clearly separated.',
-            'Integration tests using Testcontainers and a real PostgreSQL instance — 13 tests covering concurrency conflicts, idempotent retries, and negative cases.',
+            'Implemented a 6-state underwriting state machine (EnumMap table-driven) and a full policy API across 17 endpoints; M5 delivers financial-grade transaction control with ETag optimistic locking, Idempotency Key, and JSONB audit logs.',
+            'Integration tests using Testcontainers and a real PostgreSQL instance — 13 tests covering concurrency conflicts, idempotent retries, and 8 negative cases.',
+            'M11–M13 delivered Nginx Gateway, an OTel + Jaeger + Prometheus + Grafana observability triad, and EFK centralized logging with ILM; M16 added a Vue 3 frontend login flow with route guards.',
           ],
           links: [
             {
@@ -955,7 +1036,7 @@ const pageContent: Record<Locale, LocaleContent> = {
           ],
           details: {
             intro:
-              'A project built to prepare for Java backend engineering interviews in banking and life insurance. Structured around the bancassurance channel as the domain, it grows from a skeleton (M0) through eight milestones to a production-flavored system, with M5 policy endorsement as the design centerpiece.',
+              'A project built to prepare for Java backend engineering interviews in banking and life insurance. The backend core grows from M0 through M8, then extends into infra observability (M11–M13) and a Vue 3 frontend shell (M16), with M5 policy endorsement as the backend design centerpiece.',
             sections: [
               {
                 heading: 'Business Context',
@@ -965,7 +1046,7 @@ const pageContent: Record<Locale, LocaleContent> = {
                 ],
               },
               {
-                heading: 'Core Design Decisions',
+                heading: 'Core Design Decisions (M0–M8)',
                 items: [
                   'State machine (M3): 6-state underwriting flow implemented with an EnumMap table-driven approach; illegal transitions throw IllegalStateTransitionException → 409 Conflict.',
                   'Optimistic locking + @Transactional (M5): GET returns an ETag version header; PATCH carries If-Match. 412 means the application-layer pre-check caught a stale version; 409 means a real concurrent DB write collision — two semantics, two codes.',
@@ -985,22 +1066,24 @@ const pageContent: Record<Locale, LocaleContent> = {
                 ],
               },
               {
-                heading: 'Tech Stack',
+                heading: 'Infra & Frontend Extensions (M11–M16)',
                 items: [
-                  'Java 21 LTS: Virtual Threads, records, sealed classes — growing adoption in new banking projects.',
-                  'Spring Boot 4.0.x + Spring Data JPA + Hibernate 6 with @Version optimistic locking.',
-                  'PostgreSQL 16 via Docker: ACID guarantees, JSONB, widely used in bank POC environments.',
-                  'Flyway for version-controlled DDL; springdoc-openapi for auto-generated Swagger UI.',
-                  'Lombok + MapStruct to reduce boilerplate and safely convert between DTOs and entities.',
-                  'JUnit 5 + Testcontainers: real database integration tests, no H2 false positives.',
+                  'M11 Nginx Gateway: HTTP → HTTPS redirect, /api reverse proxy, and forwarded headers — a unified entry point for the full stack.',
+                  'M12 Observability: OTel Collector + Jaeger (Tracing) + Prometheus + Grafana (Metrics / Dashboard) — the full three-pillar observability loop.',
+                  'M13 Centralized Logging: EFK stack (Elasticsearch + Kibana + Fluent Bit) with ILM policy, index templates, and data views for searchable application logs.',
+                  'M16 Vue 3 Frontend Shell: Vite + Pinia + Router + Tailwind + Element Plus — login flow with route guards, wired to the backend API.',
                 ],
               },
               {
-                heading: 'Project Structure',
+                heading: 'Tech Stack',
                 items: [
-                  'Package by Feature instead of by Layer: underwriting and policy are self-contained feature packages — avoids the "Controller with 1000 classes" maintenance problem common in large financial projects.',
-                  'common layer handles exception handling, JPA auditing fields, and OpenAPI / Jackson configuration.',
-                  'PolicyService (readOnly) and PolicyChangeService (write) have clearly separated responsibilities.',
+                  'Java 21 LTS: Virtual Threads, records, sealed classes — growing adoption in new banking projects.',
+                  'Spring Boot 4.0.x + Spring Data JPA + Hibernate 6 with @Version optimistic locking; Flyway for version-controlled DDL.',
+                  'Nginx (Docker Compose): unified entry point, TLS, and reverse proxy bridging frontend and backend.',
+                  'OpenTelemetry + Jaeger + Prometheus + Grafana: tracing, metrics, and dashboards as a full observability triad.',
+                  'EFK (Elasticsearch + Kibana + Fluent Bit): centralized log search with ILM lifecycle policies.',
+                  'Vue 3 + Vite + Pinia + Router + Tailwind + Element Plus: the M16 frontend shell and login flow.',
+                  'JUnit 5 + Testcontainers: real database integration tests, no H2 false positives.',
                 ],
               },
             ],
@@ -1008,6 +1091,76 @@ const pageContent: Record<Locale, LocaleContent> = {
               {
                 label: 'GitHub Repo',
                 href: 'https://github.com/seenseanchen/HelloJavaInBancassurance',
+              },
+            ],
+          },
+        },
+        {
+          title: 'PlayReviewHarness',
+          role: 'An AI-driven Google Play review analysis pipeline that clusters issues with an LLM and automatically creates Linear engineering tasks',
+          period: 'Public side project / 2026',
+          summary:
+            'Scrapes low-star Google Play reviews, uses an LLM to cluster recurring issues and surface root causes, then automatically creates Linear issues with full user feedback context — the entire pipeline runs from a single CLI command.',
+          stack: [
+            'Node.js 22',
+            'TypeScript 5',
+            'OpenAI SDK (gpt-4o-mini)',
+            'Zod',
+            'google-play-scraper',
+            'Linear SDK',
+            'Commander.js',
+            'tsx',
+          ],
+          impact: [
+            'Uses Zod Schema validation to enforce structured LLM output, combined with Context Engineering (numbered reviews + user metadata) so the model returns precise reviewIndices traceable to real users.',
+            'Automatically maps severity (critical / high / medium) to Linear priority levels; each issue ships with an affected-users table so engineers can act immediately.',
+            'Each pipeline stage — scrape, filter, LLM analysis, Linear creation — is independently designed and re-runnable for fast debugging and extensibility.',
+          ],
+          links: [
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/PlayReviewHarness',
+            },
+          ],
+          details: {
+            intro:
+              'PlayReviewHarness is a hands-on AI Harness engineering exercise covering structured LLM workflow design, Context Engineering, Output Validation, and Tool integration. From raw review scraping to structured Linear issues, the whole pipeline runs from one CLI command.',
+            sections: [
+              {
+                heading: 'Pipeline Flow',
+                items: [
+                  'Step 1: google-play-scraper fetches the requested number of Google Play reviews for a given App ID or URL.',
+                  'Step 2: Filter reviews by star rating, remove empty content and duplicates.',
+                  'Step 3: OpenAI LLM clusters recurring issues, assesses severity, and returns reviewIndices + root cause hypotheses + concrete engineering fix suggestions.',
+                  'Step 4: Linear SDK creates issues mapped by severity (critical → Urgent, high → High), each with an affected-users table in the description.',
+                  'Terminal summary lets the developer review LLM analysis before Linear issues take over the workflow.',
+                ],
+              },
+              {
+                heading: 'AI Harness Engineering Highlights',
+                items: [
+                  'Structured LLM output: Prompt Engineering + Zod Schema validation forces the model to return machine-consumable structure.',
+                  'Context Engineering: numbered review list with user metadata lets the LLM return precise reviewIndices, mapping each cluster back to real users.',
+                  'Tool integration: google-play-scraper + OpenAI SDK + Linear SDK wired into a single pipeline — no manual copy-paste between tools.',
+                  'Stage-isolated design: every step can be re-run independently for fast debugging when tuning prompts or handling API errors.',
+                ],
+              },
+              {
+                heading: 'Tech Stack',
+                items: [
+                  'Node.js 22 + TypeScript 5: runtime and type-safe foundation.',
+                  'tsx + Commander.js: run TypeScript directly without a build step, with a clean CLI argument interface.',
+                  'google-play-scraper: fetches Google Play reviews by App ID or full URL.',
+                  'OpenAI SDK (gpt-4o-mini): LLM clustering and analysis, defaulting to gpt-4o-mini to keep costs low.',
+                  'Zod: enforces LLM output schema, preventing unstructured responses from breaking downstream stages.',
+                  'Linear SDK (@linear/sdk): official API client — creates prioritized issues with user data tables attached.',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/PlayReviewHarness',
               },
             ],
           },
