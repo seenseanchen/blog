@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import Image from '@/components/Image'
 import Link from '@/components/Link'
 import ProjectDetailsDialog from '@/components/ProjectDetailsDialog'
 import type { ShowcaseSectionContent } from '@/data/pageContent'
@@ -72,6 +73,18 @@ export default function ShowcaseSection({
                 {entry.summary}
               </p>
             </div>
+
+            {entry.imageSrc && entry.imageAlt && (
+              <div className="relative mt-6 h-96 overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 sm:h-[30rem] dark:border-gray-800 dark:bg-gray-950">
+                <Image
+                  src={entry.imageSrc}
+                  alt={entry.imageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 896px, 100vw"
+                  className="object-contain"
+                />
+              </div>
+            )}
 
             <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
               <div>

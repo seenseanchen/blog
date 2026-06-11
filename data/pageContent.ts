@@ -53,6 +53,8 @@ type ProjectEntry = {
   role: string
   period: string
   summary: string
+  imageSrc?: string
+  imageAlt?: string
   stack: string[]
   impact: string[]
   links?: CallToAction[]
@@ -359,6 +361,176 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
       ],
       entries: [
+        {
+          title: 'Oh Money · Buy Me Home',
+          role: '行動優先、支援離線後援與跨裝置同步的個人記帳 PWA',
+          period: 'Public side project / 2026',
+          summary:
+            '以「3 秒記下一筆」為核心，將快速收支輸入、期間統計、帳戶與分類篩選、搜尋及雲端同步整合成適合手機操作的個人記帳體驗。',
+          imageSrc: '/static/images/oh-money-showcase.webp',
+          imageAlt: 'Oh Money 手機版交易紀錄與分類篩選畫面',
+          stack: [
+            'Next.js App Router',
+            'React',
+            'TypeScript',
+            'Tailwind CSS',
+            'Supabase Auth + PostgreSQL',
+            'PWA + Service Worker',
+            'IndexedDB',
+            'Vercel',
+          ],
+          impact: [
+            '以低摩擦操作縮短記帳流程，讓使用者能快速新增收入或支出並立即回到日常使用情境。',
+            '交易紀錄支援日、週、月、年與自訂期間，並可依關鍵字、類型、帳戶、分類與時間排序整理資料。',
+            '整合 Email / 密碼與 Magic Link 登入、Supabase 同步，以及 Service Worker + IndexedDB 的離線後援。',
+          ],
+          links: [
+            {
+              label: 'Live Demo',
+              href: 'https://oh-money-buy-me-home.vercel.app/',
+            },
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/oh-money-buy-me-home',
+            },
+          ],
+          details: {
+            intro:
+              'Oh Money 是一個針對手機使用情境設計的個人記帳 PWA。重點不是堆疊複雜報表，而是降低每天記錄與回查交易的摩擦，同時保留同步與離線使用能力。',
+            sections: [
+              {
+                heading: '核心功能',
+                items: [
+                  '快速記帳：以精簡輸入流程記錄收入、支出、帳戶、分類、商家、描述與備註。',
+                  '多期間檢視：支援日、週、月、年與自訂日期區間，方便回顧不同時間尺度的收支。',
+                  '交易搜尋與篩選：可依商家 / 描述 / 備註搜尋，搭配交易類型、帳戶、分類與時間排序。',
+                  '分類化管理：以餐飲、交通、購物、娛樂、居家、水電帳單、醫療、教育、旅行等分類快速整理支出。',
+                ],
+              },
+              {
+                heading: '登入與同步',
+                items: [
+                  '提供 Email / 密碼註冊登入與 Magic Link 無密碼登入。',
+                  '以 Supabase Auth 管理使用者身分，並由 PostgreSQL 保存跨裝置同步的記帳資料。',
+                  '介面明確顯示同步狀態，讓使用者知道本機資料是否已完成雲端同步。',
+                ],
+              },
+              {
+                heading: 'PWA 與離線策略',
+                items: [
+                  '以 standalone PWA 形式支援安裝到手機主畫面，採用 zh-TW、行動版 viewport 與深色主題。',
+                  'Service Worker 對頁面導航採 network-first，成功後寫入快取；離線時回退到快取頁或 app shell。',
+                  '靜態資源採 cache-first，離線資料由 IndexedDB 提供，Supabase API 與非 GET 請求不進入快取。',
+                ],
+              },
+              {
+                heading: '技術棧',
+                items: [
+                  'Next.js App Router + React + TypeScript 建立前端與登入流程。',
+                  'Tailwind CSS 建構適合手機操作的 glass-style 響應式介面與明暗主題。',
+                  'Supabase SSR / Auth / PostgreSQL 負責身分驗證與雲端資料同步。',
+                  'Web App Manifest、Service Worker 與 IndexedDB 組成可安裝且具離線後援的 PWA。',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://oh-money-buy-me-home.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/oh-money-buy-me-home',
+              },
+            ],
+          },
+        },
+        {
+          title: 'SC1986 · 山強電訊資材',
+          role: '以 RFQ 詢價為核心的工業電子材料型錄、報價車與管理後台',
+          period: 'Public side project / 2026',
+          summary:
+            '把大量工業電子材料 SKU、規格搜尋、報價車與人工報價流程整合成一套免登入即可詢價的 B2B 型錄網站，並提供商品、CSV 與詢價案件管理後台。',
+          imageSrc: '/static/images/sc1986-showcase.jpg',
+          imageAlt: 'SC1986 山強電訊資材詢價型商城首頁',
+          stack: [
+            'Next.js 16',
+            'React 19',
+            'TypeScript',
+            'Tailwind CSS v4',
+            'Supabase PostgreSQL + Auth + Storage',
+            'RLS + RPC',
+            'Zod + Resend',
+            'Cloudflare Turnstile',
+            'Vercel + Cloudflare',
+          ],
+          impact: [
+            '公開訪客免登入即可搜尋與篩選商品、查看規格、加入報價車並取得可追蹤的詢價案件編號。',
+            '管理後台涵蓋商品 CRUD、圖片與規格、上下架、CSV 匯入匯出，以及詢價狀態與內部備註管理。',
+            '以 RLS、原子 RPC、Zod、body 上限、rate limit、honeypot 與 Turnstile 保護公開詢價入口。',
+          ],
+          links: [
+            {
+              label: 'Live Demo',
+              href: 'https://sc1986.vercel.app/',
+            },
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/jeffc1825-svg/sc1986',
+            },
+          ],
+          details: {
+            intro:
+              'SC1986 是為山強電訊資材打造的 RFQ-first 工業電子材料商城。第一階段的交易終點是「可追蹤的詢價案件」，由業務確認價格、交期、替代料與加工條件後人工回覆，而不是直接在線上付款。',
+            sections: [
+              {
+                heading: '公開型錄與詢價流程',
+                items: [
+                  '商品型錄支援 SKU、品名、簡述與描述搜尋，以及分類樹、品牌、價格模式、庫存狀態、排序與分頁。',
+                  '商品詳情包含麵包屑、多圖 gallery、規格表、價格 / 交期狀態、訂購說明與相關商品。',
+                  '報價車可逐項調整數量與備註；訪客免登入填寫聯絡資料後即可送出，成功頁顯示案件編號。',
+                  '後端以 RPC 在同一交易建立詢價主檔與品項快照，再非同步寄送 Resend 通知信給業務。',
+                ],
+              },
+              {
+                heading: '管理後台',
+                items: [
+                  'Supabase Auth + admin_users 白名單建立 fail-closed 管理入口。',
+                  '商品管理支援新增 / 編輯、批次上下架與封存、圖片與規格、多層分類，以及 Storage 同步清理。',
+                  'CSV 匯入採批次與逐列錯誤紀錄，成功列一律先進 draft；另提供 BOM 匯出與錯誤列下載。',
+                  '詢價管理支援關鍵字 / 狀態篩選、品項快照、new → reviewing → quoted → closed / cancelled 流程與內部備註。',
+                ],
+              },
+              {
+                heading: '架構與安全',
+                items: [
+                  'Next.js 16 App Router 同時承載公開前台、/admin、Route Handlers 與 Server Actions。',
+                  'Supabase 提供 PostgreSQL、Auth、Storage、RLS 與 SECURITY DEFINER RPC；公開資料與管理資料依權限分流。',
+                  '詢價 API 使用 Zod、32KB body 上限、每分鐘 5 次 IP rate limit、honeypot 與 Cloudflare Turnstile。',
+                  '分類 API 採應用層 TTL + CDN Cache-Control 雙層快取；公開型錄使用無 cookie anon client，避免不必要的 Auth refresh。',
+                ],
+              },
+              {
+                heading: '部署與目前狀態',
+                items: [
+                  '部署鏈路為 Cloudflare DNS / HTTPS / CDN → Vercel → Supabase，Resend 負責詢價通知。',
+                  '具備 light / dark / system 主題、手機版分類抽屜、SEO metadata、canonical、sitemap 與 robots 控制。',
+                  '目前公開網址為測試環境，使用測試商品資料；正式資料與詢價營運仍等待業主驗收與上線。',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://sc1986.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/jeffc1825-svg/sc1986',
+              },
+            ],
+          },
+        },
         {
           title: 'HelloJavaInBancassurance',
           role: '以銀保通路情境從後端 API 到可觀測性平台、Vue 3 前端的全端 Java 面試練習專案',
@@ -1003,6 +1175,176 @@ const pageContent: Record<Locale, LocaleContent> = {
         },
       ],
       entries: [
+        {
+          title: 'Oh Money · Buy Me Home',
+          role: 'A mobile-first personal finance PWA with offline fallback and cross-device sync',
+          period: 'Public side project / 2026',
+          summary:
+            'Built around a "log it in three seconds" workflow, combining fast income and expense entry, period-based summaries, account and category filters, search, and cloud sync in a mobile-friendly experience.',
+          imageSrc: '/static/images/oh-money-showcase.webp',
+          imageAlt: 'Oh Money mobile transaction history and category filter',
+          stack: [
+            'Next.js App Router',
+            'React',
+            'TypeScript',
+            'Tailwind CSS',
+            'Supabase Auth + PostgreSQL',
+            'PWA + Service Worker',
+            'IndexedDB',
+            'Vercel',
+          ],
+          impact: [
+            'Reduces everyday bookkeeping friction with a short entry flow for income and expenses.',
+            'Transaction history supports day, week, month, year, and custom ranges, plus keyword, type, account, category, and time-based filtering.',
+            'Combines email/password and Magic Link authentication, Supabase sync, and a Service Worker + IndexedDB offline fallback.',
+          ],
+          links: [
+            {
+              label: 'Live Demo',
+              href: 'https://oh-money-buy-me-home.vercel.app/',
+            },
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/seenseanchen/oh-money-buy-me-home',
+            },
+          ],
+          details: {
+            intro:
+              'Oh Money is a personal finance PWA designed for mobile use. Instead of piling on complex reporting, it focuses on lowering the friction of recording and reviewing transactions while retaining cloud sync and offline access.',
+            sections: [
+              {
+                heading: 'Core Features',
+                items: [
+                  'Fast transaction entry for income, expenses, accounts, categories, merchants, descriptions, and notes.',
+                  'Day, week, month, year, and custom date-range views for reviewing finances at different time scales.',
+                  'Search by merchant, description, or note, combined with transaction type, account, category, and time sorting.',
+                  'Expense categories cover food, transportation, shopping, entertainment, home, utilities, healthcare, education, and travel.',
+                ],
+              },
+              {
+                heading: 'Authentication and Sync',
+                items: [
+                  'Supports email/password registration and sign-in, plus passwordless Magic Link authentication.',
+                  'Uses Supabase Auth for identity and PostgreSQL for synchronized transaction data across devices.',
+                  'Exposes sync status in the interface so users can see whether local changes have reached the cloud.',
+                ],
+              },
+              {
+                heading: 'PWA and Offline Strategy',
+                items: [
+                  'Runs as a standalone installable PWA with a mobile viewport, Traditional Chinese locale, and dark-theme support.',
+                  'The Service Worker uses network-first navigation with cached pages and an app-shell fallback when offline.',
+                  'Static assets use cache-first behavior, offline data is rendered from IndexedDB, and Supabase or non-GET requests are never cached.',
+                ],
+              },
+              {
+                heading: 'Tech Stack',
+                items: [
+                  'Next.js App Router + React + TypeScript for the application and authentication flows.',
+                  'Tailwind CSS for the responsive, touch-friendly glass-style interface and light/dark themes.',
+                  'Supabase SSR / Auth / PostgreSQL for identity and cloud synchronization.',
+                  'Web App Manifest, Service Worker, and IndexedDB for installation and offline fallback.',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://oh-money-buy-me-home.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/seenseanchen/oh-money-buy-me-home',
+              },
+            ],
+          },
+        },
+        {
+          title: 'SC1986 · San Chun Industrial Electronics',
+          role: 'An RFQ-first industrial electronics catalog with a quote cart and operations dashboard',
+          period: 'Public side project / 2026',
+          summary:
+            'A B2B catalog that brings industrial electronics SKUs, specification search, a quote cart, and a human-assisted quotation workflow into one no-login inquiry experience, backed by product, CSV, and quote-case administration.',
+          imageSrc: '/static/images/sc1986-showcase.jpg',
+          imageAlt: 'SC1986 industrial electronics RFQ storefront homepage',
+          stack: [
+            'Next.js 16',
+            'React 19',
+            'TypeScript',
+            'Tailwind CSS v4',
+            'Supabase PostgreSQL + Auth + Storage',
+            'RLS + RPC',
+            'Zod + Resend',
+            'Cloudflare Turnstile',
+            'Vercel + Cloudflare',
+          ],
+          impact: [
+            'Public visitors can search and filter products, review specifications, build a quote cart, and receive a trackable inquiry reference without signing in.',
+            'The admin system covers product CRUD, images and specifications, publishing states, CSV import/export, and quote status with internal notes.',
+            'Protects the public inquiry flow with RLS, an atomic RPC, Zod, request-size limits, rate limiting, a honeypot, and Turnstile.',
+          ],
+          links: [
+            {
+              label: 'Live Demo',
+              href: 'https://sc1986.vercel.app/',
+            },
+            {
+              label: 'GitHub Repo',
+              href: 'https://github.com/jeffc1825-svg/sc1986',
+            },
+          ],
+          details: {
+            intro:
+              'SC1986 is an RFQ-first industrial electronics storefront built for San Chun. The first-stage conversion is a trackable inquiry case, not online payment: sales staff confirm pricing, lead time, alternatives, and processing requirements before replying with a formal quote.',
+            sections: [
+              {
+                heading: 'Public Catalog and RFQ Flow',
+                items: [
+                  'Catalog search covers SKU, name, short description, and description, with category trees, brand, price mode, stock status, sorting, and pagination.',
+                  'Product pages include breadcrumbs, multi-image galleries, specification tables, price and lead-time states, ordering notes, and related products.',
+                  'Visitors can adjust quantity and per-item notes in the quote cart, submit contact details without an account, and receive a case reference.',
+                  'A database RPC atomically creates the inquiry header and item snapshots, then Resend notifies sales asynchronously.',
+                ],
+              },
+              {
+                heading: 'Admin Operations',
+                items: [
+                  'Supabase Auth plus an admin_users allowlist creates a fail-closed administration boundary.',
+                  'Product management covers create/edit, bulk publishing and archiving, images and specifications, nested categories, and Storage cleanup.',
+                  'CSV import records batch and row-level errors, sends successful rows to draft first, and provides BOM exports and downloadable error rows.',
+                  'Quote management supports keyword and status filters, item snapshots, new → reviewing → quoted → closed / cancelled states, and private notes.',
+                ],
+              },
+              {
+                heading: 'Architecture and Security',
+                items: [
+                  'Next.js 16 App Router hosts the public storefront, /admin, Route Handlers, and Server Actions.',
+                  'Supabase provides PostgreSQL, Auth, Storage, RLS, and SECURITY DEFINER RPCs, separating anonymous catalog access from administrative data.',
+                  'The inquiry API applies Zod validation, a 32KB body limit, five requests per minute per IP, a honeypot, and Cloudflare Turnstile.',
+                  'Category data uses application-level TTL plus CDN caching; public catalog queries use a cookie-free anonymous client to avoid unnecessary auth refreshes.',
+                ],
+              },
+              {
+                heading: 'Deployment and Current Status',
+                items: [
+                  'The delivery path is Cloudflare DNS / HTTPS / CDN → Vercel → Supabase, with Resend handling inquiry notifications.',
+                  'Includes light / dark / system themes, a mobile category drawer, SEO metadata, canonical URLs, sitemap generation, and robots controls.',
+                  'The public URL is currently a test environment using sample product data; production data and live inquiry operations are pending owner acceptance.',
+                ],
+              },
+            ],
+            actions: [
+              {
+                label: 'Live Demo',
+                href: 'https://sc1986.vercel.app/',
+              },
+              {
+                label: 'GitHub Repo',
+                href: 'https://github.com/jeffc1825-svg/sc1986',
+              },
+            ],
+          },
+        },
         {
           title: 'HelloJavaInBancassurance',
           role: 'A full-stack Java interview practice project covering backend API, observability platform, and a Vue 3 frontend — all built around bancassurance workflows',
