@@ -1,0 +1,66 @@
+---
+title: 'Digital Resilience in the AI Era: What Still Works When One Service Goes Down?'
+date: '2026-11-07'
+tags: ['ai', 'cybersecurity', 'digital-resilience', 'weekly-podcast']
+draft: false
+authors: ['default.en']
+images: ['/static/images/2026-11-07-ai-cybersecurity-digital-resilience.webp']
+summary: 'A look at AI-assisted defense, supply chains, and attack surfaces through Taiwan’s cybersecurity strategy, with an insurance website as a practical example of resilient architecture and recovery drills.'
+---
+
+<Image
+  src="/static/images/2026-11-07-ai-cybersecurity-digital-resilience.webp"
+  alt="One circuit around a chip is broken while another path keeps the central chip running"
+  width={1536}
+  height={768}
+/>
+
+Imagine it’s Monday morning and your banking app keeps spinning. You stop at a convenience store and find that electronic payments are down. By the time you get to work, people in the group chat are saying they can’t connect to the VPN.
+
+It’s a hypothetical scenario. Faced with those symptoms, I’d start by asking whether the services share an identity provider, cloud platform, or network. Finding a shared dependency might explain why several seemingly independent services are failing together.
+
+That was the question behind the November 7 weekly podcast. When a system fails, how far does the impact spread? Which features can stay available? How long will it take to bring back the rest? Those are my starting questions for digital resilience.
+
+## Three cybersecurity priorities from Taiwan
+
+On November 4 and 5, Taiwan’s Administration for Cyber Security held the Advanced Cybersecurity Exploration Conference in Taipei. The Ministry of Digital Affairs presented three priorities: using AI to improve defense, extending security protections across the semiconductor supply chain, and reducing unnecessary network connections. Deployment data and drills will show how effective those measures are in practice. [Conference release from the Administration for Cyber Security](https://moda.gov.tw/ACS/press/news/press/21238)
+
+### AI can sort alerts, and mistakes can have a wider impact
+
+AI can make some tasks quicker. Attackers might use it to organize public information or adapt a phishing email. Defenders might use it to group alerts from different systems that could point to the same incident, so the person on call can find a lead sooner.
+
+Sorting alerts and disabling accounts require different levels of authority. If a model mistakes normal behavior for an attack and disables a shared login or service account, that one mistake could take a service offline. I’d evaluate the tool on time to detect, false positives, and manual triage time, with human approval and an audit trail for high-impact actions.
+
+### Supply chain risk crosses company boundaries
+
+A web product can depend on npm packages, CI/CD, a cloud identity provider, and third-party APIs. On a semiconductor production line, there’s also remote vendor maintenance, the manufacturing network, and the downtime window to consider. Even a straightforward patch may require compatibility testing before anyone can schedule the outage.
+
+In software, an SBOM (software bill of materials) helps a team find which services use an affected version when a vulnerability is disclosed. To find out who built a deployed artifact and whether it was verified, the team needs build records and artifact verification as well. With both, it can determine the scope of an incident more quickly. [NIST guidance on cybersecurity supply chain risk management](https://csrc.nist.gov/pubs/sp/800/161/r1/upd1/final)
+
+### Inventory connections to shrink the attack surface
+
+I’d start with concrete questions. Which admin interfaces are exposed to the internet? Which legacy service is sitting unused? What equipment can a vendor maintenance account reach? Those questions tend to reveal more immediate work than asking which tool to buy next.
+
+Some connections are necessary to keep a business running. For equipment maintenance, you can identify who needs access to which machine and when, then limit the authorization to those conditions. NIST’s zero trust architecture makes a related point: a request’s network location alone is insufficient grounds for trusting it. [NIST Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
+
+## How I’d design for resilience
+
+### Decide what to keep working during a failure
+
+Take an insurance website. If the product recommendation API times out, the page can hide that section while users continue checking their policies or claim status. If the authoritative source for policy status is down, the page should say that it can’t confirm the status and avoid presenting a potentially stale cached result as current.
+
+That’s how I think about graceful degradation. Decide what users should still be able to do during a failure, then give secondary dependencies timeouts so the entire page doesn’t have to wait. For actions with side effects, such as submitting a claim, check whether a retry could submit the same request twice.
+
+### Verify that backups can restore the service
+
+Say a team sets a recovery point objective (RPO) of 15 minutes and a recovery time objective (RTO) of one hour. The first describes the acceptable window of data loss, and the second is the target time to restore service. In a drill, I’d check both the age of the restored data and how long it takes from the decision to fail over until users can use the service again. [NIST Contingency Planning Guide](https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final)
+
+The drill should also cover shared dependencies. Two environments can both lose login access when they rely on the same identity service. Knowing who can start recovery and how the on-call team can reach the management environment when the main login fails matters as much as the backup itself.
+
+## What I’ll watch for next
+
+I’ll look for three results after the announcement. Does AI shorten the time from alert to confirmed incident? Do supply chain measures reach smaller vendors who need technical support? Do critical services hit their recovery targets in drills? NIST CSF 2.0 puts governance, identification, protection, detection, response, and recovery in one framework, giving teams a way to use those results to revisit their risk decisions. [NIST Cybersecurity Framework 2.0](https://csrc.nist.gov/pubs/cswp/29/the-nist-cybersecurity-framework-csf-20/final)
+
+Next time I draw a system diagram, I’d pick one shared dependency and imagine it failing today. Which features would still run, and who would restore the rest? I’d test that before launch.
+
+> This article was written with AI assistance and has not yet been proofread by the author.
