@@ -1,0 +1,16 @@
+:root { color-scheme: light; font: 16px/1.8 system-ui, sans-serif; color: #233d38; background: #fbfcfa; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header { padding: 15px max(5vw, 20px); background: #183e37; color: #fff; font-weight: 700; }
+main { max-width: 900px; margin: auto; padding: 32px 20px 65px; }
+.tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 32px; }
+select, .tools a { padding: 7px 12px; border: 1px solid #92b4a9; border-radius: 6px; background: white; color: #165343; font: inherit; max-width: 100%; }
+a { color: #146453; text-underline-offset: .2em; }
+article { overflow-wrap: anywhere; }
+h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.35; }
+h2 { margin: 2em 0 .5em; border-top: 1px solid #cddbd4; padding-top: .6em; font-size: 1.4rem; }
+pre { padding: 16px; background: #193a33; color: white; overflow: auto; border-radius: 6px; }
+code { font: .9em/1.6 ui-monospace, monospace; }
+table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+td, th { border-bottom: 1px solid #d8e2dc; text-align: left; vertical-align: top; padding: 8px 12px; }
+th { background: #eaf1ec; }
