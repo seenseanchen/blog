@@ -4,7 +4,7 @@ body { margin: 0; }
 header { padding: 15px max(5vw, 20px); background: #183e37; color: #fff; font-weight: 700; }
 main { max-width: 900px; margin: auto; padding: 32px 20px 65px; }
 .tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 32px; }
-select, .tools a { padding: 7px 12px; border: 1px solid #92b4a9; border-radius: 6px; background: white; color: #165343; font: inherit; max-width: 100%; }
+.tools a { padding: 7px 12px; border: 1px solid #92b4a9; border-radius: 6px; background: white; color: #165343; font: inherit; max-width: 100%; }
 a { color: #146453; text-underline-offset: .2em; }
 article { overflow-wrap: anywhere; }
 h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.35; }
@@ -22,3 +22,7 @@ th { background: #eaf1ec; }
 #sections button { padding: 3px 0; text-align: start; border: 0; background: transparent; color: #146453; cursor: pointer; font: inherit; }
 #sections button:hover, #sections button:focus-visible { text-decoration: underline; }
 article :is(h2, h3) { scroll-margin-top: 1rem; }
+
+#document-list { list-style: none; padding: 0; }
+#document-list li { border-bottom: 1px solid #cddbd4; }
+#document-list a { display: block; padding: 14px 0; }

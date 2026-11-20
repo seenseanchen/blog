@@ -32,25 +32,41 @@ async function openNotebook() {
     const packed = new Uint8Array(await response.arrayBuffer())
     const data = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: packed.slice(0, 12) }, key, packed.slice(12))
     const documents = JSON.parse(new TextDecoder().decode(data))
-    const select = document.getElementById('documents')
-    const link = document.getElementById('download')
-    let downloadUrl
-    function showDocument() {
-      const doc = documents[select.selectedIndex]
+    const catalog = document.getElementById('catalog')
+    if (catalog) {
+      const list = document.getElementById('document-list')
+      for (const doc of documents) {
+        const item = document.createElement('li')
+        const link = document.createElement('a')
+        link.href = './' + doc.page + location.hash
+        link.textContent = doc.title
+        item.append(link)
+        list.append(item)
+      }
+      catalog.hidden = false
+    } else {
+      const pageName = location.pathname.split('/').pop()
+      const doc = documents.find(entry => entry.page === pageName)
+      if (!doc) {
+        status.textContent = '這份文件已移出目錄。'
+        const back = document.createElement('a')
+        back.href = './index.html' + location.hash
+        back.textContent = '返回文件目錄'
+        status.append(' ', back)
+        return
+      }
+      document.title = doc.title + '｜小本本'
       const article = document.getElementById('document')
       article.innerHTML = doc.html
       updateContents(article)
-      if (downloadUrl) URL.revokeObjectURL(downloadUrl)
+      document.getElementById('back').href = './index.html' + location.hash
       const bytes = Uint8Array.from(atob(doc.source), c => c.charCodeAt(0))
-      downloadUrl = URL.createObjectURL(new Blob([bytes], { type: 'text/markdown;charset=utf-8' }))
-      link.download = doc.name
-      link.href = downloadUrl
+      const download = document.getElementById('download')
+      download.href = URL.createObjectURL(new Blob([bytes], { type: 'text/markdown;charset=utf-8' }))
+      download.download = doc.name
+      document.getElementById('reader').hidden = false
     }
-    for (const doc of documents) select.add(new Option(doc.title))
-    select.addEventListener('change', showDocument)
-    showDocument()
     status.hidden = true
-    document.getElementById('shelf').hidden = false
   } catch {
     status.textContent = '無法開啟文件。請確認完整書籤網址，並檢查網路連線後重新整理。'
   }

@@ -15,17 +15,10 @@
 <main>
   <p id="status" role="status">請使用完整的書籤網址開啟。</p>
   <noscript>閱讀文件需要啟用 JavaScript。</noscript>
-  <div id="shelf" hidden>
-    <label for="documents">計劃文件</label>
-    <div class="tools"><select id="documents"></select><a id="download">下載 Markdown</a></div>
-    <nav id="contents" aria-label="章節目錄" hidden>
-      <details open>
-        <summary>章節目錄</summary>
-        <ul id="sections"></ul>
-      </details>
-    </nav>
-    <article id="document"></article>
-  </div>
+  <section id="catalog" hidden>
+    <h1>文件目錄</h1>
+    <nav aria-label="文件目錄"><ul id="document-list"></ul></nav>
+  </section>
 </main>
 </body>
 </html>
