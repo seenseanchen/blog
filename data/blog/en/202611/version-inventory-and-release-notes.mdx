@@ -1,0 +1,53 @@
+---
+title: 'One release notice, two different engineering tasks'
+date: '2026-11-20'
+tags: ['architecture', 'automation', 'testing']
+draft: false
+authors: ['default']
+summary: 'Two teams share a frontend starter. Their build environments and release plans show how a migration guide can become one actionable item in a daily architecture brief.'
+---
+
+Imagine two Vue projects built from the same starter. On Monday, a maintainer shares a Vite migration guide saying that the next major version raises the minimum Node.js version. Team A plans to upgrade on Friday. Team B is maintaining its current version. Should today's architecture brief ask everyone to upgrade Node.js?
+
+I'd ask Team A which version of Node.js will actually run on the Jenkins agent that builds Friday's release. A developer's laptop and the starter README can't answer that question. This scenario is hypothetical. For a real upgrade, check the requirements for the target release in the [Vite migration guide](https://vite.dev/guide/migration).
+
+## Record where each dependency runs
+
+In an earlier [post on digital resilience](/en/blog/ai-cybersecurity-digital-resilience), I discussed using a software bill of materials to find affected services. Here I'd ask one more question. At what stage do we use the dependency? If the site deploys static files, a Node.js build requirement affects whether CI can produce the next release. The availability of pages already deployed calls for a separate check.
+
+| What to check | Where to look | Decision it informs |
+| --- | --- | --- |
+| Installed Vite version | Lockfile used for the build | Which migration steps apply |
+| Node.js version used by CI | Run `node --version` on the same agent and in the same container before installing dependencies | Whether CI meets the target version's build requirements |
+| Planned upgrade date | Upgrade PR or release plan | Whether someone needs to act today |
+
+## Cover both teams in one item
+
+If Team A's build log shows a Node.js version below the minimum for the target Vite release, I'd write this in the brief:
+
+> **Verify Team A's build environment before Friday's upgrade.** The Jenkins agent runs a Node.js version below the target Vite release's minimum. The CI maintainer should run the upgrade PR with the candidate image, install dependencies, produce a production build and open the home page in preview. Team B is staying on its current version this week. Add the same check to its next upgrade checklist.
+
+If all I have is an image tag in a Jenkinsfile, I'd change the opening to “Team A's build version needs verification” and ask for version output from that job. That distinction determines whether a colleague spends five minutes checking a log or half a day replacing an image.
+
+## Decide when a notice deserves another mention
+
+I'd schedule a daily check of official release notes, security advisories and upgrade guides. For each source, start 48 hours before its last successful fetch. Keep the notice identifier, applicable conditions and previous assessment. If a fetch fails, preserve its checkpoint and list the gap at the end of the brief.
+
+Tomorrow the guide might be identical, yet a fresh build log from Team A could change “needs verification” to “replace the image.” I'd compare **both the official notice and the team's circumstances**. A formatting change can wait. A change in ownership, deadline or next action deserves another mention.
+
+Here's the prompt I'd give the AI that prepares the brief:
+
+~~~text
+Read the official notices, the team's version and usage inventory, and the previous brief.
+For each event, identify the projects that meet its conditions, the stage affected
+(build, deployment or runtime), and who can verify the impact and how.
+Mark missing evidence as needing verification and name the record to check.
+Link to the official source and distinguish its requirements from the team's assessment.
+Select up to five items by deadline and scope. When repeating an item, explain what
+evidence changed the conclusion. Zero items is fine. List sources that could not be
+checked and save today's assessments for comparison tomorrow.
+~~~
+
+I'd like Team A to know which pipeline to run and Team B to know when to schedule its check. One notice is enough to help both teams make their own decision.
+
+This article was written with AI assistance and has not yet been proofread by the author.
