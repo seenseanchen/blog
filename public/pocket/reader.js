@@ -1,3 +1,24 @@
+function updateContents(article) {
+  const list = document.getElementById('sections')
+  list.replaceChildren()
+  for (const heading of article.querySelectorAll('h2, h3')) {
+    const item = document.createElement('li')
+    const button = document.createElement('button')
+    item.classList.toggle('subsection', heading.tagName === 'H3')
+    button.type = 'button'
+    button.textContent = heading.textContent
+    heading.tabIndex = -1
+    // The URL fragment holds the notebook key. Keep it intact when navigating.
+    button.addEventListener('click', () => {
+      heading.focus({ preventScroll: true })
+      heading.scrollIntoView({ block: 'start' })
+    })
+    item.append(button)
+    list.append(item)
+  }
+  document.getElementById('contents').hidden = !list.childElementCount
+}
+
 async function openNotebook() {
   const status = document.getElementById('status')
   const encoded = location.hash.slice(1)
@@ -16,7 +37,9 @@ async function openNotebook() {
     let downloadUrl
     function showDocument() {
       const doc = documents[select.selectedIndex]
-      document.getElementById('document').innerHTML = doc.html
+      const article = document.getElementById('document')
+      article.innerHTML = doc.html
+      updateContents(article)
       if (downloadUrl) URL.revokeObjectURL(downloadUrl)
       const bytes = Uint8Array.from(atob(doc.source), c => c.charCodeAt(0))
       downloadUrl = URL.createObjectURL(new Blob([bytes], { type: 'text/markdown;charset=utf-8' }))
