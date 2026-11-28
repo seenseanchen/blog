@@ -1,0 +1,168 @@
+---
+title: 'If Tokyo Stops Working, Who Takes Over? Japan’s Secondary Capitals and National Resilience'
+date: '2026-11-28'
+tags: ['japan', 'system-design', 'digital-resilience', 'weekly-podcast']
+draft: false
+authors: ['default']
+images: ['/static/images/2026-11-28-japan-secondary-capital-national-resilience.webp']
+summary: 'Japan plans to launch its secondary capital system in spring 2028. From agglomeration economies and continuity of government to common cause failures, what would an alternative location actually need to take over when Tokyo is hit by a disaster?'
+---
+
+<Image
+  src="/static/images/2026-11-28-japan-secondary-capital-national-resilience.webp"
+  alt="Miniature cities inspired by Tokyo and Osaka linked by multiple glowing routes, illustrating regional redundancy"
+  width={1536}
+  height={768}
+/>
+
+Imagine a major earthquake in Tokyo. Office buildings remain standing, but trains stop, communications become unreliable, and the people expected at work cannot get there. Local authorities need the central government to allocate emergency resources, just as the central government's own working environment breaks down.
+
+This is a hypothetical scenario. What interests me is who, somewhere else, can obtain information, make legally valid decisions, and ensure those decisions are carried out when government is needed most.
+
+That is the core of the November 22–28 weekly podcast feature. Japan's proposed secondary capital system offers a concrete way to examine national redundancy. It involves urban economics, local interests, administrative authority, and engineering recovery capabilities. Choosing a second capital is only part of the picture.
+
+## What Was Decided This Week, and What Remains Open?
+
+According to Jiji Press's November 27 report, Japan's government decided its basic approach, or _kihonteki kangaekata_, to secondary capital designation that day. It plans to accept applications from June 2027 onward, designate multiple secondary capitals together in October–November, and begin operating the system around April 2028. [Jiji Press report](https://www.nippon.com/ja/articles/-/58081)
+
+The terminology matters. The decision sets an approach for subsequent institutional design; it does not mean every formal basic policy and local development plan is finished. The report says individual development policies are expected in spring 2028, with budget and tax measures also involved.
+
+| Planned timing        | Next institutional step                                       |
+| --------------------- | ------------------------------------------------------------- |
+| June 2027 onward      | Accept applications from prefectures meeting the requirements |
+| October–November 2027 | Plan to designate multiple secondary capitals together        |
+| Around April 2028     | Target the start of the system and advance local preparations |
+
+Hokkaido, Aichi, Osaka, and Fukuoka are the four prefectures the report identifies as meeting population and economic scale criteria and seeking designation. That does not mean formal designation is complete, or that a large enough population alone qualifies a region.
+
+Osaka Prefecture's official explanation also lists the likelihood of being affected by the same disaster as the Tokyo region, the existing presence of national administrative offices, and the necessary local administrative arrangements. Location selection must consider both risk diversification and the capacity already available to take on work. [Osaka Prefecture: designation requirements](https://www.pref.osaka.lg.jp/o070050/koho/kohoportal/202611/tp16.html)
+
+**Launching the system is a milestone. The ability to take over government work still needs to be demonstrated through people, authority, facilities, and exercises.**
+
+## Why Concentrate in Big Cities When the Risks Are Known?
+
+### Concentration solves real problems
+
+Suppose a software company wants to open a development office. Recruiting and collaboration are usually easier where engineers, clients, universities, and professional services already cluster. Engineers have a similar incentive: more job options mean changing employers is less likely to require moving their whole lives.
+
+That is an intuitive way to understand agglomeration economies. Firms share labor markets and specialized services, while proximity makes exchanging information and working together easier. Companies attract people, people attract more companies, and established centers keep accumulating advantages.
+
+Tokyo's role as a political and economic center has developed over a long history. Understanding this policy does not require treating concentration as a mistake. It makes many everyday activities more efficient and makes leaving established networks expensive.
+
+### Shared savings can become shared exposure
+
+Think of a restaurant chain. Ten branches sharing one central kitchen can standardize quality and reduce equipment and management costs. A power outage at that kitchen, however, can affect many branches at once.
+
+In computing, that suggests a single point of failure. Applied to government, the concept is an analytical aid: Japan already has local governments, emergency arrangements, and government continuity plans. A disruption in Tokyo does not automatically imply a nationwide shutdown. [Japan's government continuity planning resources](https://www.bousai.go.jp/taisaku/chuogyoumukeizoku/index.html)
+
+The useful questions are which functions depend heavily on the Tokyo region, and how long existing alternatives can last when power, transport, communications, and personnel are affected together for an extended period.
+
+## A Copy of the Documents Is Not Enough
+
+Cloud backups can preserve your photos when your phone breaks. To receive calls and sign into a banking app immediately, you also need usable hardware, accounts, authentication, and a working network. Preserving data and continuing work are different outcomes.
+
+National redundancy has the same distinction. Copying documents to Osaka can reduce some data loss risks. But can the people receiving them authorize resource allocation? Can they establish that the information is current? How do local agencies know which instructions carry legal authority?
+
+### Disaster recovery restores systems
+
+Disaster recovery concerns restoring information systems and related resources, including data recovery, alternative environments, and network switching. It requires usable backups as well as compatible environments, keys, procedures, and testing. [NIST SP 800-34 Rev. 1](https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final)
+
+### BCP must also establish who will do the work
+
+A Business Continuity Plan, or BCP, extends the scope to people, premises, suppliers, and business processes. Restoring systems may leave operations stuck if nobody can verify emergency needs or a critical contractor cannot deliver its service.
+
+Continuity of government adds institutional requirements: the people taking over need lawful authority and clear command and coordination relationships. Government cannot be switched over simply by redirecting traffic to another server.
+
+I see this as an entire chain of work: obtain trustworthy information, form a decision, authorize it legally, communicate instructions, execute them, and report back. An alternative site becomes useful when it can complete that chain.
+
+## Make Recovery Objectives Testable
+
+“Restore operations as soon as possible” is difficult to evaluate. Information systems often use RTO and RPO to make expectations concrete. NIST's contingency planning guidance also includes recovery requirements, priorities, and testing in the planning process.
+
+| Metric                        | Question it answers                                                  | Hypothetical enterprise target        |
+| ----------------------------- | -------------------------------------------------------------------- | ------------------------------------- |
+| RTO: Recovery Time Objective  | How soon should necessary service be restored after an interruption? | Restore core queries within two hours |
+| RPO: Recovery Point Objective | What maximum time span of data loss is acceptable?                   | At most fifteen minutes of data loss  |
+
+These numbers are illustrative examples, not published Japanese government targets. RPO is also not simply the backup schedule: backup success, recoverability, and access to keys all affect the actual outcome.
+
+For government, functions must first be distinguished. Emergency communications and routine administration may need different recovery speeds. Decision records, disaster information, and resource inventories also have different update requirements.
+
+To me, a useful objective should establish who activates the process and under what conditions, which function must recover, what missing information can be tolerated, and who confirms a successful handover. Those questions get closer to verifiable capability than saying a backup center exists.
+
+## Separate Shared Dependencies Along With Locations
+
+Two data centers are far apart but use the same identity service. When the primary region fails, the alternative servers remain alive, yet the on-call team cannot sign into the management platform.
+
+This hypothetical example illustrates a common cause failure: apparently separate resources can become unusable for the same reason. Geographic distance is only one dimension of their dependencies.
+
+| Apparently distributed resource | Dependency that may remain shared                      |
+| ------------------------------- | ------------------------------------------------------ |
+| Offices                         | The same people who must travel from the affected area |
+| Data and computing equipment    | The same authentication, keys, or management platform  |
+| Communication routes            | Critical nodes or power bottlenecks                    |
+| Decision-making locations       | Authority that has not been transferred or clarified   |
+
+At his November 25 press conference, Hokkaido's governor used a Nankai Trough earthquake as an example of risks that could affect Osaka and Aichi, and argued for discussing roles among secondary capitals. That is a local government's position, not an already completed central government allocation of responsibilities. [Hokkaido governor's press conference](https://www.pref.hokkaido.lg.jp/ss/tkk/hodo/pressconference/r8/275613.html)
+
+My takeaway is to test a combination of backup locations against different disasters, rather than choosing only the scenario most favorable to it. Multiple sites provide options; their effectiveness still depends on capacity, availability, and shared dependencies.
+
+## How Ready Should the Alternative Be in Normal Times?
+
+Engineering offers different levels of readiness for understanding the trade-off between cost and recovery speed. The table below is an analogy, not Japan's announced technical architecture. Implementation details also vary by system.
+
+| Model         | Normal readiness                                                                         | Main trade-off                                                                       |
+| ------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Cold Standby  | Retain data, procedures, or basic resources; establish the environment after an incident | Lower routine cost, more activation work                                             |
+| Warm Standby  | Part of the environment and capability is ready                                          | Ongoing maintenance and possibly additional capacity are needed                      |
+| Hot Standby   | Alternative environment is highly ready                                                  | Potentially faster switching, with data and operational correctness still to resolve |
+| Active-Active | Multiple sites provide service in normal operation                                       | Daily operating experience, with more complex coordination and consistency           |
+
+An infrequently used government backup center may retain its physical space while gradually losing people familiar with its procedures. Performing some work in the alternative region routinely could build experience and create everyday value.
+
+That does not mean every administrative function should become simultaneous decision-making across multiple centers. An order system can have conflict-resolution rules; public decisions also involve political accountability, statutory procedures, and jurisdiction. Engineering analogies help frame questions but cannot replace institutional design.
+
+## This Is Also Regional Economic Policy, With Continuing Costs
+
+Osaka Prefecture's official explanation pairs two aims: backing up capital functions in emergencies and serving as a center for Japan's economic growth in normal times. Local governments therefore seek more than office space used only during disasters.
+
+The case for this approach is that everyday economic activity can support people, services, and infrastructure, reducing the risk of backup capabilities sitting idle. Alternative centers may also give a highly concentrated country more options for future development.
+
+On the cost side, buildings, networks, and equipment are just the beginning. Training, system synchronization, coordination between agencies, and regular exercises require continuing budgets. If regions pursue overlapping facilities without filling the most important capability gaps, more designated cities may bring little extra resilience.
+
+I support treating continuity of government as a public capability worth funding, while asking for explicit evaluation criteria. Which disaster-related interruption risks will be reduced, by how much, and who bears the continuing cost? Regional development benefits and continuity benefits each need evidence.
+
+Osaka City publishes topics and materials from its capital-function backup review meetings, including scenarios, functions requiring backup, and operational arrangements. Those concrete discussions deserve closer attention than the city designation itself. [Osaka City: capital-function backup review meetings](https://www.city.osaka.lg.jp/fukushutosuishin/page/0000678962.html)
+
+## Bringing the Questions Back to Taiwan and Engineering Teams
+
+For Taiwan, I would start with an inventory of functions. Which public services can least tolerate interruption during an earthquake, typhoon, or widespread infrastructure failure? Do alternative locations have enough people, information, and lawful authority? The discussion need not begin by choosing a city.
+
+For engineering teams, the questions are equally concrete. Suppose an insurance website has a backup environment. After its production region fails, can policy queries recover first? If a claim submission cannot be confirmed as already written, should new transactions pause to prevent duplicates?
+
+Recovery order needs to follow business risk. Queries might display the age of their data, while writes affecting entitlements need stricter consistency and reconciliation. Getting the homepage back does not establish that the entire service has recovered.
+
+To design a useful exercise, I would choose an essential workflow and assume the primary region, management entry point, or a key person is unavailable. Then I would test whether the alternative team can complete the work. Recording elapsed time and actual obstacles shows where the next budget allocation should go.
+
+## What Will I Look For in 2028?
+
+The final list of designated regions is only the first step. Next come the functions each region must take on, development budgets, authority arrangements, and whether exercises demonstrate actual handover capability.
+
+A test that only proves equipment can start still misses whether information is trustworthy, instructions are valid, personnel can maintain shifts, and work can return to the original location after recovery. Both failover and return need to be part of the complete process.
+
+This piece extends concepts from the November 7 digital resilience feature, but its subject is national geographic concentration and governance. The criterion I want to keep is simple: **when the primary location cannot work, can the alternative finish the important tasks?**
+
+How far Japan's secondary capital system goes depends on subsequent preparation and verification. Another mark on the map is a beginning.
+
+## Sources and Further Reading
+
+Fact-checking cutoff: November 28, 2026. Future dates are plans, and engineering scenarios are illustrative.
+
+- [Jiji Press, November 27, 2026: secondary capital operation and designation schedule](https://www.nippon.com/ja/articles/-/58081)
+- [Osaka Prefecture: designation criteria and Osaka's policy goals](https://www.pref.osaka.lg.jp/o070050/koho/kohoportal/202611/tp16.html)
+- [Hokkaido, November 25, 2026: governor's discussion of secondary capitals and simultaneous disaster risk](https://www.pref.hokkaido.lg.jp/ss/tkk/hodo/pressconference/r8/275613.html)
+- [Osaka City: capital-function backup review meetings and public materials](https://www.city.osaka.lg.jp/fukushutosuishin/page/0000678962.html)
+- [Japan's government continuity plans and ministry guidance](https://www.bousai.go.jp/taisaku/chuogyoumukeizoku/index.html)
+- [NIST SP 800-34 Rev. 1: information system contingency and recovery planning](https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final)
+
+> This article was written with AI assistance and has not yet been proofread by the author.
